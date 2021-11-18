@@ -60,6 +60,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="WindowService.cs" />
+    <Page Include="View\AddWorkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +73,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IWindowService.cs" />
+    <Compile Include="ViewModel\AddWorkViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\AddWorkWindow.xaml.cs">
+      <DependentUpon>AddWorkWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Client.cs" />
