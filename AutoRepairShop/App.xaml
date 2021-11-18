@@ -2,8 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AutoRepairShop"
+             xmlns:viewmodels ="clr-namespace:AutoRepairShop.ViewModel"
+             xmlns:views ="clr-namespace:AutoRepairShop.View"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type viewmodels:AddWorkViewModel}">
+            <views:AddWorkWindow/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

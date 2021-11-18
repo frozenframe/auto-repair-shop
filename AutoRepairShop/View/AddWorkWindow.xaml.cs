@@ -11,20 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoRepairShop
+namespace AutoRepairShop.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AddWorkWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddWorkWindow : UserControl
     {
-        public MainWindow()
+        public AddWorkWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new AddWorkViewModel();
         }
     }
 }
