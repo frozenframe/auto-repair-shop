@@ -9,5 +9,8 @@
         <DataTemplate DataType="{x:Type viewmodels:AddWorkViewModel}">
             <views:AddWorkWindow/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ClientDataViewModel}">
+            <views:ClientDataUserControl/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

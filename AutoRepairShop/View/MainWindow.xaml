@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Клиент" FontSize="18">
-                <MenuItem x:Name="AddClient_MenuItem" Header="Добавить"/>
+                <MenuItem x:Name="AddClient_MenuItem" Header="Добавить" Command="{Binding OpenClientDataWindowCommand}"/>
                 <MenuItem x:Name="DeleteClient_MenuItem" Header="Удалить"/>
             </MenuItem>
             <MenuItem Header="Напоминания" FontSize="18">

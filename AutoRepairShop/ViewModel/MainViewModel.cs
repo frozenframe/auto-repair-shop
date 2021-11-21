@@ -17,9 +17,12 @@ namespace AutoRepairShop.ViewModel
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }        
+        }
+
 
         private RelayCommand openAddWorkWindowCommand;
+        private RelayCommand openClientDataWindowCommand;
+
 
         public ICommand OpenAddWorkWindowCommand
         {
@@ -29,14 +32,33 @@ namespace AutoRepairShop.ViewModel
                 {
                     openAddWorkWindowCommand = new RelayCommand(OpenAddWorkWindow);
                 }
-
                 return openAddWorkWindowCommand;
             }
         }
 
+
         private void OpenAddWorkWindow(object commandParameter)
         {
             new WindowService().ShowWindow(new AddWorkViewModel());
+        }
+        
+        
+        public ICommand OpenClientDataWindowCommand
+        {
+            get
+            {
+                if (openClientDataWindowCommand == null)
+                {
+                    openClientDataWindowCommand = new RelayCommand(OpenClientDataWindow);
+                }
+                return openClientDataWindowCommand;
+            }
+        }
+
+
+        private void OpenClientDataWindow(object commandParameter)
+        {
+            new WindowService().ShowWindow(new ClientDataViewModel());
         }
     }
 }
