@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.OleDb;
 
 namespace AutoRepairShop
 {
     public class DbManager
     {
         private OleDbConnection connection;
-
 
         public DbManager(string connectionString)
         {
@@ -62,16 +63,16 @@ namespace AutoRepairShop
             }
         }
 
-        public List<Client> getClients(Client client)
+        public List<Client> getClients()
         {
-            OleDbCommand command = new OleDbCommand(SqlQueries.getClients, connection);
+            OleDbCommand command = new OleDbCommand(SqlQueries.getAllClients, connection);
             OleDbDataReader reader = command.ExecuteReader();
 
             List<Client> result = new List<Client>();
             while (reader.Read())
             {
-                Client client = new Client(reader[0].ToInt32(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString(), reader[5].ToString());
-                result.Items.Add(client);
+                Client client = new Client((int)reader[0], reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString(), reader[5].ToString());
+                result.Add(client);
             }
 
             reader.Close();
