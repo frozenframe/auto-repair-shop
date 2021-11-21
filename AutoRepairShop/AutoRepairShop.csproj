@@ -56,8 +56,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ViewModel\ClientDataViewModel.cs" />
+    <Compile Include="View\ClientDataUserControl.xaml.cs">
+      <DependentUpon>ClientDataUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowService.cs" />
     <Page Include="View\AddWorkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClientDataUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

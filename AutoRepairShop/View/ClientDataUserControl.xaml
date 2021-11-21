@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="AutoRepairShop.View.ClientDataUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoRepairShop.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Label Content="ФИО клиента" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Телефон" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+        <Label Content="Комментарий" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top"/>
+        <RichTextBox x:Name="ClientComment_RichTextBox" Height="100" Margin="10,187,10,0" VerticalAlignment="Top">
+            <FlowDocument/>
+        </RichTextBox>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <Button x:Name="AddClient_Button" Content="Добавить" Margin="715,418,10,10"/>
+
+    </Grid>
+</UserControl>
