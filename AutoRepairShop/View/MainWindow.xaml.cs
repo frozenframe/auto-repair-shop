@@ -32,6 +32,7 @@ namespace AutoRepairShop
         {
             InitializeComponent();
             DataContext = new MainViewModel();
+            DataContext = new MainViewModel();
             Logger.InitLogger();
             DbManager dbManager = new DbManager(String.Format(connectionString, dbSourceFromConfig));
             Client newClient = new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый");
