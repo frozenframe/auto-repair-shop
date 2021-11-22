@@ -48,7 +48,7 @@ namespace AutoRepairShop
             }
         }
 
-        public Client addClient(Client client) // HashMap<String, String> parameters
+        public Client addClient(Client client)
         {
             object[] insertArgs = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment };
             String insertQuery = String.Format(SqlQueries.addClient, insertArgs);

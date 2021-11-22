@@ -16,17 +16,26 @@ namespace AutoRepairShop
 		public static readonly string getClientByFioPhone = getAllClients + " and lastname = '{0}' and name_cl = '{1}' and surname = '{2}' and phone = '{3}'";
 		public static readonly string getAllClientsByLastname = getAllClients + " and lastname like '*{0}*'";
 
-		public static readonly string addCar = "insert into Cars (mark, model) values ('{0}', '{1}')";
-		public static readonly string updateCar = "update Cars set mark='{0}', model='{1}' where id={2}";
-		public static readonly string deleteCar = "delete from Cars where id={0}";
-		public static readonly string getAllCars = "select id, mark, model from Cars where 1=1 ";
-		public static readonly string getAllCarsById = getAllCars + " and id = {0} ";
-		public static readonly string getAllCarsByMark = getAllCars + " and mark like '*{0}*' ";
-		public static readonly string getAllCarsByModel = getAllCars + " and model like '*{0}*' ";
+		public static readonly string addCarBrand = "insert into Car_Brands (brand_name) values ('{0}')";
+		public static readonly string updateCarBrand = "update Car_Brands set brand_name='{0}' where id={1}";
+		public static readonly string deleteCarBrand = "delete from Car_Brands where id={0}";
+		public static readonly string getAllCarBrands = "select id, brand_name from Car_Brands where 1=1 ";
+		public static readonly string getAllCarsById = getAllCarBrands + " and id = {0} ";
+		public static readonly string getAllCarsByBrandName = getAllCarBrands + " and brand_name like '*{0}*' ";
 
-		public static readonly string addClientCar = "insert into Client_Cars (client_id, car_id, reg_number, comment) values ('{0}', '{1}', '{2}', '{3}')";
-		public static readonly string updateClientCar = "update Client_Cars set car_id='{0}', reg_number='{1}', comment='{2}' where id={3}";
+		public static readonly string addCarModel = "insert into Car_Models (brand_id, model) values ('{0}', '{1}')";
+		public static readonly string updateCarModel = "update Car_Models set brand_id='{0}', model='{1}' where id={2}";
+		public static readonly string deleteCarModel = "delete from Car_Models where id={0}";
+		public static readonly string getAllCarModels = "select id, brand_id, model from Car_Models where 1=1 ";
+		public static readonly string getAllCarModelsById = getAllCarModels + " and id = {0} ";
+		public static readonly string getAllCarModelsByBrandId = getAllCarModels + " and brand_id = {0} ";
+		public static readonly string getAllCarModelsByModel = getAllCarModels + " and model like '*{0}*' ";
+
+		public static readonly string addClientCar = "insert into Client_Cars (client_id, car_model_id, reg_number, comment) values ('{0}', '{1}', '{2}', '{3}')";
+		public static readonly string updateClientCar = "update Client_Cars set car_model_id='{0}', reg_number='{1}', comment='{2}' where id={3}";
 		public static readonly string deleteClientCar = "delete from Client_Cars where id={0}";
-		public static readonly string getAllCLientCars = "select cc.id, cc.client_id, cc.reg_number, cc.comment, c.id, c.mark, c.model from Client_Cars cc, Cars c where client_id = {0} and cc.car_id = c.id";
+		public static readonly string getAllCLientCars = "select cc.id, cc.client_id, cc.reg_number, cc.comment, cm.id, cm.brand_id, cm.model, cb.id, cb.brand_name " +
+			" from Client_Cars cc, Car_Models cm, Car_Brands cb" +
+			" where client_id = {0} and cc.car_model_id = cm.id and cm.brand_id = cb.id";
 	}
 }
