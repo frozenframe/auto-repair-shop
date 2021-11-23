@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AutoRepairShop
 {
@@ -10,6 +11,8 @@ namespace AutoRepairShop
 		public String Surname { get; set; }
 		public String Phone { get; set; }
 		public String Comment { get; set; }
+
+		public Dictionary<int, Car> cars;
 
 		public Client(int? id, String lastname, String name, String surname, String phone, String comment)
 		{
@@ -25,5 +28,7 @@ namespace AutoRepairShop
 			this(null, lastname, name, surname, phone, comment)
 		{
 		}
+
+
 	}
 }
