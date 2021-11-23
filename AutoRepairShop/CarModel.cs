@@ -3,24 +3,16 @@
 namespace AutoRepairShop
 {
     public class CarModel
-    {
-		public int? Id { get; }
-		public int BrandId { get; set; }
-		public String BrandName { get; set; }
-		public String Model { get; set; }
+	{// Здесь не будет Nullable Id и Setters, так как марки и модели машин мы всегда берем из базы и не даем менять другим способом. Только через базу.
+		public int Id { get; }
+		public CarBrand CarBrand { get; }
+		public String Model { get; }
 		
-		public CarModel(int? id, int brandId, String brandName, String model)
+		public CarModel(int id, CarBrand carBrand, String model)
 		{
 			this.Id = id;
-			this.BrandId = brandId;
-			this.BrandName = brandName;
+			this.CarBrand = carBrand;
 			this.Model = model;
 		}
-
-		public CarModel(int brandId, String brandName, String model) :
-			this(null, brandId, brandName, model)
-		{
-		}
-
 	}
 }

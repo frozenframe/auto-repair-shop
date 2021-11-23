@@ -12,7 +12,7 @@ namespace AutoRepairShop
 		public String Phone { get; set; }
 		public String Comment { get; set; }
 
-		public List<Car> cars;
+		public Dictionary<int, Car> cars;
 
 		public Client(int? id, String lastname, String name, String surname, String phone, String comment)
 		{
