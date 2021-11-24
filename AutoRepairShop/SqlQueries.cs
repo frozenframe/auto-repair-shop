@@ -38,5 +38,7 @@ namespace AutoRepairShop
 		public static readonly string getAllCLientCars = "select cc.id, cc.client_id, cc.reg_number, cc.comment, cm.id, cm.brand_id, cm.model, cb.id, cb.brand_name " +
 			" from Client_Cars cc, Car_Models cm, Car_Brands cb" +
 			" where client_id = {0} and cc.car_model_id = cm.id and cm.brand_id = cb.id";
+
+		public static readonly string getAllWorkTypes = "select id, parent_id, work_type from Work_Types order by parent_id asc, work_type asc";
 	}
 }

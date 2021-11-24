@@ -188,20 +188,35 @@ namespace AutoRepairShop
         {
             String selectQuery = String.Format(SqlQueries.getAllCarModelsByBrandId, (int)carBrand.Id);
             OleDbCommand command = new OleDbCommand(selectQuery, connection);
-            OleDbDataReader reader = command.ExecuteReader();
-
             List<CarModel> result = new List<CarModel>();
-            while (reader.Read())
+
+            using (OleDbDataReader reader = command.ExecuteReader())
             {
-                CarModel carModel = new CarModel((int)reader[0], carBrand, reader[2].ToString());
-                result.Add(carModel);
+                while (reader.Read())
+                {
+                    CarModel carModel = new CarModel((int)reader[0], carBrand, reader[2].ToString());
+                    result.Add(carModel);
+                }
             }
-            reader.Close();
 
             return result;
         }
 
+        public SortedList<int, WorkType> getAllWorkTypes()
+        {
+            OleDbCommand command = new OleDbCommand(SqlQueries.getAllWorkTypes, connection);
+            SortedList<int, WorkType> result = new SortedList<int, WorkType>();
 
+            using (OleDbDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    WorkType workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
+                    result.Add((int)reader[0], workType);
+                }
+            }
+            return result;
+        }
 
         ///---------------------------------------- PRIVATE METHODS SECTION -------------------------
         private int? insertRecordIntoDb(String insertQuery)

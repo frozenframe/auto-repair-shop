@@ -72,6 +72,7 @@
     <Compile Include="CarModel.cs" />
     <Compile Include="CarBrands.cs" />
     <Compile Include="CarBrand.cs" />
+    <Compile Include="WorkType.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="DbManager.cs" />

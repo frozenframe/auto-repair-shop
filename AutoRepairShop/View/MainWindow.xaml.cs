@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AutoRepairShop
 {
@@ -54,6 +45,27 @@ namespace AutoRepairShop
             foreach(Client client in clients) {
                 Console.WriteLine("Фамилия клиента: {0}, Имя: {1}", client.Lastname, client.Name);
             }
+
+            //Получение списка работ
+            SortedList<int, WorkType> worksTree = dbManager.getAllWorkTypes();
+
+            // Пока заремарил код ниже. Так как с TreeView нужно разбираться уже предметно в классах шаблона MVVM. 
+            // Набросок заполнения контрола здесь делать бесполезно
+
+            //TreeView treeView1 = new TreeView();
+            //foreach (WorkType workType in worksTree.Values)
+            //{
+            //    TreeNode node = new TreeNode(workType.WorkTypeName);
+            //    //Items node = new TreeNode(workType.WorkTypeName);
+            //    TreeNode parent;
+            //    if (workType.ParentId == null)
+            //        treeView1.Nodes.Add(node); // Добавление ноды в контрол TreeView
+            //        //treeView1.Items.Add(node); // Добавление ноды в контрол TreeView
+            //    else if (worksTree.TryGetValue(workType.ParentId.Value, out parent))
+            //        parent.Nodes.Add(node);
+            //    //nodes.Add(cat_id, node);
+            //}
+
         }
     }
 }
