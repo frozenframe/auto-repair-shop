@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoRepairShop.Stores;
+using AutoRepairShop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,18 @@ namespace AutoRepairShop
     /// </summary>
     public partial class App : Application
     {
+        //protected override void OnStartup(StartupEventArgs e)
+        //{
+        //    ClientStore clientStore = new ClientStore();
+        //    MainViewModel mainViewModel = new MainViewModel(clientStore);
+
+        //    MainWindow = new MainWindow()
+        //    {
+        //        DataContext = mainViewModel
+        //    };
+        //    MainWindow.Show();
+        //    base.OnStartup(e);
+        //}
+
     }
 }

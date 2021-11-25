@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="AutoRepairShop.View.ClientDataUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoRepairShop.View" xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ClientDataViewModel}"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Телефон" HorizontalAlignment="Left" Margin="514,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Комментарий" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Surname_TextBox" HorizontalAlignment="Left" Height="23" Margin="76,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding  Surname, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="PhoneNumber_TextBox" HorizontalAlignment="Left" Height="23" Margin="514,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Text="{Binding Phone,UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="AddClient_Button" Content="Добавить" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Command="{Binding AddClientCommand}" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction MethodName="Close"
+                                        TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>                    
+                </i:EventTrigger> 
+            </i:Interaction.Triggers>
+        </Button>
+        <TextBox x:Name="FirstName_TextBox" HorizontalAlignment="Left" Height="23" Margin="76,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="Имя" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <Label Content="Отчество" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Lastname_TextBox" HorizontalAlignment="Left" Height="23" Margin="76,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding Lastname,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="ClientComment_TextBox" Height="80" Margin="10,240,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Comment,UpdateSourceTrigger=PropertyChanged}"/>
+
+    </Grid>
+</UserControl>

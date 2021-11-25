@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoRepairShop.Stores;
+using AutoRepairShop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +22,7 @@ namespace AutoRepairShop
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         //private string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};"; // User Id=admin;Password=; - это если база будет защищена паролем
         private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
 
@@ -54,6 +57,17 @@ namespace AutoRepairShop
             foreach(Client client in clients) {
                 Console.WriteLine("Фамилия клиента: {0}, Имя: {1}", client.Lastname, client.Name);
             }
+            DataContext = new MainViewModel();
+            //Logger.InitLogger();
+            //DbManager dbManager = new DbManager(string.Format(connectionString, dbSourceFromConfig));
+            //Client newClient = new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый");
+            //dbManager.addClient(newClient);
+            //List<Client> clients = dbManager.getClients();
+
+            //foreach (Client client in clients)
+            //{
+            //    Console.WriteLine("Фамилия клиента: {0}, Имя: {1}", client.Lastname, client.Name);
+            //}
         }
     }
 }
