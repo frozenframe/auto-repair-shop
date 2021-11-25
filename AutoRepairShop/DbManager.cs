@@ -55,7 +55,7 @@ namespace AutoRepairShop
             try
             {
                 OleDbCommand command = new OleDbCommand(sqlQuery, connection);
-                command.ExecuteNonQuery();
+                command.ExecuteNonQuery();                
             }
             catch (Exception e)
             {

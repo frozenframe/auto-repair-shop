@@ -24,6 +24,6 @@
                 <MenuItem Header="Добавить" Command="{Binding OpenAddWorkWindowCommand}"/>
             </MenuItem>
         </Menu>
-        <DataGrid x:Name="CompletedWork_DataGrid" Grid.Row="1"/>
+        <!--<DataGrid x:Name="CompletedWork_DataGrid" Grid.Row="1" ItemsSource="{Binding ClientsList}" AutoGenerateColumns="True" Margin="0,65,0,45" SelectedItem="{Binding SelectedClient}"/>-->
     </Grid>
 </Window>

@@ -17,7 +17,7 @@ namespace AutoRepairShop
                 Height = 450,
                 Width = 800
             };
-            window.Content = viewModel;
+            window.Content = viewModel;            
             window.Show();
         }
     }

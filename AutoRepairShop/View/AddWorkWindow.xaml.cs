@@ -23,7 +23,7 @@ namespace AutoRepairShop.View
         public AddWorkWindow()
         {
             InitializeComponent();
-            DataContext = new AddWorkViewModel();
+            
         }
     }
 }

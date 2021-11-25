@@ -1,6 +1,8 @@
 ﻿using AutoRepairShop;
+using AutoRepairShop.Stores;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,18 +12,70 @@ using System.Windows.Input;
 
 namespace AutoRepairShop.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        private RelayCommand openAddWorkWindowCommand;
+        private RelayCommand openClientDataWindowCommand;
+        //public ObservableCollection<ClientViewModel> ClientsList { get; set; }
+        //public Dictionary<int, Client> claientsMap = new Dictionary<int, Client>;
+        //private readonly ClientStore _clientStore;
+        //private Client _selectedClient;
+
+        //public Client SelectedClient
+        //{
+        //    get
+        //    {
+        //        return _selectedClient;
+        //    }
+        //    set
+        //    {
+        //        _selectedClient = value;
+        //        OnPropertyChanged(nameof(SelectedClient));
+        //    }
+        //}
+        
+        public MainViewModel()
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            //_clientStore = new ClientStore();
+            //ClientsList = new ObservableCollection<ClientViewModel>();
+            //_clientStore.ClientCreated += OnClientCreated;
         }
 
 
-        private RelayCommand openAddWorkWindowCommand;
-        private RelayCommand openClientDataWindowCommand;
+        //public MainViewModel(ClientStore clientStore)
+        //{
+        //    //_clientStore = clientStore;
+        //    //ClientsList = new ObservableCollection<ClientViewModel>();            
+        //    //ClientsList.Add(new ClientViewModel(new Client()
+        //    //{
+        //    //    Name = "Иван",
+        //    //    Surname = "Иванов",
+        //    //    Lastname = "Иванович",
+        //    //    Phone = "+71231234455",
+        //    //    Comment = "Тестовый"
+        //    //}));
+
+        //    //_clientStore.ClientCreated += OnClientCreated;
+
+        //    //ClientsList = new ObservableCollection<Client>
+        //    //{
+        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый"),
+        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый1"),
+        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый2"),
+        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый3"),
+        //    //};
+        //}
+
+        //private void OnClientCreated(Client client)
+        //{
+        //    ClientsList.Add(new ClientViewModel(client));
+        //}
+
+        //public override void Dispose()
+        //{
+        //    _clientStore.ClientCreated -= OnClientCreated;
+        //    base.Dispose();
+        //}
 
 
         public ICommand OpenAddWorkWindowCommand
@@ -40,10 +94,11 @@ namespace AutoRepairShop.ViewModel
         private void OpenAddWorkWindow(object commandParameter)
         {
             new WindowService().ShowWindow(new AddWorkViewModel());
+
         }
-        
-        
-        public ICommand OpenClientDataWindowCommand
+
+
+        public ICommand OpenClientDataWindowCommand //TODO ClientsView
         {
             get
             {
@@ -57,8 +112,8 @@ namespace AutoRepairShop.ViewModel
 
 
         private void OpenClientDataWindow(object commandParameter)
-        {
-            new WindowService().ShowWindow(new ClientDataViewModel());
+        {            
+            new WindowService().ShowWindow(new ClientsViewViewModel());
         }
     }
 }

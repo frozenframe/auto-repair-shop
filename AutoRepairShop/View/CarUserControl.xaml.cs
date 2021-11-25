@@ -1,5 +1,4 @@
-﻿using AutoRepairShop.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +16,13 @@ using System.Windows.Shapes;
 namespace AutoRepairShop.View
 {
     /// <summary>
-    /// Логика взаимодействия для ClientDataUserControl.xaml
+    /// Логика взаимодействия для CarUserControl.xaml
     /// </summary>
-    public partial class ClientDataUserControl : UserControl
+    public partial class CarUserControl : UserControl
     {
-        public ClientDataUserControl()
+        public CarUserControl()
         {
             InitializeComponent();
-            
         }
     }
 }

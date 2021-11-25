@@ -12,5 +12,8 @@
         <DataTemplate DataType="{x:Type viewmodels:ClientDataViewModel}">
             <views:ClientDataUserControl/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ClientsViewViewModel}">
+            <views:ClientsViewUserControl/>
+        </DataTemplate>
     </Application.Resources>
 </Application>
