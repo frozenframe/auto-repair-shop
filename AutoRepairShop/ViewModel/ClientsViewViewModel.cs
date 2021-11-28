@@ -1,4 +1,6 @@
-﻿using AutoRepairShop.Stores;
+﻿using AutoRepairShop;
+using AutoRepairShop.Model;
+using AutoRepairShop.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +13,9 @@ namespace AutoRepairShop.ViewModel
 {
     public class ClientsViewViewModel : ViewModelBase
     {
+        //private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
+        //private string dbSourceFromConfig = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";        
+        DbInteraction dbInteraction;
         private RelayCommand openClientDataWindowCommand;
         private RelayCommand openClientDataWindowForEditCommand;
         
@@ -33,15 +38,14 @@ namespace AutoRepairShop.ViewModel
         public ClientsViewViewModel()
         {
             _clientStore = new ClientStore();
+            dbInteraction = new DbInteraction();
+            var clientsFromDb = dbInteraction.GetClient();            
             ClientsList = new ObservableCollection<ClientViewModel>();
-            ClientsList.Add(new ClientViewModel(new Client()
+            foreach (var row in clientsFromDb)
             {
-                Name = "Иван",
-                Surname = "Иванов",
-                Lastname = "Иванович",
-                Phone = "+71231234455",
-                Comment = "Тестовый"
-            }));
+                var newClient = new ClientViewModel(row);
+                ClientsList.Add(newClient);
+            }
             _clientStore.ClientCreated += OnClientCreated;
         }
 
@@ -90,8 +94,26 @@ namespace AutoRepairShop.ViewModel
             new WindowService().ShowWindow(new ClientDataViewModel(SelectedClient,_clientStore));
         }
 
-        
+        private RelayCommand deleteClientCommand;
+
+        public ICommand DeleteClientCommand
+        {
+            get
+            {
+                if (deleteClientCommand == null)
+                {
+                    deleteClientCommand = new RelayCommand(DeleteClient);
+                }
+
+                return deleteClientCommand;
+            }
+        }
+
+
+        private void DeleteClient(object commandParameter)
+        {
+            dbInteraction.DeleteClient(_selectedClient.Client);            
+            ClientsList.Remove(_selectedClient);
+        }
     }
-
-
 }

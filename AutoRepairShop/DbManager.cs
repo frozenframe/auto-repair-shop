@@ -14,6 +14,7 @@ namespace AutoRepairShop
             OpenConnection();
         }
 
+
         private void OpenConnection()
         {
             if (connection.State != System.Data.ConnectionState.Open)
@@ -30,6 +31,7 @@ namespace AutoRepairShop
                 }
             }
         }
+
 
         public void CloseConnection()
         {
@@ -48,6 +50,7 @@ namespace AutoRepairShop
             }
         }
 
+
         public void addClient(Client client) // HashMap<String, String> parameters
         {
             object[] args = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment };
@@ -62,8 +65,12 @@ namespace AutoRepairShop
                 Console.WriteLine("An error is appearred during inserting into Client table: " + e.Message);
             }
         }
-
         public List<Client> getClients()
+        {
+            return getClients(SqlQueries.getAllClients);
+        }
+
+        public List<Client> getClients(string sqlQuery)
         {
             OleDbCommand command = new OleDbCommand(SqlQueries.getAllClients, connection);
             OleDbDataReader reader = command.ExecuteReader();
@@ -78,6 +85,37 @@ namespace AutoRepairShop
             reader.Close();
 
             return result;
+        }
+
+
+        public void updateClient(Client client)
+        {
+            object[] args = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment, client.Id };
+            String sqlQuery = String.Format(SqlQueries.updateClient, args);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error is appearred during updating Client table: " + e.Message);
+            }
+        }
+
+
+        public void deleteClient(Client client)
+        {
+            String sqlQuery = String.Format(SqlQueries.deleteClient, client.Id);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error is appearred during deleting from Client table: " + e.Message);
+            }
         }
     }
 }

@@ -10,10 +10,10 @@ namespace AutoRepairShop
         private string _lastname;
         public string Lastname
         {
-            get 
-            { 
-                return _lastname; 
-            } 
+            get
+            {
+                return _lastname;
+            }
             set
             {
                 _lastname = value; OnPropertyChanged(nameof(Lastname));
