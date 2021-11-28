@@ -11,21 +11,40 @@ namespace AutoRepairShop
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Data
         //private string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};"; // User Id=admin;Password=; - это если база будет защищена паролем
         private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
 
         private string dbSourceFromConfig = "C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb";
 
+        private DbManager _dbManager;
+
+        #endregion // Data
+
+        #region Properties
+
+        public DbManager DbManager
+        {
+            get { 
+                if (_dbManager == null)
+                {
+                    _dbManager = new DbManager(String.Format(connectionString, dbSourceFromConfig));
+                } 
+                return _dbManager; 
+            }
+        }
+        #endregion // Properties
+
         public MainWindow()
         {
             InitializeComponent();
             Logger.InitLogger();
-            DbManager dbManager = new DbManager(String.Format(connectionString, dbSourceFromConfig));
+            //DbManager dbManager = new DbManager(String.Format(connectionString, dbSourceFromConfig));
             Client newClient = new Client("Иванов", "Иван", "Иванович", "+712312344556", "Тестовый");
-            Client addedClient = dbManager.addClient(newClient);
+            Client addedClient = DbManager.addClient(newClient);
             
             // Эмулируем заполнение ComboBox со списками марок авто и выбор нужной из этого списка
-            CarBrands carBrands = new CarBrands(dbManager.getCarBrands());
+            CarBrands carBrands = new CarBrands(DbManager.getCarBrands());
             CarBrand newCarBrand = null;
             foreach (CarBrand brand in carBrands.getCarBrands().Values)
             {
@@ -33,21 +52,21 @@ namespace AutoRepairShop
                 break;
             }
             // Эмулируем заполнение ComboBox со списками моделей авто и выбор нужной из этого списка
-            List<CarModel> carModels = dbManager.getCarModels(newCarBrand);
+            List<CarModel> carModels = DbManager.getCarModels(newCarBrand);
             CarModel newCarModel = carModels.First();
             
             // добавим новую машину для нового клиента и занесем ее в базу.
             Car newCar = new Car((int)addedClient.Id, newCarModel, "C123XY 70", "test car");
-            Car addedCar = dbManager.addClientCar(addedClient, newCar);
+            Car addedCar = DbManager.addClientCar(addedClient, newCar);
 
             // Выведем информацию о новом клиенте
-            List<Client> clients = dbManager.getClients();
+            List<Client> clients = DbManager.getClients();
             foreach(Client client in clients) {
                 Console.WriteLine("Фамилия клиента: {0}, Имя: {1}", client.Lastname, client.Name);
             }
 
             //Получение списка работ
-            SortedList<int, WorkType> worksTree = dbManager.getAllWorkTypes();
+            SortedList<int, WorkType> worksTree = DbManager.getAllWorkTypes();
 
             // Пока заремарил код ниже. Так как с TreeView нужно разбираться уже предметно в классах шаблона MVVM. 
             // Набросок заполнения контрола здесь делать бесполезно

@@ -212,7 +212,7 @@ namespace AutoRepairShop
                 while (reader.Read())
                 {
                     WorkType workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
-                    result.Add((int)reader[0], workType);
+                    result.Add((int)reader[0], workType); //!List может быть и обычным! на этом этапе не нужен порядок записей. Позже упорядочим
                 }
             }
             return result;

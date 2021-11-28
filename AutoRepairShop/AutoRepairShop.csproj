@@ -60,6 +60,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CarItemsManager\WorkTypeViewUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,9 +73,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Car.cs" />
+    <Compile Include="CarItemsManager\TreeManagerViewModel.cs" />
+    <Compile Include="CarItemsManager\WorkTypeViewUserControl.xaml.cs">
+      <DependentUpon>WorkTypeViewUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CarItemsManager\WorkTypeViewModel.cs" />
     <Compile Include="CarModel.cs" />
     <Compile Include="CarBrands.cs" />
     <Compile Include="CarBrand.cs" />
+    <Compile Include="WorkTypes.cs" />
     <Compile Include="WorkType.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Client.cs" />
