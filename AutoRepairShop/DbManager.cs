@@ -14,6 +14,7 @@ namespace AutoRepairShop
             OpenConnection();
         }
 
+
         private void OpenConnection()
         {
             if (connection.State != System.Data.ConnectionState.Open)
@@ -30,6 +31,7 @@ namespace AutoRepairShop
                 }
             }
         }
+
 
         public void CloseConnection()
         {
