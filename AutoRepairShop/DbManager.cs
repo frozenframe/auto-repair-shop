@@ -166,6 +166,21 @@ namespace AutoRepairShop
             return null;
         }
 
+
+        public List<Car> GetClientCars(int clientId)
+        {
+            String selectQuery = String.Format(SqlQueries.getAllClientCars, (int)clientId);
+            OleDbCommand command = new OleDbCommand(selectQuery, connection);
+            OleDbDataReader reader = command.ExecuteReader();
+            List<Car> result = new List<Car>();
+            while (reader.Read())
+            {
+                Car car = new Car((int)reader[0], (int)clientId, new CarModel((int)reader[4], new CarBrand((int)reader[7], reader[8].ToString()), reader[6].ToString()), reader[2].ToString(), reader[3].ToString());
+                result.Add(car);
+            }
+            return result;
+        }
+
  
         ///--------------------- Car Brands Part --------------------------------
         public Dictionary<int, CarBrand> getCarBrands()

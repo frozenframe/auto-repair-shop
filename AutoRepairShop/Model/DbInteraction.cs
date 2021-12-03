@@ -34,5 +34,26 @@ namespace AutoRepairShop.Model
         {
             dbManager.updateClient(client);
         }
+
+        public List<Car> GetClientCars(int clientId)
+        {
+            return dbManager.GetClientCars(clientId);
+            
+        }
+
+        public List<CarBrand> GetBrands()
+        {
+            var carBrands = new List<CarBrand>();
+            foreach(var row in dbManager.getCarBrands())
+            {
+                carBrands.Add(row.Value);
+            }
+            return carBrands;
+        }
+
+        public List<CarModel> GetModels(CarBrand carBrand)
+        {
+           return dbManager.getCarModels(carBrand);
+        }
     }
 }

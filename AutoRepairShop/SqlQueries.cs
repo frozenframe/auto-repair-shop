@@ -35,7 +35,7 @@ namespace AutoRepairShop
 		public static readonly string addClientCar = "insert into Client_Cars (client_id, car_model_id, reg_number, comment) values ('{0}', '{1}', '{2}', '{3}')";
 		public static readonly string updateClientCar = "update Client_Cars set car_model_id='{0}', reg_number='{1}', comment='{2}' where id={3}";
 		public static readonly string deleteClientCar = "delete from Client_Cars where id={0}";
-		public static readonly string getAllCLientCars = "select cc.id, cc.client_id, cc.reg_number, cc.comment, cm.id, cm.brand_id, cm.model, cb.id, cb.brand_name " +
+		public static readonly string getAllClientCars = "select cc.id, cc.client_id, cc.reg_number, cc.comment, cm.id, cm.brand_id, cm.model, cb.id, cb.brand_name " +
 			" from Client_Cars cc, Car_Models cm, Car_Brands cb" +
 			" where client_id = {0} and cc.car_model_id = cm.id and cm.brand_id = cb.id";
 	}
