@@ -20,9 +20,17 @@ namespace AutoRepairShop.WorkTypeManager
     /// </summary>
     public partial class WorkTypeView : UserControl
     {
+        private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
+
+        private string dbSourceFromConfig = "C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb";
+
+        DbManager _dbManager;
         public WorkTypeView()
         {
             InitializeComponent();
+
+            _dbManager = new DbManager(String.Format(connectionString, dbSourceFromConfig));
+            SortedList<int, WorkType> allWorkTypes = _dbManager.getAllWorkTypes();
 
             WorkTypes workTypes = new WorkTypes();
             // По-хорошему нужно иметь возможность обрабатывать случай, когда есть несколько корневых узлов у дерева иерархии
