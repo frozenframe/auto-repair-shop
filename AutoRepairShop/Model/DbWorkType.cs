@@ -1,43 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AutoRepairShop
+namespace AutoRepairShop.Model
 {
-    public class WorkTypes
+    public class DbWorkType : DbInteraction
     {
-        #region Data
+        #region Fields
 
         private SortedList<int, WorkType> _allWorkTypes;
-        private DbManager _dbManager;
-        private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
-        private string dbSourceFromConfig = @"C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb";
-        private SortedList<int, WorkType> _workTypesTree = new SortedList<int, WorkType>();
 
-        #endregion // Data
-
-        #region Constructors
-        public WorkTypes()
-        {
-            _dbManager = new DbManager(string.Format(connectionString, dbSourceFromConfig));
-        }
-        #endregion // Constructors
+        #endregion // Fields
 
         #region Properties
 
-        public List<WorkType> RootWorkTypes { 
+        public List<WorkType> RootWorkTypes
+        {
             get
             {
                 if (_allWorkTypes == null)
                 {
-                    _allWorkTypes = _dbManager.getAllWorkTypes();
+                    _allWorkTypes = getAllWorkTypes();
                 }
                 //WorkType firstNode = _allWorkTypes.First().Value; // У нашего дерева должен быть 
                 foreach (WorkType workType in _allWorkTypes.Values)
                 {
                     WorkType parent;
+                    // Пробегаемся по списку и проверяем каждый узел.
+                    // Если узел не корневой, то найдем его парента и добавим этот узел ему в дочерние.
                     if (workType.ParentId != null && _allWorkTypes.TryGetValue(workType.ParentId.Value, out parent))
                     {
                         parent.Children.Add(workType);
@@ -61,21 +51,25 @@ namespace AutoRepairShop
 
         #endregion // Properties
 
+        #region Public methods
+        #endregion // Public methods
 
-        #region Private section
-
-        private bool TryGetValue(WorkType workType, out WorkType parent)
+        #region Private methods
+        private SortedList<int,WorkType> getAllWorkTypes()
         {
-            if (workType == null)
-            {
-                parent = null;
-                return false;
-            } else
-            {
-                _allWorkTypes.
-            }
+            OleDbCommand command = new OleDbCommand(SqlQueries.getAllWorkTypes, connection);
+            SortedList<int, WorkType> result = new SortedList<int, WorkType>();
 
+            using (OleDbDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    WorkType workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
+                    result.Add((int)reader[0], workType); //!List может быть и обычным! на этом этапе не нужен порядок записей. Позже упорядочим
+                }
+            }
+            return result;
         }
-        #endregion // Private section
+        #endregion // Private methods
     }
 }

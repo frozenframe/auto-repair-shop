@@ -16,6 +16,7 @@ namespace AutoRepairShop.ViewModel
     {
         private RelayCommand openAddWorkWindowCommand;
         private RelayCommand openClientDataWindowCommand;
+        private RelayCommand openTreeViewWindowCommand;
         //public ObservableCollection<ClientViewModel> ClientsList { get; set; }
         //public Dictionary<int, Client> claientsMap = new Dictionary<int, Client>;
         //private readonly ClientStore _clientStore;
@@ -33,7 +34,7 @@ namespace AutoRepairShop.ViewModel
         //        OnPropertyChanged(nameof(SelectedClient));
         //    }
         //}
-        
+
         public MainViewModel()
         {
             //_clientStore = new ClientStore();
@@ -115,5 +116,26 @@ namespace AutoRepairShop.ViewModel
         {            
             new WindowService().ShowWindow(new ClientsViewViewModel());
         }
+
+        public ICommand OpenTreeViewWindowCommand
+        {
+            get
+            {
+                if (openTreeViewWindowCommand == null)
+                {
+                    openTreeViewWindowCommand = new RelayCommand(OpenTreeViewWindow);
+                }
+                return openTreeViewWindowCommand;
+            }
+        }
+
+
+        private void OpenTreeViewWindow(object commandParameter)
+        {
+            new WindowService().ShowWindow(new OpenTreeViewModel());
+
+        }
+
+
     }
 }

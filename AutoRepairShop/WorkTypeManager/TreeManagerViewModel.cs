@@ -1,8 +1,7 @@
-﻿using AutoRepairShop.WorkTypeManager;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace AutoRepairShop.CarItemsManager
+namespace AutoRepairShop.WorkTypeManager
 {
     public class TreeManagerViewModel
     {

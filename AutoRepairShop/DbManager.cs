@@ -168,57 +168,57 @@ namespace AutoRepairShop
 
  
         ///--------------------- Car Brands Part --------------------------------
-        public Dictionary<int, CarBrand> getCarBrands()
-        {
-            OleDbCommand command = new OleDbCommand(SqlQueries.getAllCarBrands, connection);
-            OleDbDataReader reader = command.ExecuteReader();
+        //public Dictionary<int, CarBrand> getCarBrands()
+        //{
+        //    OleDbCommand command = new OleDbCommand(SqlQueries.getAllCarBrands, connection);
+        //    OleDbDataReader reader = command.ExecuteReader();
 
-            Dictionary<int, CarBrand> result = new Dictionary<int, CarBrand>();
-            while (reader.Read())
-            {
-                CarBrand carBrand = new CarBrand((int)reader[0], reader[1].ToString());
-                result.Add((int)carBrand.Id, carBrand);
-            }
-            reader.Close();
+        //    Dictionary<int, CarBrand> result = new Dictionary<int, CarBrand>();
+        //    while (reader.Read())
+        //    {
+        //        CarBrand carBrand = new CarBrand((int)reader[0], reader[1].ToString());
+        //        result.Add((int)carBrand.Id, carBrand);
+        //    }
+        //    reader.Close();
 
-            return result;
-        }
+        //    return result;
+        //}
 
 
-        ///--------------------- Car Models Part --------------------------------
-        public List<CarModel> getCarModels(CarBrand carBrand)
-        {
-            String selectQuery = String.Format(SqlQueries.getAllCarModelsByBrandId, (int)carBrand.Id);
-            OleDbCommand command = new OleDbCommand(selectQuery, connection);
-            List<CarModel> result = new List<CarModel>();
+        /////--------------------- Car Models Part --------------------------------
+        //public List<CarModel> getCarModels(CarBrand carBrand)
+        //{
+        //    String selectQuery = String.Format(SqlQueries.getAllCarModelsByBrandId, (int)carBrand.Id);
+        //    OleDbCommand command = new OleDbCommand(selectQuery, connection);
+        //    List<CarModel> result = new List<CarModel>();
 
-            using (OleDbDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    CarModel carModel = new CarModel((int)reader[0], carBrand, reader[2].ToString());
-                    result.Add(carModel);
-                }
-            }
+        //    using (OleDbDataReader reader = command.ExecuteReader())
+        //    {
+        //        while (reader.Read())
+        //        {
+        //            CarModel carModel = new CarModel((int)reader[0], carBrand, reader[2].ToString());
+        //            result.Add(carModel);
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        public SortedList<int, WorkType> getAllWorkTypes()
-        {
-            OleDbCommand command = new OleDbCommand(SqlQueries.getAllWorkTypes, connection);
-            SortedList<int, WorkType> result = new SortedList<int, WorkType>();
+        //public SortedList<int, WorkType> getAllWorkTypes()
+        //{
+        //    OleDbCommand command = new OleDbCommand(SqlQueries.getAllWorkTypes, connection);
+        //    SortedList<int, WorkType> result = new SortedList<int, WorkType>();
 
-            using (OleDbDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    WorkType workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
-                    result.Add((int)reader[0], workType); //!List может быть и обычным! на этом этапе не нужен порядок записей. Позже упорядочим
-                }
-            }
-            return result;
-        }
+        //    using (OleDbDataReader reader = command.ExecuteReader())
+        //    {
+        //        while (reader.Read())
+        //        {
+        //            WorkType workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
+        //            result.Add((int)reader[0], workType); //!List может быть и обычным! на этом этапе не нужен порядок записей. Позже упорядочим
+        //        }
+        //    }
+        //    return result;
+        //}
 
         ///---------------------------------------- PRIVATE METHODS SECTION -------------------------
         private int? insertRecordIntoDb(String insertQuery)
