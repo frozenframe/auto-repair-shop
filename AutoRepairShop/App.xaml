@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:AutoRepairShop"
              xmlns:viewmodels ="clr-namespace:AutoRepairShop.ViewModel"
              xmlns:views ="clr-namespace:AutoRepairShop.View"
+             xmlns:addViewmodels ="clr-namespace:AutoRepairShop.WorkTypeManager"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <DataTemplate DataType="{x:Type viewmodels:AddWorkViewModel}">
@@ -15,5 +16,9 @@
         <DataTemplate DataType="{x:Type viewmodels:ClientsViewViewModel}">
             <views:ClientsViewUserControl/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type addViewmodels:TreeManagerViewModel}">
+            <views:WorkTypeViewUserControl/>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

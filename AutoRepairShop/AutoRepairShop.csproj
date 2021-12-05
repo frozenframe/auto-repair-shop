@@ -63,9 +63,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DbCarBrand.cs" />
+    <Compile Include="Model\DbCarModel.cs" />
+    <Compile Include="Model\DbWorkType.cs" />
     <Compile Include="Model\DbInteraction.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Stores\ClientStore.cs" />
+    <Compile Include="ViewModel\OpenTreeViewModel.cs" />
     <Compile Include="ViewModel\ClientDataViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
@@ -96,6 +100,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\WorkTypeViewUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,10 +118,16 @@
     <Compile Include="View\AddWorkWindow.xaml.cs">
       <DependentUpon>AddWorkWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Car.cs" />
-    <Compile Include="CarModel.cs" />
-    <Compile Include="CarBrands.cs" />
-    <Compile Include="CarBrand.cs" />
+    <Compile Include="MetaModel\Car.cs" />
+    <Compile Include="WorkTypeManager\TreeManagerViewModel.cs" />
+    <Compile Include="View\WorkTypeViewUserControl.xaml.cs">
+      <DependentUpon>WorkTypeViewUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkTypeManager\WorkTypeViewModel.cs" />
+    <Compile Include="MetaModel\CarModel.cs" />
+    <Compile Include="MetaModel\CarBrands.cs" />
+    <Compile Include="MetaModel\CarBrand.cs" />
+    <Compile Include="MetaModel\WorkType.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Model\Client.cs" />
     <Compile Include="DbManager.cs" />
@@ -150,9 +164,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
