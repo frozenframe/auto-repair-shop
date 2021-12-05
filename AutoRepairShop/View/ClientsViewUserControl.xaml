@@ -21,7 +21,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <GridSplitter Height="450" VerticalAlignment="Top" Width="1" Grid.Column="1" Margin="0,0,299,0" Background="Black"/>
-        <DataGrid x:Name="ClientCarData_DataGrid" Grid.Column="1" Margin="10,10,10,40" ItemsSource="{Binding ClientsCarList}" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid x:Name="ClientCarData_DataGrid" Grid.Column="1" Margin="10,10,10,40" ItemsSource="{Binding ClientsCarList}" SelectedItem="{Binding SelectedCar}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Model" Binding="{Binding CarModel.Model}"/>
                 <DataGridTextColumn Header="reg num" Binding="{Binding RegNumber}"/>

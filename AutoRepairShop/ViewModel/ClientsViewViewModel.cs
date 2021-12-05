@@ -24,23 +24,37 @@ namespace AutoRepairShop.ViewModel
 
         private readonly ClientStore _clientStore;
         private readonly CarStore _carStore;
-        private bool _canInteractWithCarFunctions = false;
+        private bool _isClientSelected = false;
+        private bool _isCarSelected = false;
         public ObservableCollection<ClientViewModel> ClientsList { get; set; }
         private ClientViewModel _selectedClient;
         public ObservableCollection<Car> ClientsCarList { get; set; }
         private Car _selectedCar;
 
 
-        public bool CanInteractWithCarFunctions
+        public bool IsClientSelected
         {
             get
             {
-                return _canInteractWithCarFunctions;
+                return _isClientSelected;
             }
             set
             {
-                _canInteractWithCarFunctions = value;
-                OnPropertyChanged(nameof(CanInteractWithCarFunctions));
+                _isClientSelected = value;
+                OnPropertyChanged(nameof(IsClientSelected));
+            }
+        }
+
+        public bool IsCarSelected
+        {
+            get
+            {
+                return _isCarSelected;
+            }
+            set
+            {
+                _isCarSelected = value;
+                OnPropertyChanged(nameof(IsCarSelected));
             }
         }
 
@@ -56,7 +70,7 @@ namespace AutoRepairShop.ViewModel
                 _selectedClient = value;                             
                 OnPropertyChanged(nameof(SelectedClient));
                 FillCarsGrid(_selectedClient);
-                CanInteractWithCarFunctions = true;
+                IsClientSelected = true;
             }
         }
 
@@ -71,6 +85,7 @@ namespace AutoRepairShop.ViewModel
             {
                 _selectedCar = value;
                 OnPropertyChanged(nameof(SelectedCar));
+                IsCarSelected = true;
             }
         }
 
@@ -81,7 +96,7 @@ namespace AutoRepairShop.ViewModel
             var cars = dbInteraction.GetClientCars(selectedClient.Id.Value);
             foreach (var row in cars)
             {
-                ClientsCarList.Add(new Car(row.CLientId, row.CarModel, row.RegNumber, row.Comment));
+                ClientsCarList.Add(new Car(row.Id,row.CLientId, row.CarModel, row.RegNumber, row.Comment));
             }
         }
 
@@ -198,7 +213,12 @@ namespace AutoRepairShop.ViewModel
 
         private bool CheckClientSelection(object param)
         {
-            return CanInteractWithCarFunctions;
+            return IsClientSelected;
+        }
+
+        private bool CheckCarSelection(object param)
+        {
+            return IsCarSelected;
         }
 
 
@@ -209,7 +229,7 @@ namespace AutoRepairShop.ViewModel
             {
                 if (openCarDataWindowForEditCommand == null)
                 {
-                    openCarDataWindowForEditCommand = new RelayCommand(OpenCarDataWindowForEdit,CheckClientSelection);
+                    openCarDataWindowForEditCommand = new RelayCommand(OpenCarDataWindowForEdit,CheckCarSelection);
                 }
 
                 return openCarDataWindowForEditCommand;
@@ -218,7 +238,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenCarDataWindowForEdit(object commandParameter)
         {
-            new WindowService().ShowWindow(new CarDataViewModel(_selectedCar, _carStore, SelectedClient));
+            new WindowService().ShowWindow(new CarDataViewModel(SelectedCar, _carStore, SelectedClient));
         }
     }
 }

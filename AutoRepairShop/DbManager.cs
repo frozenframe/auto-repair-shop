@@ -51,14 +51,14 @@ namespace AutoRepairShop
         }
 
         ///--------------------- Client Part --------------------------------
-        public Client addClient(Client client)
+        public Client AddClient(Client client)
         {
             object[] insertArgs = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment };
-            String insertQuery = String.Format(SqlQueries.addClient, insertArgs);
+            string insertQuery = string.Format(SqlQueries.addClient, insertArgs);
 
             try
             {
-                int id = insertRecordIntoDb(insertQuery) ?? 0;
+                int id = InsertRecordIntoDb(insertQuery) ?? 0;
                 if (id != 0)
                 {
                     return new Client(id, client.Lastname, client.Name, client.Surname, client.Phone, client.Comment);
@@ -67,7 +67,7 @@ namespace AutoRepairShop
             catch (Exception e)
             {
                 Logger.Log.Error(
-                    String.Format("An error is appearred during adding client {0} {1} {2} {3}. Error: {4}",
+                    string.Format("An error is appearred during adding client {0} {1} {2} {3}. Error: {4}",
                     client.Lastname,
                     client.Name,
                     client.Surname,
@@ -78,20 +78,20 @@ namespace AutoRepairShop
             return null;
         }
 
-        public Client getClientByFioPhone(Client client)
+        public Client GetClientByFioPhone(Client client)
         {
             object[] selectArgs = { client.Lastname, client.Name, client.Surname, client.Phone };
-            String selectQuery = String.Format(SqlQueries.getClientByFioPhone, selectArgs);
+            string selectQuery = string.Format(SqlQueries.getClientByFioPhone, selectArgs);
 
-            return getClients(selectQuery).ToArray()[0];
+            return GetClients(selectQuery).ToArray()[0];
         }
 
-        public List<Client> getClients()
+        public List<Client> GetClients()
         {
-            return getClients(SqlQueries.getAllClients);
+            return GetClients(SqlQueries.getAllClients);
         }
 
-        private List<Client> getClients(String sqlQuery)
+        private List<Client> GetClients(string sqlQuery)
         {
             OleDbCommand command = new OleDbCommand(sqlQuery, connection);
             OleDbDataReader reader = command.ExecuteReader();
@@ -107,10 +107,10 @@ namespace AutoRepairShop
             return result;
         }
 
-        public void updateClient(Client client)
+        public void UpdateClient(Client client)
         {
             object[] args = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment, client.Id };
-            String sqlQuery = String.Format(SqlQueries.updateClient, args);
+            string sqlQuery = string.Format(SqlQueries.updateClient, args);
             try
             {
                 OleDbCommand command = new OleDbCommand(sqlQuery, connection);
@@ -122,9 +122,9 @@ namespace AutoRepairShop
             }
         }
 
-        public void deleteClient(Client client)
+        public void DeleteClient(Client client)
         {
-            String sqlQuery = String.Format(SqlQueries.deleteClient, client.Id);
+            string sqlQuery = string.Format(SqlQueries.deleteClient, client.Id);
             try
             {
                 OleDbCommand command = new OleDbCommand(sqlQuery, connection);
@@ -139,13 +139,13 @@ namespace AutoRepairShop
 
         ///--------------------- Client Cars Part --------------------------------
 
-        public Car addClientCar(Client client, Car car)
+        public Car AddClientCar(Client client, Car car)
         {
             object[] insertArgs = { (int)client.Id, car.CarModel.Id, car.RegNumber, car.Comment };
-            String insertQuery = String.Format(SqlQueries.addClientCar, insertArgs);
+            string insertQuery = string.Format(SqlQueries.addClientCar, insertArgs);
             try
             {
-                int id = insertRecordIntoDb(insertQuery) ?? 0;
+                int id = InsertRecordIntoDb(insertQuery) ?? 0;
                 if (id != 0)
                 {
                     return new Car(id, (int)client.Id, car.CarModel, car.RegNumber, car.Comment);
@@ -154,7 +154,7 @@ namespace AutoRepairShop
             catch (Exception e)
             {
                 Logger.Log.Error(
-                    String.Format("An error is appearred during adding car ({0}/{1}) for client {2} {3}. Error: {4}",
+                    string.Format("An error is appearred during adding car ({0}/{1}) for client {2} {3}. Error: {4}",
                     car.CarModel.CarBrand.BrandName,
                     car.CarModel.Model,
                     client.Lastname,
@@ -183,7 +183,7 @@ namespace AutoRepairShop
 
  
         ///--------------------- Car Brands Part --------------------------------
-        public Dictionary<int, CarBrand> getCarBrands()
+        public Dictionary<int, CarBrand> GetCarBrands()
         {
             OleDbCommand command = new OleDbCommand(SqlQueries.getAllCarBrands, connection);
             OleDbDataReader reader = command.ExecuteReader();
@@ -201,9 +201,9 @@ namespace AutoRepairShop
 
 
         ///--------------------- Car Models Part --------------------------------
-        public List<CarModel> getCarModels(CarBrand carBrand)
+        public List<CarModel> GetCarModels(CarBrand carBrand)
         {
-            String selectQuery = String.Format(SqlQueries.getAllCarModelsByBrandId, (int)carBrand.Id);
+            string selectQuery = string.Format(SqlQueries.getAllCarModelsByBrandId, (int)carBrand.Id);
             OleDbCommand command = new OleDbCommand(selectQuery, connection);
             OleDbDataReader reader = command.ExecuteReader();
 
@@ -221,7 +221,7 @@ namespace AutoRepairShop
 
 
         ///---------------------------------------- PRIVATE METHODS SECTION -------------------------
-        private int? insertRecordIntoDb(String insertQuery)
+        private int? InsertRecordIntoDb(string insertQuery)
         {
             int? newRecodeId = null;
             OleDbTransaction transaction = null;

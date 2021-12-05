@@ -18,21 +18,21 @@ namespace AutoRepairShop.Model
         }
         public List<Client> GetClient()
         {
-            return dbManager.getClients();
+            return dbManager.GetClients();
         }
         public void DeleteClient(Client client)
         {
-            dbManager.deleteClient(client);
+            dbManager.DeleteClient(client);
         }
 
         public void AddClient(Client client)
         {
-            dbManager.addClient(client);
+            dbManager.AddClient(client);
         }
 
         public void UpdateClient(Client client)
         {
-            dbManager.updateClient(client);
+            dbManager.UpdateClient(client);
         }
 
         public List<Car> GetClientCars(int clientId)
@@ -44,7 +44,7 @@ namespace AutoRepairShop.Model
         public List<CarBrand> GetBrands()
         {
             var carBrands = new List<CarBrand>();
-            foreach(var row in dbManager.getCarBrands())
+            foreach(var row in dbManager.GetCarBrands())
             {
                 carBrands.Add(row.Value);
             }
@@ -53,7 +53,13 @@ namespace AutoRepairShop.Model
 
         public List<CarModel> GetModels(CarBrand carBrand)
         {
-           return dbManager.getCarModels(carBrand);
+           return dbManager.GetCarModels(carBrand);
+        }
+
+        public Car AddClientCar(Client client,Car car)
+        {
+           return dbManager.AddClientCar(client, car);
+            //dbManager.;
         }
     }
 }

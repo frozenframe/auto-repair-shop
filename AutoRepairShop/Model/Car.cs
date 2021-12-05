@@ -9,7 +9,7 @@ namespace AutoRepairShop
         private CarModel _carModel;
         private string _regNumber;
         private string _comment;
-        public int? Id { get; }
+        public int? Id { get; set; }
         public int CLientId { get; set; }
         public CarModel CarModel
         {

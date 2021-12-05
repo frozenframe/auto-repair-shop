@@ -5,25 +5,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:local="clr-namespace:AutoRepairShop.View" xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:CarDataViewModel}"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             mc:Ignorable="d" Width="420" Height="300">
+             mc:Ignorable="d" Width="400" Height="400">
     <Grid>
-        <TextBlock x:Name="ClientFullname_TextBlock" Margin="10,48,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" FontSize="30">
+        <TextBlock x:Name="ClientFullname_TextBlock" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" FontSize="30">
             <Run Text="{Binding Client.Surname,Mode=OneTime}"/>
             <Run Text="{Binding Client.Name,Mode=OneTime}"/>
             <Run Text="{Binding Client.Lastname,Mode=OneTime}"/>
         </TextBlock>
-        <TextBlock Margin="10,93,10,0" TextWrapping="Wrap" Text="{Binding Car.CarModel.Model}" VerticalAlignment="Top" Height="28" FontSize="20" />
-        <Label Content="Марка машины" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>
-        <Label Content="Модель машины" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="CarBrand_ComboBox" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="400" DisplayMemberPath="BrandName" ItemsSource="{Binding CarBrands}"  SelectedItem = "{Binding SelectedCarBrand}">
+        <TextBlock Margin="10,55,10,0" TextWrapping="Wrap" Text="{Binding Car.CarModel.Model,Mode=OneTime}" VerticalAlignment="Top" Height="28" FontSize="20" />
+        <Label Content="Марка машины" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
+        <Label Content="Модель машины" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="CarBrand_ComboBox" Margin="10,119,10,0" VerticalAlignment="Top"
+                  ItemsSource="{Binding CarBrands}" SelectedItem="{Binding SelectedCarBrand}" DisplayMemberPath="BrandName"  Text="{Binding SelectedCarBrand.BrandName}">
+            <!--SelectedItem = "{Binding Path=SelectedCarBrand,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
             <!--<i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding BrandSelectionChangedCommand}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>-->
         </ComboBox>
-        <ComboBox x:Name="CarModel_ComboBox" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Width="400" DisplayMemberPath="Model" ItemsSource="{Binding CarModels}" SelectedItem = "{Binding SelectedCarModel}"/>
+        <ComboBox x:Name="CarModel_ComboBox" Margin="10,177,10,0" VerticalAlignment="Top" DisplayMemberPath="Model" 
+                  ItemsSource="{Binding CarModels}"  SelectedItem="{Binding SelectedCarModel}" Text="{Binding SelectedCarModel.Model}"/>
+        <!--SelectedValue="{Binding SelectedCarModel}" SelectedValuePath="Model"-->
         <Button x:Name="AddCar_Button" Content="Добавить" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"
-                Command="{Binding AddCarToClientCommand}"/>
+                Command="{Binding AddCarToClientCommand}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction MethodName="Close"
+                                        TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <Label Content="Номер" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top"/>
+        <Label Content="Комментарий" HorizontalAlignment="Left" Margin="10,263,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="RegNumber_TextBox" Height="23" Margin="10,235,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Car.RegNumber}"/>
+        <TextBox x:Name="Comment_TextBox" Height="40" Margin="10,294,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Car.Comment}"/>
     </Grid>
 </UserControl>

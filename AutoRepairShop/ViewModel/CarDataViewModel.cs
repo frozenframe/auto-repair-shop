@@ -19,7 +19,7 @@ namespace AutoRepairShop.ViewModel
         private CarModel _selectedCarModel;
         private ClientViewModel _client;
         //private readonly string _clientName;
-        public ClientViewModel Client 
+        public ClientViewModel Client
         {
             get
             {
@@ -44,6 +44,7 @@ namespace AutoRepairShop.ViewModel
             }
             set
             {
+                if (_selectedCarBrand == value) return;
                 _selectedCarBrand = value;
                 FillCarModelComboBox(_selectedCarBrand);
                 OnPropertyChanged(nameof(SelectedCarBrand));
@@ -95,7 +96,9 @@ namespace AutoRepairShop.ViewModel
 
         public CarDataViewModel(Car car, CarStore carStore,ClientViewModel client) : this(carStore,client)
         {
-            Car = car;            
+            Car = car;
+            SelectedCarBrand = Car.CarModel.CarBrand;
+            SelectedCarModel = car.CarModel;
         }
 
 
@@ -153,12 +156,14 @@ namespace AutoRepairShop.ViewModel
         {
             if(Car.Id is null)
             {
-                var newCar = new Car(1, SelectedCarModel, "A999AE", "norm");
+                var newCar = new Car((int)Client.Id, SelectedCarModel, Car.RegNumber, Car.Comment);                
+                newCar = dbInteraction.AddClientCar(new Client(Client.Id, Client.Lastname, Client.Name, Client.Surname, Client.Phone, Client.Comment), newCar);
                 _carstore.AddCar(newCar);
                 //TODO добавление в базу записи о новой машине клиента
             }
             else
             {
+
                 //TODO изменение выбранной машины клиента
             }
         }
