@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AutoRepairShop
+namespace AutoRepairShop.MetaModel
 {
     // Этот класс должен быть подписан на событие обновления таблицы Car_Brands и в этом случае он должен затирать и перечитывать 
     // мапу carBrands из базы.

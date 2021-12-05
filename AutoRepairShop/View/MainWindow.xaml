@@ -24,7 +24,7 @@
                 <MenuItem Header="Добавить" Command="{Binding OpenAddWorkWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="TreeView test" FontSize="18">
-                <MenuItem Header="Показать" Command="{Binding openTreeViewWindowCommand}"/>
+                <MenuItem Header="Показать" Command="{Binding OpenTreeViewWindowCommand}"/>
             </MenuItem>
         </Menu>
         <!--<DataGrid x:Name="CompletedWork_DataGrid" Grid.Row="1" ItemsSource="{Binding ClientsList}" AutoGenerateColumns="True" Margin="0,65,0,45" SelectedItem="{Binding SelectedClient}"/>-->

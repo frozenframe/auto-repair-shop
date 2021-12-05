@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoRepairShop
+namespace AutoRepairShop.MetaModel
 {
     public class CarModel
 	{// Здесь не будет Nullable Id и Setters, так как марки и модели машин мы всегда берем из базы и не даем менять другим способом. Только через базу.

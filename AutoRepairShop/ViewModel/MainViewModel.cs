@@ -1,5 +1,6 @@
 ﻿using AutoRepairShop;
 using AutoRepairShop.Stores;
+using AutoRepairShop.WorkTypeManager;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -132,7 +133,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenTreeViewWindow(object commandParameter)
         {
-            new WindowService().ShowWindow(new OpenTreeViewModel());
+            new WindowService().ShowWindow(new TreeManagerViewModel());
 
         }
 

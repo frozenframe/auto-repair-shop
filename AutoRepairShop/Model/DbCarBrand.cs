@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AutoRepairShop.MetaModel;
+using System.Collections.Generic;
 using System.Data.OleDb;
 
 namespace AutoRepairShop.Model

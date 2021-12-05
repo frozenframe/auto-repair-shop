@@ -5,30 +5,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoRepairShop
+namespace AutoRepairShop.MetaModel
 {
     public class WorkType
     {
         #region Data
-        public int Id { get; }
-        public int? ParentId { get; }
-        public string WorkTypeName { get; }
+        private int _id;
+        private int? _parentId;
+        private string _workTypeName;
 
-        private Collection<WorkType> _children;
+        private Collection<WorkType> _children = new Collection<WorkType>();
 
         #endregion // Data
 
         #region Constructor
-        public WorkType (int id, int parentId, String workTypeName)
+        public WorkType (int id, int? parentId, String workTypeName)
         {
-            this.Id = id;
-            this.ParentId = parentId;
-            this.WorkTypeName = workTypeName;
+            this._id = id;
+            this._parentId = parentId;
+            this._workTypeName = workTypeName;
         }
 
         #endregion // Constructor
 
         #region Properties
+        public int Id {
+            get { return _id; }
+        }
+        public int? ParentId {
+            get { return this._parentId; }
+        }
+        public string WorkTypeName
+        {
+            get { return this._workTypeName; }
+        }
 
         public Collection<WorkType> Children
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoRepairShop
+namespace AutoRepairShop.MetaModel
 {
     public class Car
     {

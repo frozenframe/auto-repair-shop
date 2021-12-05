@@ -1,4 +1,5 @@
-﻿using AutoRepairShop.Model;
+﻿using AutoRepairShop.MetaModel;
+using AutoRepairShop.Model;
 using AutoRepairShop.ViewModel;
 using System;
 using System.Collections.Generic;

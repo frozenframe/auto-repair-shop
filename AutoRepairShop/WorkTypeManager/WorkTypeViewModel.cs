@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using AutoRepairShop.MetaModel;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -9,10 +10,10 @@ namespace AutoRepairShop.WorkTypeManager
     {
         #region Fields
 
-        private Collection<WorkTypeViewModel> _rootNodes;
-        private WorkTypeViewModel _rootItem;
+        //private Collection<WorkTypeViewModel> _rootNodes;
+        //private WorkTypeViewModel _rootItem;
 
-        private Collection<WorkTypeViewModel> _children;
+        private ObservableCollection<WorkTypeViewModel> _children;
         private WorkTypeViewModel _parent;
         private WorkType _workType;
 
@@ -36,7 +37,7 @@ namespace AutoRepairShop.WorkTypeManager
             _workType = workType;
             _parent = parent;
 
-            _children = new Collection<WorkTypeViewModel>(
+            _children = new ObservableCollection<WorkTypeViewModel>(
                    (from child in _workType.Children
                     select new WorkTypeViewModel(child, this))
                     .ToList<WorkTypeViewModel>());
@@ -46,23 +47,78 @@ namespace AutoRepairShop.WorkTypeManager
 
         #region Properties
 
-        #region RootNodes
+        #region Children
 
-        public Collection<WorkTypeViewModel> Children
+        public ObservableCollection<WorkTypeViewModel> Children
         {
             get { return _children; }
+        }
+
+        public string WorkTypeName
+        {
+            get
+            {
+                return _workType.WorkTypeName;
+            }
         }
 
         /// <summary>
         /// Returns a read-only collection containing the first person 
         /// in the family tree, to which the TreeView can bind.
         /// </summary>
-        public Collection<WorkTypeViewModel> RootNodes
+        //public Collection<WorkTypeViewModel> RootNodes
+        //{
+        //    get { return _rootNodes; }
+        //}
+
+        #endregion // Children
+
+        #region IsExpanded
+
+        /// <summary>
+        /// Gets/sets whether the TreeViewItem 
+        /// associated with this object is expanded.
+        /// </summary>
+        public bool IsExpanded
         {
-            get { return _rootNodes; }
+            get { return _isExpanded; }
+            set
+            {
+                if (value != _isExpanded)
+                {
+                    _isExpanded = value;
+                    this.OnPropertyChanged("IsExpanded");
+                }
+
+                // Expand all the way up to the root.
+                if (_isExpanded && _parent != null)
+                    _parent.IsExpanded = true;
+            }
         }
 
-        #endregion // FirstGeneration
+        #endregion // IsExpanded
+
+        #region IsSelected
+
+        /// <summary>
+        /// Gets/sets whether the TreeViewItem 
+        /// associated with this object is selected.
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+
+        #endregion // IsSelected
+
 
         #region Commands
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AutoRepairShop.MetaModel;
+using System;
+using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
 
@@ -28,7 +30,7 @@ namespace AutoRepairShop.Model
                     WorkType parent;
                     // Пробегаемся по списку и проверяем каждый узел.
                     // Если узел не корневой, то найдем его парента и добавим этот узел ему в дочерние.
-                    if (workType.ParentId != null && _allWorkTypes.TryGetValue(workType.ParentId.Value, out parent))
+                    if (workType.ParentId.HasValue && _allWorkTypes.TryGetValue(workType.ParentId.Value, out parent))
                     {
                         parent.Children.Add(workType);
                     }
@@ -64,7 +66,15 @@ namespace AutoRepairShop.Model
             {
                 while (reader.Read())
                 {
-                    WorkType workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
+                    WorkType workType;
+                    if (reader.IsDBNull(1))
+                    {
+                        workType = new WorkType((int)reader[0], null, reader[2].ToString());
+                    }
+                    else
+                    {
+                        workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
+                    }
                     result.Add((int)reader[0], workType); //!List может быть и обычным! на этом этапе не нужен порядок записей. Позже упорядочим
                 }
             }
