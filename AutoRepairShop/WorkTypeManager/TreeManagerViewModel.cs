@@ -24,15 +24,13 @@ namespace AutoRepairShop.WorkTypeManager
 
         #region Constructor
 
-        public TreeManagerViewModel()   //WorkType rootWorkType
+        public TreeManagerViewModel()
         {
             _dbWorkType = new DbWorkType();
-            //WorkTypeViewModel workTypeViewModel = new WorkTypeViewModel(_dbWorkType.RootWorkTypes.First());
-            //this.DataContext = workTypeViewModel;
 
             // По-хорошему нужно иметь возможность обрабатывать случай, когда есть несколько корневых узлов у дерева иерархии
             //Но пока зашиваемся, что он жестко один!
-            _rootWorkType = new WorkTypeViewModel(_dbWorkType.RootWorkTypes.First()); //rootWorkType
+            _rootWorkType = new WorkTypeViewModel(_dbWorkType.RootWorkTypes.First());
             _rootNodes = new ObservableCollection<WorkTypeViewModel>(
                 new WorkTypeViewModel[]
                 {
@@ -46,20 +44,13 @@ namespace AutoRepairShop.WorkTypeManager
 
         #region RootNodes
 
-        ///// <summary>
-        ///// Returns a read-only collection containing the first person 
-        ///// in the family tree, to which the TreeView can bind.
-        ///// </summary>
-        //public ObservableCollection<WorkTypeViewModel> RootNodes => _rootNodes;
+        /// <summary>
+        /// Returns a read-only collection containing the first person 
+        /// in the family tree, to which the TreeView can bind.
+        /// </summary>
+        public ObservableCollection<WorkTypeViewModel> RootNodes => _rootNodes;
 
         #endregion // RootNodes
-
-        //public string WorkTypeName { 
-        //    get
-        //    {
-        //        return _rootWorkType.WorkTypeName;
-        //    }
-        //}
 
         #region Commands
 

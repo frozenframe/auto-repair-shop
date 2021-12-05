@@ -10,9 +10,6 @@ namespace AutoRepairShop.WorkTypeManager
     {
         #region Fields
 
-        //private Collection<WorkTypeViewModel> _rootNodes;
-        //private WorkTypeViewModel _rootItem;
-
         private ObservableCollection<WorkTypeViewModel> _children;
         private WorkTypeViewModel _parent;
         private WorkType _workType;
@@ -24,6 +21,7 @@ namespace AutoRepairShop.WorkTypeManager
         readonly ICommand _changeCommand;
         readonly ICommand _deleteCommand;
         readonly ICommand _changeParentCommand;
+
         #endregion // Fields
 
         #region Constructor
@@ -61,15 +59,6 @@ namespace AutoRepairShop.WorkTypeManager
                 return _workType.WorkTypeName;
             }
         }
-
-        /// <summary>
-        /// Returns a read-only collection containing the first person 
-        /// in the family tree, to which the TreeView can bind.
-        /// </summary>
-        //public Collection<WorkTypeViewModel> RootNodes
-        //{
-        //    get { return _rootNodes; }
-        //}
 
         #endregion // Children
 

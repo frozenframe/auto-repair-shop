@@ -1,16 +1,18 @@
-﻿using System;
-
-namespace AutoRepairShop.MetaModel
+﻿namespace AutoRepairShop.MetaModel
 {
     public class Car
     {
+		#region Properties
 		public int? Id { get; }
 		public int CLientId { get; set; }
 		public CarModel CarModel { get; set; }
-		public String RegNumber { get; set; }
-		public String Comment { get; set; }
+		public string RegNumber { get; set; }
+		public string Comment { get; set; }
 
-		public Car(int? id, int cLientId, CarModel carModel, String regNumber, String comment)
+		#endregion Properties
+
+		#region Constructors
+		public Car(int? id, int cLientId, CarModel carModel, string regNumber, string comment)
 		{
 			this.Id = id;
 			this.CLientId = cLientId;
@@ -19,10 +21,11 @@ namespace AutoRepairShop.MetaModel
 			this.Comment = comment;
 		}
 
-		public Car(int cLientId, CarModel carModel, String regNumber, String comment) :
+		public Car(int cLientId, CarModel carModel, string regNumber, string comment) :
 			this(null, cLientId, carModel, regNumber, comment)
 		{
 		}
 
+		#endregion Constructors
 	}
 }

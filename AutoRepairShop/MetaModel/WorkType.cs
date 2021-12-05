@@ -1,51 +1,29 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoRepairShop.MetaModel
 {
     public class WorkType
     {
-        #region Data
-        private int _id;
-        private int? _parentId;
-        private string _workTypeName;
+        #region Properties
+        public int Id { get; }
+        public int? ParentId { get; }
+        public string WorkTypeName { get; }
 
-        private Collection<WorkType> _children = new Collection<WorkType>();
+        public Collection<WorkType> Children { get; } = new Collection<WorkType>();
 
-        #endregion // Data
+        #endregion Properties
 
         #region Constructor
         public WorkType (int id, int? parentId, String workTypeName)
         {
-            this._id = id;
-            this._parentId = parentId;
-            this._workTypeName = workTypeName;
+            this.Id = id;
+            this.ParentId = parentId;
+            this.WorkTypeName = workTypeName;
         }
 
-        #endregion // Constructor
+        #endregion Constructor
 
-        #region Properties
-        public int Id {
-            get { return _id; }
-        }
-        public int? ParentId {
-            get { return this._parentId; }
-        }
-        public string WorkTypeName
-        {
-            get { return this._workTypeName; }
-        }
 
-        public Collection<WorkType> Children
-        {
-            get { return _children; }
-            //set { _children = value; }
-        }
-
-        #endregion // Properties
     }
 }

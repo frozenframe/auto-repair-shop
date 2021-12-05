@@ -24,7 +24,6 @@ namespace AutoRepairShop.Model
                 {
                     _allWorkTypes = getAllWorkTypes();
                 }
-                //WorkType firstNode = _allWorkTypes.First().Value; // У нашего дерева должен быть 
                 foreach (WorkType workType in _allWorkTypes.Values)
                 {
                     WorkType parent;

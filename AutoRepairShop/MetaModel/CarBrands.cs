@@ -7,7 +7,11 @@ namespace AutoRepairShop.MetaModel
     // Эта мапа зачитывается в при старте программы и используется в качестве источника для ComboBox "марки авто"
     public class CarBrands
     {
+        #region Fields
+
         private Dictionary<int, CarBrand> carBrands;
+
+        #endregion Fields
 
         public CarBrands(Dictionary<int, CarBrand> carBrands)
         {
@@ -17,9 +21,12 @@ namespace AutoRepairShop.MetaModel
             }
         }
 
+        #region Properties
         public Dictionary<int, CarBrand> getCarBrands()
         {
             return carBrands;
         }
+
+        #endregion Properties
     }
 }
