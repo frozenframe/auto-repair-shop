@@ -25,9 +25,9 @@ namespace AutoRepairShop.Model
             dbManager.DeleteClient(client);
         }
 
-        public void AddClient(Client client)
+        public Client AddClient(Client client)
         {
-            dbManager.AddClient(client);
+           return dbManager.AddClient(client);
         }
 
         public void UpdateClient(Client client)
@@ -58,8 +58,18 @@ namespace AutoRepairShop.Model
 
         public Car AddClientCar(Client client,Car car)
         {
-           return dbManager.AddClientCar(client, car);
-            //dbManager.;
+           return dbManager.AddClientCar(client, car);            
+        }
+
+        public void UpdateClientCar(Car car)
+        {
+            dbManager.UpdateClientCar(car);
+        }
+
+
+        public void DeleteClientCar(Car car)
+        {
+            dbManager.DeleteClientCar(car);
         }
     }
 }

@@ -18,7 +18,8 @@ namespace AutoRepairShop.ViewModel
         private CarBrand _selectedCarBrand;
         private CarModel _selectedCarModel;
         private ClientViewModel _client;
-        //private readonly string _clientName;
+        
+
         public ClientViewModel Client
         {
             get
@@ -44,8 +45,13 @@ namespace AutoRepairShop.ViewModel
             }
             set
             {
+                //вопрос о том что carbrand должен быть выше carmodel
                 if (_selectedCarBrand == value) return;
                 _selectedCarBrand = value;
+                if(Car.CarModel != null)
+                {
+                    _car.CarModel.CarBrand = value;
+                }                
                 FillCarModelComboBox(_selectedCarBrand);
                 OnPropertyChanged(nameof(SelectedCarBrand));
             }
@@ -60,6 +66,7 @@ namespace AutoRepairShop.ViewModel
             set
             {
                 _selectedCarModel = value;
+                _car.CarModel = value;
                 OnPropertyChanged(nameof(SelectedCarModel));
             }
         }
@@ -123,7 +130,7 @@ namespace AutoRepairShop.ViewModel
         //   var carModelWithSelectedBrand = dbInteraction.GetModels(SelectedCarBrand);
         //    CarModels.Add(new CarModel(1, new CarBrand(1, ""), "f911"));
         //    CarModels.Add(new CarModel(1, new CarBrand(2, ""), "gg"));
-        //    //TODO GET ALL car models for selected brand
+        //    
         //}
 
 
@@ -147,7 +154,6 @@ namespace AutoRepairShop.ViewModel
                 {
                     addCarToClientCommand = new RelayCommand(AddCarToClient);
                 }
-
                 return addCarToClientCommand;
             }
         }
@@ -158,12 +164,11 @@ namespace AutoRepairShop.ViewModel
             {
                 var newCar = new Car((int)Client.Id, SelectedCarModel, Car.RegNumber, Car.Comment);                
                 newCar = dbInteraction.AddClientCar(new Client(Client.Id, Client.Lastname, Client.Name, Client.Surname, Client.Phone, Client.Comment), newCar);
-                _carstore.AddCar(newCar);
-                //TODO добавление в базу записи о новой машине клиента
+                _carstore.AddCar(newCar);                
             }
             else
             {
-
+                dbInteraction.UpdateClientCar(Car);
                 //TODO изменение выбранной машины клиента
             }
         }

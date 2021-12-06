@@ -69,7 +69,10 @@ namespace AutoRepairShop.ViewModel
             {
                 _selectedClient = value;                             
                 OnPropertyChanged(nameof(SelectedClient));
-                FillCarsGrid(_selectedClient);
+                if(value != null)
+                {
+                    FillCarsGrid(_selectedClient);
+                }                
                 IsClientSelected = true;
             }
         }
@@ -120,7 +123,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OnCarAdded(Car car)
         {
-            ClientsCarList.Add(new Car(car.CLientId, car.CarModel, car.RegNumber, car.Comment));
+            ClientsCarList.Add(new Car(car.Id,car.CLientId, car.CarModel, car.RegNumber, car.Comment));
         }
 
         private void OnClientCreated(Client client)
@@ -160,7 +163,7 @@ namespace AutoRepairShop.ViewModel
             {
                 if (openClientDataWindowForEditCommand == null)
                 {
-                    openClientDataWindowForEditCommand = new RelayCommand(OpenClientDataWindowForEdit);
+                    openClientDataWindowForEditCommand = new RelayCommand(OpenClientDataWindowForEdit,CheckClientSelection);
                 }
                 return openClientDataWindowForEditCommand;
             }
@@ -178,7 +181,7 @@ namespace AutoRepairShop.ViewModel
             {
                 if (deleteClientCommand == null)
                 {
-                    deleteClientCommand = new RelayCommand(DeleteClient);
+                    deleteClientCommand = new RelayCommand(DeleteClient, CheckClientSelection);
                 }
 
                 return deleteClientCommand;
@@ -187,8 +190,14 @@ namespace AutoRepairShop.ViewModel
 
         private void DeleteClient(object commandParameter)
         {
+            //TODO удалять все машины связанные с удаляемым клиентом
             dbInteraction.DeleteClient(_selectedClient.Client);            
             ClientsList.Remove(_selectedClient);
+            foreach(var car in ClientsCarList)
+            {
+                dbInteraction.DeleteClientCar(car);               
+            }
+            ClientsCarList.Clear();
         }
         
 
@@ -218,7 +227,8 @@ namespace AutoRepairShop.ViewModel
 
         private bool CheckCarSelection(object param)
         {
-            return IsCarSelected;
+            return SelectedCar is null? false : true;
+            //return IsCarSelected;
         }
 
 
@@ -239,6 +249,27 @@ namespace AutoRepairShop.ViewModel
         private void OpenCarDataWindowForEdit(object commandParameter)
         {
             new WindowService().ShowWindow(new CarDataViewModel(SelectedCar, _carStore, SelectedClient));
+        }
+
+        private RelayCommand deleteCarCommand;
+
+        public ICommand DeleteCarCommand
+        {
+            get
+            {
+                if (deleteCarCommand == null)
+                {
+                    deleteCarCommand = new RelayCommand(DeleteCar,CheckCarSelection);
+                }
+
+                return deleteCarCommand;
+            }
+        }
+
+        private void DeleteCar(object commandParameter)
+        {
+            dbInteraction.DeleteClientCar(SelectedCar);
+            ClientsCarList.Remove(SelectedCar);
         }
     }
 }

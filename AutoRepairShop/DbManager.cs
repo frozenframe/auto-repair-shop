@@ -138,7 +138,6 @@ namespace AutoRepairShop
 
 
         ///--------------------- Client Cars Part --------------------------------
-
         public Car AddClientCar(Client client, Car car)
         {
             object[] insertArgs = { (int)client.Id, car.CarModel.Id, car.RegNumber, car.Comment };
@@ -167,6 +166,38 @@ namespace AutoRepairShop
         }
 
 
+        public void UpdateClientCar(Car car)
+        {
+            //"update Client_Cars set car_model_id='{0}', reg_number='{1}', comment='{2}' where id={3}";
+            object[] args = { car.CarModel.Id,car.RegNumber,car.Comment,car.Id};
+            string sqlQuery = string.Format(SqlQueries.updateClientCar, args);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error is appearred during updating ClientCar table: " + e.Message);
+            }
+        }
+
+
+        public void DeleteClientCar(Car car)
+        {
+            string sqlQuery = string.Format(SqlQueries.deleteClientCar, car.Id);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error is appearred during deleting from Client table: " + e.Message);
+            }
+        }
+
+
         public List<Car> GetClientCars(int clientId)
         {
             String selectQuery = String.Format(SqlQueries.getAllClientCars, (int)clientId);
@@ -175,7 +206,7 @@ namespace AutoRepairShop
             List<Car> result = new List<Car>();
             while (reader.Read())
             {
-                Car car = new Car((int)reader[0], (int)clientId, new CarModel((int)reader[4], new CarBrand((int)reader[7], reader[8].ToString()), reader[6].ToString()), reader[2].ToString(), reader[3].ToString());
+                Car car = new Car((int)reader[0], clientId, new CarModel((int)reader[4], new CarBrand((int)reader[7], reader[8].ToString()), reader[6].ToString()), reader[2].ToString(), reader[3].ToString());
                 result.Add(car);
             }
             return result;
