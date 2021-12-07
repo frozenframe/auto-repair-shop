@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.OleDb;
 
 namespace AutoRepairShop.Model
@@ -26,31 +25,33 @@ namespace AutoRepairShop.Model
         {   // Класс DbManager становится по сути нам не нужен. Это класс будет создавать и хранить соединение до БД.
             // Логики вычитывания из базы здесь быть не должно. Пусть за это будут отвечать дочерние от него классы.
             // Позже развяжем их.
-            dbManager = new DbManager(string.Format(connectionString, dbSourceFromConfig));
+            //dbManager = new DbManager(string.Format(connectionString, dbSourceFromConfig));
             connection = new OleDbConnection(string.Format(connectionString, dbSourceFromConfig));
             OpenConnection();
 
         }
-        public List<Client> GetClient()
+
+        #region Public methods
+        public void CloseConnection()
         {
-            return dbManager.getClients();
-        }
-        public void DeleteClient(Client client)
-        {
-            dbManager.deleteClient(client);
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                try
+                {
+                    connection.Close();
+                }
+                //TODO: Все тоже самое, что и для Connection.Open();
+                catch (Exception ex)
+                {
+                    Logger.Log.Error("An error was occured during processing query: " + ex.Message);
+                    throw;
+                }
+            }
         }
 
-        public void AddClient(Client client)
-        {
-            dbManager.addClient(client);
-        }
+        #endregion Public methods
 
-        public void UpdateClient(Client client)
-        {
-            dbManager.updateClient(client);
-        }
-
-        #region Private section
+        #region Private methods
 
         private void OpenConnection()
         {
@@ -69,6 +70,6 @@ namespace AutoRepairShop.Model
             }
         }
 
-        #endregion // Private section
+        #endregion Private methods
     }
 }

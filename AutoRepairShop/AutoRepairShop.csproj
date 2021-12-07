@@ -63,6 +63,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DbClientCars.cs" />
+    <Compile Include="Model\DbClient.cs" />
     <Compile Include="Model\DbCarBrand.cs" />
     <Compile Include="Model\DbCarModel.cs" />
     <Compile Include="Model\DbWorkType.cs" />
@@ -130,7 +132,7 @@
     <Compile Include="MetaModel\WorkType.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Model\Client.cs" />
-    <Compile Include="DbManager.cs" />
+    <Compile Include="Model\DbManager.cs" />
     <Compile Include="SqlQueries.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -15,6 +15,9 @@ namespace AutoRepairShop
     /// </summary>
     public partial class App : Application
     {
+        public void ConfigureServices(IServiceCollection services)
+        {
+        }
         //protected override void OnStartup(StartupEventArgs e)
         //{
         //    ClientStore clientStore = new ClientStore();
