@@ -5,10 +5,6 @@ namespace AutoRepairShop.Model
 {
     public class DbInteraction
     {
-        #region Deprecated
-        protected DbManager dbManager { get; }
-        #endregion //Deprecated
-
         #region Fields
 
         private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
@@ -22,10 +18,10 @@ namespace AutoRepairShop.Model
         #endregion // Fields
 
         public DbInteraction()
-        {   // Класс DbManager становится по сути нам не нужен. Это класс будет создавать и хранить соединение до БД.
+        {
             // Логики вычитывания из базы здесь быть не должно. Пусть за это будут отвечать дочерние от него классы.
             // Позже развяжем их.
-            //dbManager = new DbManager(string.Format(connectionString, dbSourceFromConfig));
+            
             connection = new OleDbConnection(string.Format(connectionString, dbSourceFromConfig));
             OpenConnection();
 
