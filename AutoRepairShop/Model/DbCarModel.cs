@@ -8,10 +8,10 @@ namespace AutoRepairShop.Model
     public class DbCarModel : DbInteraction
     {
         #region Public methods
-        public List<CarModel> getCarModels(CarBrand carBrand)
+        public List<CarModel> GetCarModels(CarBrand carBrand)
         {
-            String selectQuery = String.Format(SqlQueries.getAllCarModelsByBrandId, (int)carBrand.Id);
-            OleDbCommand command = new OleDbCommand(selectQuery, connection);
+            string selectQuery = string.Format(SqlQueries.getAllCarModelsByBrandId, (int)carBrand.Id);
+            OleDbCommand command = new OleDbCommand(selectQuery, Connection);
             List<CarModel> result = new List<CarModel>();
 
             using (OleDbDataReader reader = command.ExecuteReader())

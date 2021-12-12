@@ -10,31 +10,31 @@ namespace AutoRepairShop.Model
 
         public List<Client> GetClient()
         {
-            return getClients(SqlQueries.getAllClients);
+            return GetClients(SqlQueries.getAllClients);
         }
 
         public void DeleteClient(Client client)
         {
-            String sqlQuery = String.Format(SqlQueries.deleteClient, client.Id);
+            string sqlQuery = string.Format(SqlQueries.deleteClient, client.Id);
             try
             {
-                OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
                 command.ExecuteNonQuery();
             }
             catch (Exception e)
             {
-                Logger.Log.Error(String.Format("An error is appearred during deleting from Client table: {0}", e.Message));
+                Logger.Log.Error(string.Format("An error is appearred during deleting from Client table: {0}", e.Message));
             }
         }
 
         public Client AddClient(Client client)
         {
             object[] insertArgs = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment };
-            String insertQuery = String.Format(SqlQueries.addClient, insertArgs);
+            string insertQuery = string.Format(SqlQueries.addClient, insertArgs);
 
             try
             {
-                int id = insertRecordIntoDb(insertQuery) ?? 0;
+                int id = InsertRecordIntoDb(insertQuery) ?? 0;
                 if (id != 0)
                 {
                     return new Client(id, client.Lastname, client.Name, client.Surname, client.Phone, client.Comment);
@@ -43,7 +43,7 @@ namespace AutoRepairShop.Model
             catch (Exception e)
             {
                 Logger.Log.Error(
-                    String.Format("An error is appearred during adding client {0} {1} {2} {3}. Error: {4}",
+                    string.Format("An error is appearred during adding client {0} {1} {2} {3}. Error: {4}",
                     client.Lastname,
                     client.Name,
                     client.Surname,
@@ -57,38 +57,38 @@ namespace AutoRepairShop.Model
         public void UpdateClient(Client client)
         {
             object[] args = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment, client.Id };
-            String sqlQuery = String.Format(SqlQueries.updateClient, args);
+            string sqlQuery = string.Format(SqlQueries.updateClient, args);
             try
             {
-                OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
                 command.ExecuteNonQuery();
             }
             catch (Exception e)
             {
-                Logger.Log.Error(String.Format("An error is appearred during updating Client table: {0}", e.Message));
+                Logger.Log.Error(string.Format("An error is appearred during updating Client table: {0}", e.Message));
             }
         }
 
-        public Client getClientByFioPhone(Client client)
+        public Client GetClientByFioPhone(Client client)
         {
             object[] selectArgs = { client.Lastname, client.Name, client.Surname, client.Phone };
-            String selectQuery = String.Format(SqlQueries.getClientByFioPhone, selectArgs);
+            string selectQuery = string.Format(SqlQueries.getClientByFioPhone, selectArgs);
 
-            return getClients(selectQuery).ToArray()[0];
+            return GetClients(selectQuery).ToArray()[0];
         }
 
-        public List<Client> getClients()
+        public List<Client> GetClients()
         {
-            return getClients(SqlQueries.getAllClients);
+            return GetClients(SqlQueries.getAllClients);
         }
 
         #endregion Public methods
 
         #region Private methods
 
-        private List<Client> getClients(String sqlQuery)
+        private List<Client> GetClients(string sqlQuery)
         {
-            OleDbCommand command = new OleDbCommand(sqlQuery, connection);
+            OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
             OleDbDataReader reader = command.ExecuteReader();
 
             List<Client> result = new List<Client>();

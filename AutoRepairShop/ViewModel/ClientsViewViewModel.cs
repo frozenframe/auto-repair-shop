@@ -15,7 +15,8 @@ namespace AutoRepairShop.ViewModel
     {
         //private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
         //private string dbSourceFromConfig = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";        
-        DbInteraction dbInteraction;
+        DbClient dbClient;
+        DbClientCars dbClientCars;
         private RelayCommand openClientDataWindowCommand;
         private RelayCommand openClientDataWindowForEditCommand;
         private RelayCommand deleteClientCommand;
@@ -71,9 +72,9 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(SelectedClient));
                 if(value != null)
                 {
-                    FillCarsGrid(_selectedClient);
+                    FillCarsGrid(_selectedClient);                    
                 }                
-                IsClientSelected = true;
+                IsClientSelected = false;
             }
         }
 
@@ -96,7 +97,7 @@ namespace AutoRepairShop.ViewModel
         private void FillCarsGrid(ClientViewModel selectedClient)
         {
             ClientsCarList.Clear();
-            var cars = dbInteraction.GetClientCars(selectedClient.Id.Value);
+            var cars = dbClientCars.GetClientCars(selectedClient.Id.Value);
             foreach (var row in cars)
             {
                 ClientsCarList.Add(new Car(row.Id,row.CLientId, row.CarModel, row.RegNumber, row.Comment));
@@ -108,8 +109,9 @@ namespace AutoRepairShop.ViewModel
         {
             _clientStore = new ClientStore();
             _carStore = new CarStore();
-            dbInteraction = new DbInteraction();
-            var clientsFromDb = dbInteraction.GetClient();            
+            dbClient = new DbClient();
+            dbClientCars = new DbClientCars();
+            var clientsFromDb = dbClient.GetClient();
             ClientsList = new ObservableCollection<ClientViewModel>();
             ClientsCarList = new ObservableCollection<Car>();
             foreach (var row in clientsFromDb)
@@ -152,7 +154,7 @@ namespace AutoRepairShop.ViewModel
         }
 
         private void OpenClientDataWindow(object commandParameter)
-        {            
+        {
             new WindowService().ShowWindow(new ClientDataViewModel(_clientStore));
         }
 
@@ -188,16 +190,16 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
+
         private void DeleteClient(object commandParameter)
         {
-            //TODO удалять все машины связанные с удаляемым клиентом
-            dbInteraction.DeleteClient(_selectedClient.Client);            
-            ClientsList.Remove(_selectedClient);
-            foreach(var car in ClientsCarList)
+            foreach (var car in ClientsCarList)
             {
-                dbInteraction.DeleteClientCar(car);               
+                dbClientCars.DeleteClientCar(car);
             }
             ClientsCarList.Clear();
+            dbClient.DeleteClient(_selectedClient.Client);
+            ClientsList.Remove(_selectedClient);
         }
         
 
@@ -222,7 +224,7 @@ namespace AutoRepairShop.ViewModel
 
         private bool CheckClientSelection(object param)
         {
-            return IsClientSelected;
+            return SelectedClient is null ? false : true;
         }
 
         private bool CheckCarSelection(object param)
@@ -268,7 +270,7 @@ namespace AutoRepairShop.ViewModel
 
         private void DeleteCar(object commandParameter)
         {
-            dbInteraction.DeleteClientCar(SelectedCar);
+            dbClientCars.DeleteClientCar(SelectedCar);
             ClientsCarList.Remove(SelectedCar);
         }
     }

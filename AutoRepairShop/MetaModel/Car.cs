@@ -1,24 +1,65 @@
-﻿namespace AutoRepairShop.MetaModel
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace AutoRepairShop
 {
-    public class Car
+    public class Car : INotifyPropertyChanged
     {
-		#region Properties
-		public int? Id { get; }
-		public int CLientId { get; set; }
-		public CarModel CarModel { get; set; }
-		public string RegNumber { get; set; }
-		public string Comment { get; set; }
+        private CarModel _carModel;
+        private string _regNumber;
+        private string _comment;
+        public int? Id { get; set; }
+        public int CLientId { get; set; }
+        public CarModel CarModel
+        {
+            get
+            {
+                return _carModel;
+            }
+            set
+            {
+                _carModel = value;
+                OnPropertyChanged(nameof(CarModel));
+            }
+        }
+        public string RegNumber
+        {
+            get
+            {
+                return _regNumber;
+            }
+            set
+            {
+                _regNumber = value;
+                OnPropertyChanged(nameof(RegNumber));
+            }
+        }
+        public string Comment 
+        {
+            get
+            {
+                return _comment;
+            }
 
-		#endregion Properties
+            set
+            {
+                _comment = value;
+                OnPropertyChanged(nameof(Comment));
+            }
+        }
 
-		#region Constructors
+        public Car()
+        {
+
+        }
 		public Car(int? id, int cLientId, CarModel carModel, string regNumber, string comment)
 		{
-			this.Id = id;
-			this.CLientId = cLientId;
-			this.CarModel = carModel;
-			this.RegNumber = regNumber;
-			this.Comment = comment;
+			Id = id;
+			CLientId = cLientId;
+			CarModel = carModel;
+			RegNumber = regNumber;
+			Comment = comment;
 		}
 
 		public Car(int cLientId, CarModel carModel, string regNumber, string comment) :
@@ -26,6 +67,13 @@
 		{
 		}
 
-		#endregion Constructors
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void OnPropertyChanged([CallerMemberName] string prop = "")
+		{
+			if (PropertyChanged != null)
+				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+		}
+
 	}
 }

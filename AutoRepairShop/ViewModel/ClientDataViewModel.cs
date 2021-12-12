@@ -15,7 +15,7 @@ namespace AutoRepairShop.ViewModel
     {
         private ClientStore _clientStore;
         private Client _client;
-        DbInteraction dbInteraction;
+        DbClient dbClient;
         public Client Client
         {
             get
@@ -113,7 +113,7 @@ namespace AutoRepairShop.ViewModel
         {
             _clientStore = clientStore;
             Client = new Client();
-            dbInteraction = new DbInteraction();            
+            dbClient = new DbClient();            
         }
         public ClientDataViewModel(ClientViewModel client, ClientStore clientStore) : this(clientStore)
         {
@@ -142,13 +142,13 @@ namespace AutoRepairShop.ViewModel
             if(_client.Id is null)
             {                
                 Client newClient = new Client(_client.Lastname, _client.Name, _client.Surname, _client.Phone, _client.Comment);
-                newClient = dbInteraction.AddClient(newClient);                
+                newClient = dbClient.AddClient(newClient);                
                 _clientStore.CreateClient(newClient);
             }
             else
             {                
                 Client newClient = new Client(_client.Id,_client.Lastname, _client.Name, _client.Surname, _client.Phone, _client.Comment);
-                dbInteraction.UpdateClient(newClient);
+                dbClient.UpdateClient(newClient);
             }
             
             //List<Client> clients = dbManager.getClients();

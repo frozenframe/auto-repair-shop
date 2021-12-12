@@ -22,7 +22,7 @@ namespace AutoRepairShop.MetaModel
         }
 
         #region Properties
-        public Dictionary<int, CarBrand> getCarBrands()
+        public Dictionary<int, CarBrand> GetCarBrands()
         {
             return carBrands;
         }

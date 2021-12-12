@@ -7,16 +7,16 @@ namespace AutoRepairShop.Model
     public class DbCarBrand : DbInteraction
     {
         #region Public methods
-        public Dictionary<int, CarBrand> getCarBrands()
+        public Dictionary<int, CarBrand> GetCarBrands()
         {
-            OleDbCommand command = new OleDbCommand(SqlQueries.getAllCarBrands, connection);
+            OleDbCommand command = new OleDbCommand(SqlQueries.getAllCarBrands, Connection);
             OleDbDataReader reader = command.ExecuteReader();
 
             Dictionary<int, CarBrand> result = new Dictionary<int, CarBrand>();
             while (reader.Read())
             {
                 CarBrand carBrand = new CarBrand((int)reader[0], reader[1].ToString());
-                result.Add((int)carBrand.Id, carBrand);
+                result.Add(carBrand.Id, carBrand);
             }
             reader.Close();
 

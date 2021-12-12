@@ -7,19 +7,19 @@ namespace AutoRepairShop.Model
     {
 
         #region Protected methods
-        protected int? insertRecordIntoDb(String insertQuery)
+        protected int? InsertRecordIntoDb(string insertQuery)
         {
             int? newRecodeId = null;
             OleDbTransaction transaction = null;
             try
             {
-                transaction = connection.BeginTransaction();
-                OleDbCommand insertCommand = new OleDbCommand(insertQuery, connection);
+                transaction = Connection.BeginTransaction();
+                OleDbCommand insertCommand = new OleDbCommand(insertQuery, Connection);
                 insertCommand.Transaction = transaction;
                 int rows = insertCommand.ExecuteNonQuery();
                 if (rows == 1)
                 {
-                    newRecodeId = getIdInsertedRecord(transaction);
+                    newRecodeId = GetIdInsertedRecord(transaction);
                 }
                 else
                 {
@@ -44,9 +44,9 @@ namespace AutoRepairShop.Model
             }
         }
 
-        protected int getIdInsertedRecord(OleDbTransaction transaction)
+        protected int GetIdInsertedRecord(OleDbTransaction transaction)
         {
-            OleDbCommand selectCommand = new OleDbCommand("SELECT @@IDENTITY", connection);
+            OleDbCommand selectCommand = new OleDbCommand("SELECT @@IDENTITY", Connection);
             selectCommand.Transaction = transaction;
             return (int)selectCommand.ExecuteScalar();
         }

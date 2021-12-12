@@ -10,10 +10,10 @@ namespace AutoRepairShop.Model
         private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
         // Надо либо уже запилить нормальный конфиг файл, либо разобраться как указать для базы текущую директорию!
         //Кто первый - тот молодец!
-        //private string dbSourceFromConfig = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";
-        private string dbSourceFromConfig = "C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb";
+        private string dbSourceFromConfig = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";
+        //private string dbSourceFromConfig = "C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb";
 
-        protected OleDbConnection connection { get; }
+        protected OleDbConnection Connection { get; }
 
         #endregion // Fields
 
@@ -22,7 +22,7 @@ namespace AutoRepairShop.Model
             // Логики вычитывания из базы здесь быть не должно. Пусть за это будут отвечать дочерние от него классы.
             // Позже развяжем их.
             
-            connection = new OleDbConnection(string.Format(connectionString, dbSourceFromConfig));
+            Connection = new OleDbConnection(string.Format(connectionString, dbSourceFromConfig));
             OpenConnection();
 
         }
@@ -30,11 +30,11 @@ namespace AutoRepairShop.Model
         #region Public methods
         public void CloseConnection()
         {
-            if (connection.State != System.Data.ConnectionState.Open)
+            if (Connection.State != System.Data.ConnectionState.Open)
             {
                 try
                 {
-                    connection.Close();
+                    Connection.Close();
                 }
                 //TODO: Все тоже самое, что и для Connection.Open();
                 catch (Exception ex)
@@ -51,11 +51,11 @@ namespace AutoRepairShop.Model
 
         private void OpenConnection()
         {
-            if (connection.State != System.Data.ConnectionState.Open)
+            if (Connection.State != System.Data.ConnectionState.Open)
             {
                 try
                 {
-                    connection.Open();
+                    Connection.Open();
                 }
                 // TODO: Нужно отлавливать только специфичный exception
                 catch (Exception ex)

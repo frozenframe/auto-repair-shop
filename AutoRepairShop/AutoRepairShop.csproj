@@ -38,12 +38,24 @@
     <Reference Include="log4net, Version=2.0.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.13\lib\net45\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -122,22 +134,18 @@
     <Compile Include="View\AddWorkWindow.xaml.cs">
       <DependentUpon>AddWorkWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MetaModel\Car.cs" />
     <Compile Include="WorkTypeManager\TreeManagerViewModel.cs" />
     <Compile Include="View\WorkTypeViewUserControl.xaml.cs">
       <DependentUpon>WorkTypeViewUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkTypeManager\WorkTypeViewModel.cs" />
-    <Compile Include="MetaModel\CarModel.cs" />
     <Compile Include="MetaModel\CarBrands.cs" />
-    <Compile Include="MetaModel\CarBrand.cs" />
     <Compile Include="MetaModel\WorkType.cs" />
-    <Compile Include="Model\Car.cs" />
-    <Compile Include="Model\CarModel.cs" />
-    <Compile Include="Model\CarBrands.cs" />
-    <Compile Include="Model\CarBrand.cs" />
+    <Compile Include="MetaModel\Car.cs" />
+    <Compile Include="MetaModel\CarModel.cs" />
+    <Compile Include="MetaModel\CarBrand.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Model\Client.cs" />
+    <Compile Include="MetaModel\Client.cs" />
     <Compile Include="Model\DbManager.cs" />
     <Compile Include="SqlQueries.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

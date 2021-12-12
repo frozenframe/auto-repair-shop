@@ -22,7 +22,7 @@ namespace AutoRepairShop.Model
             {
                 if (_allWorkTypes == null)
                 {
-                    _allWorkTypes = getAllWorkTypes();
+                    _allWorkTypes = GetAllWorkTypes();
                 }
                 foreach (WorkType workType in _allWorkTypes.Values)
                 {
@@ -56,9 +56,9 @@ namespace AutoRepairShop.Model
         #endregion // Public methods
 
         #region Private methods
-        private SortedList<int,WorkType> getAllWorkTypes()
+        private SortedList<int,WorkType> GetAllWorkTypes()
         {
-            OleDbCommand command = new OleDbCommand(SqlQueries.getAllWorkTypes, connection);
+            OleDbCommand command = new OleDbCommand(SqlQueries.getAllWorkTypes, Connection);
             SortedList<int, WorkType> result = new SortedList<int, WorkType>();
 
             using (OleDbDataReader reader = command.ExecuteReader())

@@ -13,12 +13,19 @@ namespace AutoRepairShop.ViewModel
 {
     public class CarDataViewModel : ViewModelBase
     {
+        private RelayCommand addCarToClientCommand;
+
         private CarStore _carstore;
         private Car _car;
         private CarBrand _selectedCarBrand;
         private CarModel _selectedCarModel;
         private ClientViewModel _client;
-        
+        DbCarModel dbCarModel;
+        DbCarBrand dbCarBrand;
+        DbClientCars dbClientCars;        
+        public ObservableCollection<CarBrand> CarBrands { get; set; }
+        public ObservableCollection<CarModel> CarModels { get; set; }
+
 
         public ClientViewModel Client
         {
@@ -32,10 +39,7 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(Client));
             }
         }
-        DbInteraction dbInteraction;
-
-        public ObservableCollection<CarBrand> CarBrands { get; set; }
-        public ObservableCollection<CarModel> CarModels { get; set; }
+        
 
         public CarBrand SelectedCarBrand
         {
@@ -57,6 +61,7 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
+
         public CarModel SelectedCarModel
         {
             get
@@ -72,8 +77,6 @@ namespace AutoRepairShop.ViewModel
         }
 
 
-
-
         public Car Car
         {
             get
@@ -87,19 +90,24 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
+
         public CarDataViewModel(CarStore carStore, ClientViewModel client)
         {
             _carstore = carStore;
-            dbInteraction = new DbInteraction();
+            //dbInteraction = new DbInteraction();
+            dbCarModel = new DbCarModel();
+            dbCarBrand = new DbCarBrand();
+            dbClientCars = new DbClientCars();
             Car = new Car();
             CarBrands = new ObservableCollection<CarBrand>();
-            foreach (var row in dbInteraction.GetBrands())
+            foreach (var row in dbCarBrand.GetCarBrands())
             {
-                CarBrands.Add(row);
+                CarBrands.Add(row.Value);
             }
             CarModels = new ObservableCollection<CarModel>();
             Client = client;
         }
+
 
         public CarDataViewModel(Car car, CarStore carStore,ClientViewModel client) : this(carStore,client)
         {
@@ -137,14 +145,15 @@ namespace AutoRepairShop.ViewModel
         private void FillCarModelComboBox( CarBrand selectedCarBrand)
         {
             CarModels.Clear();
-            var carModelWithSelectedBrand = dbInteraction.GetModels(SelectedCarBrand);
+            var carModelWithSelectedBrand = dbCarModel.GetCarModels(selectedCarBrand);
             foreach(var row in carModelWithSelectedBrand)
             {
                 CarModels.Add(row);
             }
         }
 
-        private RelayCommand addCarToClientCommand;
+
+        
 
         public ICommand AddCarToClientCommand
         {
@@ -163,13 +172,12 @@ namespace AutoRepairShop.ViewModel
             if(Car.Id is null)
             {
                 var newCar = new Car((int)Client.Id, SelectedCarModel, Car.RegNumber, Car.Comment);                
-                newCar = dbInteraction.AddClientCar(new Client(Client.Id, Client.Lastname, Client.Name, Client.Surname, Client.Phone, Client.Comment), newCar);
+                newCar = dbClientCars.AddClientCar(new Client(Client.Id, Client.Lastname, Client.Name, Client.Surname, Client.Phone, Client.Comment), newCar);
                 _carstore.AddCar(newCar);                
             }
             else
             {
-                dbInteraction.UpdateClientCar(Car);
-                //TODO изменение выбранной машины клиента
+                dbClientCars.UpdateClientCar(Car);
             }
         }
     }
