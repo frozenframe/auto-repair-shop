@@ -101,5 +101,10 @@ namespace AutoRepairShop
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-    }
+
+        public override string ToString()
+        {
+            return $@"{Surname} {Name} {Lastname}";
+        }
+    }    
 }

@@ -104,5 +104,6 @@ namespace AutoRepairShop.ViewModel
         {
             _client = client;
         }
+        
     }
 }

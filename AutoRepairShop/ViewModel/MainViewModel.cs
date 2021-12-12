@@ -100,7 +100,7 @@ namespace AutoRepairShop.ViewModel
         }
 
 
-        public ICommand OpenClientDataWindowCommand //TODO ClientsView
+        public ICommand OpenClientDataWindowCommand 
         {
             get
             {
