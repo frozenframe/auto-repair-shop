@@ -24,7 +24,7 @@ namespace AutoRepairShop.Model
         {
             // Логики вычитывания из базы здесь быть не должно. Пусть за это будут отвечать дочерние от него классы.
             // Позже развяжем их.            
-            dbSourceFromConfig = File.Exists(ConfigurationManager.AppSettings["SConnectionString"]) ? Properties.Settings.Default["UConnectionString"].ToString() : Properties.Settings.Default["SConnectionString"].ToString();
+            dbSourceFromConfig = File.Exists(Properties.Settings.Default["SConnectionString"].ToString()) ? Properties.Settings.Default["SConnectionString"].ToString() : Properties.Settings.Default["UConnectionString"].ToString();
             
             Connection = new OleDbConnection(string.Format(connectionString, dbSourceFromConfig));
             OpenConnection();

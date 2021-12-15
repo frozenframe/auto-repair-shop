@@ -25,7 +25,7 @@ namespace AutoRepairShop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\FrozenFrame\\source\\repos\\AutoRepairShop\\CarRepair.accdb\r\n")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\FrozenFrame\\source\\repos\\AutoRepairShop\\CarRepair.accdb")]
         public string SConnectionString {
             get {
                 return ((string)(this["SConnectionString"]));
