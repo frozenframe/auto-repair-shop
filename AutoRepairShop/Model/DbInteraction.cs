@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.OleDb;
+using System.IO;
 
 namespace AutoRepairShop.Model
 {
@@ -10,7 +12,8 @@ namespace AutoRepairShop.Model
         private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
         // Надо либо уже запилить нормальный конфиг файл, либо разобраться как указать для базы текущую директорию!
         //Кто первый - тот молодец!
-        private string dbSourceFromConfig = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";
+
+        private string dbSourceFromConfig; // = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";
         //private string dbSourceFromConfig = "C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb";
 
         protected OleDbConnection Connection { get; }
@@ -20,7 +23,8 @@ namespace AutoRepairShop.Model
         public DbInteraction()
         {
             // Логики вычитывания из базы здесь быть не должно. Пусть за это будут отвечать дочерние от него классы.
-            // Позже развяжем их.
+            // Позже развяжем их.            
+            dbSourceFromConfig = File.Exists(ConfigurationManager.AppSettings["SConnectionString"]) ? Properties.Settings.Default["UConnectionString"].ToString() : Properties.Settings.Default["SConnectionString"].ToString();
             
             Connection = new OleDbConnection(string.Format(connectionString, dbSourceFromConfig));
             OpenConnection();
