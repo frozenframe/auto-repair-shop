@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoRepairShop" xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800">    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="12*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="11*"/>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Клиенты" FontSize="18">
@@ -27,6 +28,12 @@
                 <MenuItem Header="Показать" Command="{Binding OpenTreeViewWindowCommand}"/>
             </MenuItem>
         </Menu>
+        <ToolBar Height="32" Grid.Row="1" VerticalAlignment="Top">
+            <Button Command="{Binding OpenClientDataWindowCommand}">
+                <Image Source="../icons/ClientList.ico"></Image>
+            </Button>
+            <Separator/>
+        </ToolBar>
         <!--<DataGrid x:Name="CompletedWork_DataGrid" Grid.Row="1" ItemsSource="{Binding ClientsList}" AutoGenerateColumns="True" Margin="0,65,0,45" SelectedItem="{Binding SelectedClient}"/>-->
     </Grid>
 </Window>
