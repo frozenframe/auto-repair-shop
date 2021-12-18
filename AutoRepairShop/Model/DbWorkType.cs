@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace AutoRepairShop.Model
 {
-    public class DbWorkType : DbInteraction
+    public class DbWorkType : DbManager
     {
         #region Fields
 
         private SortedList<int, WorkType> _allWorkTypes;
 
-        #endregion // Fields
+        #endregion Fields
 
         #region Properties
 
@@ -50,10 +50,103 @@ namespace AutoRepairShop.Model
             }
         }
 
-        #endregion // Properties
+        #endregion Properties
 
         #region Public methods
-        #endregion // Public methods
+
+        public void DeleteWorkType(WorkType workType)
+        {
+            string sqlQuery = string.Format(SqlQueries.deleteWorkType, workType.Id);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(string.Format("An error is appearred during deleting from WorkType table: {0}", e.Message));
+            }
+        }
+
+        public WorkType AddWorkType(WorkType workType)
+        {
+            object[] insertArgs = { workType.ParentId, workType.WorkTypeName };
+            string insertQuery = string.Format(SqlQueries.addWorkType, insertArgs);
+
+            try
+            {
+                int id = InsertRecordIntoDb(insertQuery) ?? 0;
+                if (id != 0)
+                {
+                    return new WorkType(id, workType.ParentId, workType.WorkTypeName);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(
+                    string.Format("An error is appearred during adding work type parentId/Name: {0}/{1}. Error: {2}",
+                    workType.ParentId,
+                    workType.WorkTypeName,
+                    e.Message)
+                    );
+            }
+            return null;
+        }
+
+        public void UpdateWorkType(WorkType workType)
+        {
+            object[] args = { workType.WorkTypeName, workType.Id };
+            string sqlQuery = string.Format(SqlQueries.updateWorkType, args);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(string.Format("An error is appearred during updating WorkType table: {0}", e.Message));
+            }
+        }
+        public void ChangeWorkTypeParent(int workTypeId, int workTypeNewParentId)
+        {
+            object[] args = { workTypeNewParentId, workTypeId };
+            string sqlQuery = string.Format(SqlQueries.changeWorkTypeParent, args);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(string.Format("An error is appearred during updating WorkType table: {0}", e.Message));
+            }
+        }
+
+        public WorkType getWorkType(int id)
+        {
+            WorkType workType = null;
+
+            string sqlQuery = string.Format(SqlQueries.getWorkType, id);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
+                OleDbDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    workType = new WorkType((int)reader[0], (int)reader[1], reader[2].ToString());
+                }
+                reader.Close();
+
+                return workType;
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(string.Format("An error is appearred during getting record from WorkType table: {0}", e.Message));
+                return null;
+            }
+        }
+        #endregion Public methods
 
         #region Private methods
         private SortedList<int,WorkType> GetAllWorkTypes()
@@ -79,6 +172,6 @@ namespace AutoRepairShop.Model
             }
             return result;
         }
-        #endregion // Private methods
+        #endregion Private methods
     }
 }

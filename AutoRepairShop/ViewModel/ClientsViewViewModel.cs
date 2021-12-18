@@ -1,12 +1,6 @@
-﻿using AutoRepairShop;
-using AutoRepairShop.Model;
+﻿using AutoRepairShop.Model;
 using AutoRepairShop.Stores;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AutoRepairShop.ViewModel
@@ -45,7 +39,7 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(IsClientSelected));
             }
         }
-
+        //Свойство IsCarSelected выглядит излишним. Кажется, что св-ва SelectedCar будет достаточно для большинства случаев.
         public bool IsCarSelected
         {
             get
@@ -55,6 +49,7 @@ namespace AutoRepairShop.ViewModel
             set
             {
                 _isCarSelected = value;
+                // А зачем здесь бросаем событие? на SelectedCar разве не достаточно?
                 OnPropertyChanged(nameof(IsCarSelected));
             }
         }

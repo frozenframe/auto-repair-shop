@@ -1,6 +1,5 @@
 ﻿using AutoRepairShop;
 using AutoRepairShop.Stores;
-using AutoRepairShop.WorkTypeManager;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,14 +9,15 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static AutoRepairShop.Utils.Constants;
 
 namespace AutoRepairShop.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private RelayCommand openAddWorkWindowCommand;
         private RelayCommand openClientDataWindowCommand;
         private RelayCommand openTreeViewWindowCommand;
+
         //public ObservableCollection<ClientViewModel> ClientsList { get; set; }
         //public Dictionary<int, Client> claientsMap = new Dictionary<int, Client>;
         //private readonly ClientStore _clientStore;
@@ -80,26 +80,6 @@ namespace AutoRepairShop.ViewModel
         //}
 
 
-        public ICommand OpenAddWorkWindowCommand
-        {
-            get
-            {
-                if (openAddWorkWindowCommand == null)
-                {
-                    openAddWorkWindowCommand = new RelayCommand(OpenAddWorkWindow);
-                }
-                return openAddWorkWindowCommand;
-            }
-        }
-
-
-        private void OpenAddWorkWindow(object commandParameter)
-        {
-            new WindowService().ShowWindow(new AddWorkViewModel());
-
-        }
-
-
         public ICommand OpenClientDataWindowCommand 
         {
             get
@@ -133,7 +113,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenTreeViewWindow(object commandParameter)
         {
-            new WindowService().ShowWindow(new TreeManagerViewModel());
+            new WindowService().ShowWindow(new WorkTypeTreeViewModel(WorkTypeViewMode.MANAGEMENT), 450, 800, "Список типов работ");
 
         }
 

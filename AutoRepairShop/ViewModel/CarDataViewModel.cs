@@ -1,12 +1,6 @@
-﻿using AutoRepairShop;
-using AutoRepairShop.Model;
+﻿using AutoRepairShop.Model;
 using AutoRepairShop.Stores;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AutoRepairShop.ViewModel
@@ -25,8 +19,8 @@ namespace AutoRepairShop.ViewModel
         DbClientCars dbClientCars;        
         public ObservableCollection<CarBrand> CarBrands { get; set; }
         public ObservableCollection<CarModel> CarModels { get; set; }
-
-
+        
+        #region Properties
         public ClientViewModel Client
         {
             get
@@ -39,7 +33,6 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(Client));
             }
         }
-        
 
         public CarBrand SelectedCarBrand
         {
@@ -61,7 +54,6 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
-
         public CarModel SelectedCarModel
         {
             get
@@ -76,7 +68,6 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
-
         public Car Car
         {
             get
@@ -89,8 +80,9 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(Car));
             }
         }
+        #endregion Properties
 
-
+        #region Constructors
         public CarDataViewModel(CarStore carStore, ClientViewModel client)
         {
             _carstore = carStore;
@@ -108,14 +100,13 @@ namespace AutoRepairShop.ViewModel
             Client = client;
         }
 
-
-        public CarDataViewModel(Car car, CarStore carStore,ClientViewModel client) : this(carStore,client)
+        public CarDataViewModel(Car car, CarStore carStore,ClientViewModel client) : this(carStore, client)
         {
             Car = car;
             SelectedCarBrand = Car.CarModel.CarBrand;
             SelectedCarModel = car.CarModel;
         }
-
+        #endregion Constructors
 
         //------------------------------- Предположительно ненужно---------------------------
         //private RelayCommand brandSelectionChangedCommand;

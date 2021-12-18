@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="AutoRepairShop.View.AddWorkTypeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=viewmodel:WorkTypeAddUpdateViewModel}"
+             mc:Ignorable="d" Height="210" Width="400"
+             FocusManager.FocusedElement="{Binding ElementName=newWorkType}"
+>
+    <Grid Background="#FFF3EDED" Margin="0,0,0,0">
+        <Label Content="Группа:" HorizontalAlignment="Left" Margin="70,20,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding CurrentWorkTypeGroupName}" HorizontalAlignment="Left" Margin="140,20,0,0" VerticalAlignment="Top" Width="230"/>
+        <Label Content="Текущий тип работ" Visibility="{Binding ShowCurrentRecordInfo}" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.526,-1.733" Width="115"/>
+        <Label Content="{Binding CurrentWorkTypeName}" HorizontalAlignment="Left" Margin="140,65,0,0" VerticalAlignment="Top" Width="225"/>
+        <Label Content="Новый тип работ:" HorizontalAlignment="Left" Margin="17,84,0,0" VerticalAlignment="Top" Width="103"/>
+        <TextBox x:Name="newWorkType" Text="{Binding NewWorkTypeName}" HorizontalAlignment="Left" Margin="140,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="18"/>
+        <Button Content="Применить" Command="{Binding AddOrUpdateCommand}" HorizontalAlignment="Left" Margin="70,140,0,0" VerticalAlignment="Top" Width="115">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction MethodName="Close"
+                                        TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <Button Content="Отменить" HorizontalAlignment="Left" Margin="225,140,0,0" VerticalAlignment="Top" Width="120" Height="20">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction MethodName="Close"
+                                        TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+
+    </Grid>
+</UserControl>

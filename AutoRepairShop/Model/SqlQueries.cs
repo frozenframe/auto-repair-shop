@@ -40,5 +40,10 @@ namespace AutoRepairShop
 			" where client_id = {0} and cc.car_model_id = cm.id and cm.brand_id = cb.id";
 
 		public static readonly string getAllWorkTypes = "select id, parent_id, work_type from Work_Types order by parent_id asc, work_type asc";
-	}
+        public static readonly string getWorkType = "select id, parent_id, work_type from Work_Types where id = {0}";
+        public static readonly string deleteWorkType = "delete from Work_Types where id = {0}";
+        public static readonly string addWorkType = "insert into Work_Types (parent_id, work_type) values ({0}, '{1}')";
+        public static readonly string updateWorkType = "update Work_Types set work_type = '{0}' where id = {1}";
+        public static readonly string changeWorkTypeParent = "update Work_Types set parent_id = {0} where id = {1}";
+    }
 }

@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -57,6 +58,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -83,7 +85,9 @@
     <Compile Include="Model\DbInteraction.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Stores\CarStore.cs" />
+    <Compile Include="Stores\WorkTypeStore.cs" />
     <Compile Include="Stores\ClientStore.cs" />
+    <Compile Include="Utils\Constants.cs" />
     <Compile Include="ViewModel\OpenTreeViewModel.cs" />
     <Compile Include="ViewModel\CarDataViewModel.cs" />
     <Compile Include="ViewModel\ClientDataViewModel.cs" />
@@ -120,6 +124,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AddWorkTypeUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,16 +137,19 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IWindowService.cs" />
-    <Compile Include="ViewModel\AddWorkViewModel.cs" />
+    <Compile Include="View\AddWorkTypeUserControl.xaml.cs">
+      <DependentUpon>AddWorkTypeUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\AddWorkWindow.xaml.cs">
       <DependentUpon>AddWorkWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WorkTypeManager\TreeManagerViewModel.cs" />
+    <Compile Include="ViewModel\WorkTypeAddUpdateViewModel.cs" />
+    <Compile Include="ViewModel\WorkTypeTreeViewModel.cs" />
     <Compile Include="View\WorkTypeViewUserControl.xaml.cs">
       <DependentUpon>WorkTypeViewUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WorkTypeManager\WorkTypeViewModel.cs" />
+    <Compile Include="ViewModel\WorkTypeTreeItemViewModel.cs" />
     <Compile Include="MetaModel\CarBrands.cs" />
     <Compile Include="MetaModel\WorkType.cs" />
     <Compile Include="MetaModel\Car.cs" />
@@ -147,7 +158,7 @@
     <Compile Include="Logger.cs" />
     <Compile Include="MetaModel\Client.cs" />
     <Compile Include="Model\DbManager.cs" />
-    <Compile Include="SqlQueries.cs" />
+    <Compile Include="Model\SqlQueries.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -183,5 +194,6 @@
   <ItemGroup>
     <Resource Include="icons\ClientList.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

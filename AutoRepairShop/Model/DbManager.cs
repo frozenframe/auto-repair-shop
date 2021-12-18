@@ -23,7 +23,7 @@ namespace AutoRepairShop.Model
                 }
                 else
                 {
-                    throw new Exception("Insert command returns that no records were inserted.");
+                    throw new Exception(String.Format("One record was expected to be inserted, but {0} records were inserted.", rows));
                 }
                 transaction.Commit();
                 return newRecodeId;

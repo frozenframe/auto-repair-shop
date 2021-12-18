@@ -4,15 +4,19 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
-namespace AutoRepairShop.WorkTypeManager
+namespace AutoRepairShop.ViewModel
 {
-    public class WorkTypeViewModel : INotifyPropertyChanged
+    /// <summary>
+    /// ViewModel для элементов иерархического дерева полного списка видов работ. 
+    /// </summary>
+    public class WorkTypeTreeItemViewModel : INotifyPropertyChanged
     {
         #region Fields
 
-        private ObservableCollection<WorkTypeViewModel> _children;
-        private WorkTypeViewModel _parent;
+        private ObservableCollection<WorkTypeTreeItemViewModel> _children;
+        private WorkTypeTreeItemViewModel _parent;
         private WorkType _workType;
+        private static object _selectedItem = null;
 
         bool _isExpanded;
         bool _isSelected;
@@ -26,19 +30,19 @@ namespace AutoRepairShop.WorkTypeManager
 
         #region Constructor
 
-        public WorkTypeViewModel(WorkType workType) : this(workType, null)
+        public WorkTypeTreeItemViewModel(WorkType workType) : this(workType, null)
         {
         }
 
-        public WorkTypeViewModel(WorkType workType, WorkTypeViewModel parent)
+        public WorkTypeTreeItemViewModel(WorkType workType, WorkTypeTreeItemViewModel parent)
         {
             _workType = workType;
             _parent = parent;
 
-            _children = new ObservableCollection<WorkTypeViewModel>(
+            _children = new ObservableCollection<WorkTypeTreeItemViewModel>(
                    (from child in _workType.Children
-                    select new WorkTypeViewModel(child, this))
-                    .ToList<WorkTypeViewModel>());
+                    select new WorkTypeTreeItemViewModel(child, this))
+                    .ToList<WorkTypeTreeItemViewModel>());
 
         }
         #endregion // Constructor
@@ -47,7 +51,7 @@ namespace AutoRepairShop.WorkTypeManager
 
         #region Children
 
-        public ObservableCollection<WorkTypeViewModel> Children
+        public ObservableCollection<WorkTypeTreeItemViewModel> Children
         {
             get { return _children; }
         }
@@ -60,6 +64,10 @@ namespace AutoRepairShop.WorkTypeManager
             }
         }
 
+        public WorkType WorkType
+        {
+            get { return _workType; }
+        }
         #endregion // Children
 
         #region IsExpanded
@@ -95,19 +103,56 @@ namespace AutoRepairShop.WorkTypeManager
         /// </summary>
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get 
+            {
+                return _isSelected;
+                //if (_isSelected)
+                //{
+                //    return true;
+                //}
+                //else // Походу мне не нужна такая логика. выбор дочернего не означает выбор всех парентов!
+                //{
+                //    foreach (var child in Children)
+                //    {
+                //        if (!child.IsSelected)
+                //        {
+                //            return true;
+                //        }
+                //    }
+                //    return false;
+                //}
+
+            }
             set
             {
                 if (value != _isSelected)
                 {
                     _isSelected = value;
                     this.OnPropertyChanged("IsSelected");
+                    if (_isSelected)
+                    {
+                        SelectedItem = this;
+                    }
                 }
             }
         }
 
         #endregion // IsSelected
 
+        public static object SelectedItem
+        {
+            get { return _selectedItem; }
+            private set
+            {
+                if (_selectedItem != value)
+                {
+                    _selectedItem = value;
+                    OnSelectedItemChanged();
+                }
+            }
+        }
+                
+        #endregion Properties
 
         #region Commands
 
@@ -145,9 +190,7 @@ namespace AutoRepairShop.WorkTypeManager
 
         #endregion // Commands
 
-        #endregion // Properties
-
-        #region INotifyPropertyChanged Members
+       #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -155,6 +198,11 @@ namespace AutoRepairShop.WorkTypeManager
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private static void OnSelectedItemChanged()
+        {
+            // Raise event / do other things
         }
 
         #endregion // INotifyPropertyChanged Members

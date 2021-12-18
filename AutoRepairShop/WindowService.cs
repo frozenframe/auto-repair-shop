@@ -4,15 +4,24 @@ namespace AutoRepairShop
 {
     public class WindowService : IWindowService
     {
-        public void ShowWindow(object viewModel)
+        private void ShowWindow(Window window, object viewModel)
+        {
+            window.Content = viewModel;
+            window.Show();
+        }
+        public void ShowWindow(object viewModel, double height, double width, string title)
         {
             var window = new Window
-            {
-                Height = 450,
-                Width = 800
+            {   
+                Height = height,
+                Width = width,
+                Title = title
             };
-            window.Content = viewModel;            
-            window.Show();
+            ShowWindow(window, viewModel);
+        }
+        public void ShowWindow(object viewModel)
+        {
+            ShowWindow(viewModel, 450, 800, "");
         }
     }
 }

@@ -1,15 +1,10 @@
 ﻿<Application x:Class="AutoRepairShop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:AutoRepairShop"
              xmlns:viewmodels ="clr-namespace:AutoRepairShop.ViewModel"
              xmlns:views ="clr-namespace:AutoRepairShop.View"
-             xmlns:addViewmodels ="clr-namespace:AutoRepairShop.WorkTypeManager"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewmodels:AddWorkViewModel}">
-            <views:AddWorkWindow/>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:ClientDataViewModel}">
             <views:ClientDataUserControl/>
         </DataTemplate>
@@ -19,8 +14,11 @@
         <DataTemplate DataType="{x:Type viewmodels:CarDataViewModel}">
             <views:CarUserControl/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type addViewmodels:TreeManagerViewModel}">
+        <DataTemplate DataType="{x:Type viewmodels:WorkTypeTreeViewModel}">
             <views:WorkTypeViewUserControl/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:WorkTypeAddUpdateViewModel}">
+            <views:AddWorkTypeUserControl/>
         </DataTemplate>
 
     </Application.Resources>

@@ -3,14 +3,13 @@
 namespace AutoRepairShop.View
 {
     /// <summary>
-    /// Логика взаимодействия для AddWorkWindow.xaml
+    /// Interaction logic for AddWorkTypeUserControl.xaml
     /// </summary>
-    public partial class AddWorkWindow : UserControl
+    public partial class AddWorkTypeUserControl : UserControl
     {
-        public AddWorkWindow()
+        public AddWorkTypeUserControl()
         {
             InitializeComponent();
-            
         }
     }
 }
