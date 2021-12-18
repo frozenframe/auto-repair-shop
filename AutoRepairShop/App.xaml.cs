@@ -1,13 +1,4 @@
-﻿using AutoRepairShop.Stores;
-using AutoRepairShop.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace AutoRepairShop
 {
@@ -16,9 +7,6 @@ namespace AutoRepairShop
     /// </summary>
     public partial class App : Application
     {
-        public void ConfigureServices(IServiceCollection services)
-        {
-        }
         //protected override void OnStartup(StartupEventArgs e)
         //{
         //    ClientStore clientStore = new ClientStore();
