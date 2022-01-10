@@ -8,24 +8,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Телефон" HorizontalAlignment="Left" Margin="514,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Фамилия:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Телефон" HorizontalAlignment="Left" Margin="500,10,0,0" VerticalAlignment="Top"/>
         <Label Content="Комментарий" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Surname_TextBox" HorizontalAlignment="Left" Height="23" Margin="76,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding  Client.Surname , UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="PhoneNumber_TextBox" HorizontalAlignment="Left" Height="23" Margin="514,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Text="{Binding Client.Phone,UpdateSourceTrigger=PropertyChanged}"/>
-        <Button x:Name="AddClient_Button" Content="Добавить" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Command="{Binding AddClientCommand}" >
+        <TextBox x:Name="Surname_TextBox" HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Text="{Binding  Client.Surname , UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="PhoneNumber_TextBox" HorizontalAlignment="Left" Height="23" Margin="500,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding Client.Phone,UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="AddClient_Button" Content="Добавить" Margin="0,0,100,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Command="{Binding AddClientCommand}" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:CallMethodAction MethodName="Close"
-                                        TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>                    
-                </i:EventTrigger> 
+                                        TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
-        <TextBox x:Name="FirstName_TextBox" HorizontalAlignment="Left" Height="23" Margin="76,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding Client.Name,UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Content="Имя" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-        <Label Content="Отчество" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Lastname_TextBox" HorizontalAlignment="Left" Height="23" Margin="76,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="{Binding Client.Lastname,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="FirstName_TextBox" HorizontalAlignment="Left" Height="23" Margin="10,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Text="{Binding Client.Name,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="Имя:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+        <Label Content="Отчество:" HorizontalAlignment="Left" Margin="9,123,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Lastname_TextBox" HorizontalAlignment="Left" Height="23" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Text="{Binding Client.Lastname,UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="ClientComment_TextBox" Height="80" Margin="10,240,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Client.Comment,UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="Отмена" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction MethodName="Close"
+                                            TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
 
     </Grid>
 </UserControl>

@@ -194,6 +194,16 @@
   <ItemGroup>
     <Resource Include="icons\ClientList.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="icons\Add.ico" />
+    <Resource Include="icons\Delete.ico" />
+    <Resource Include="icons\Edit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\Works.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\Schedule.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

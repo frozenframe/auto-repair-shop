@@ -13,17 +13,20 @@
             <RowDefinition Height="11*"/>
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="Клиенты" FontSize="18">
-                <MenuItem x:Name="AddClient_MenuItem" Header="Открыть список" Command="{Binding OpenClientDataWindowCommand}"/>
-                <!--<MenuItem x:Name="DeleteClient_MenuItem" Header="Удалить"/>-->
+            <MenuItem Header="Общее" FontSize="18">
+                <MenuItem Header="Выход"/>
             </MenuItem>
-            <MenuItem Header="Напоминания" FontSize="18">
-                <MenuItem Header="На текущий день"/>
-                <MenuItem Header="Сформировать отчет"/>
-            </MenuItem>
-            <MenuItem Header="Работы" FontSize="18">
+            <MenuItem Header="Ремонт" FontSize="18">
                 <MenuItem Header="Добавить" Command="{Binding OpenAddWorkWindowCommand}"/>
+                <MenuItem Header="Плановые работы"/>                
             </MenuItem>
+            <MenuItem Header="Настройка" FontSize="18">
+                <MenuItem Header="Типы работ"/>
+                <MenuItem Header="Общие настройки">
+                    <MenuItem x:Name="AddClient_MenuItem" Header="Клиенты" Command="{Binding OpenClientDataWindowCommand}"/>
+                    <MenuItem Header="Модели автомобилей"/>
+                </MenuItem>                
+            </MenuItem>            
             <MenuItem Header="TreeView test" FontSize="18">
                 <MenuItem Header="Показать" Command="{Binding OpenTreeViewWindowCommand}"/>
             </MenuItem>
@@ -33,6 +36,14 @@
                 <Image Source="../icons/ClientList.ico"></Image>
             </Button>
             <Separator/>
+            <Button Command="{Binding OpenAddWorkWindowCommand}">
+                <Image Source="../icons/Works.ico"></Image>
+            </Button>
+            <Separator/>
+            <Button >
+                <Image Source="../icons/Schedule.ico"></Image>
+            </Button>
+            <Separator/>            
         </ToolBar>
         <!--<DataGrid x:Name="CompletedWork_DataGrid" Grid.Row="1" ItemsSource="{Binding ClientsList}" AutoGenerateColumns="True" Margin="0,65,0,45" SelectedItem="{Binding SelectedClient}"/>-->
     </Grid>

@@ -196,7 +196,7 @@ namespace AutoRepairShop.ViewModel
             dbClient.DeleteClient(_selectedClient.Client);
             ClientsList.Remove(_selectedClient);
         }
-        
+
 
         public ICommand OpenCarDataWindowCommand
         {
