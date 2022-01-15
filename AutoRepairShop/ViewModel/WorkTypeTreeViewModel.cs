@@ -9,6 +9,7 @@ using AutoRepairShop.MetaModel;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using AutoRepairShop.Utils;
 
 namespace AutoRepairShop.ViewModel
 {
@@ -20,8 +21,8 @@ namespace AutoRepairShop.ViewModel
     public class WorkTypeTreeViewModel //: INotifyPropertyChanged
     {
         #region Fields
-
-        DbWorkType _dbWorkType;
+        
+        private DbWorkType _dbWorkType;
 
         private ObservableCollection<WorkTypeTreeItemViewModel> _rootNodes;
         private WorkTypeTreeItemViewModel _rootWorkType;
@@ -198,7 +199,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenAddWorkTypeWindow(object commandParameter)
         {
-            new WindowService().ShowWindow(new WorkTypeAddUpdateViewModel(SelectedItem, _workTypeStore, CrudMode.ADD), 210, 400, commandParameter.ToString());
+            new WindowService().ShowWindow(new WorkTypeAddUpdateViewModel(SelectedItem, _workTypeStore, CrudMode.ADD), 210, 400, commandParameter.ToString(), SHOW_MODAL);
         }
 
         /// <summary>
@@ -220,7 +221,7 @@ namespace AutoRepairShop.ViewModel
         }
         private void OpenUpdateWorkTypeWindow(object commandParameter)
         {
-            new WindowService().ShowWindow(new WorkTypeAddUpdateViewModel(SelectedItem, _workTypeStore, CrudMode.UPDATE), 210, 400, commandParameter.ToString());
+            new WindowService().ShowWindow(new WorkTypeAddUpdateViewModel(SelectedItem, _workTypeStore, CrudMode.UPDATE), 210, 400, commandParameter.ToString(), SHOW_MODAL);
         }
 
         /// <summary>
@@ -287,7 +288,7 @@ namespace AutoRepairShop.ViewModel
             WorkTypeStore workTypeStore1 = new WorkTypeStore();
             workTypeStore1.WorkTypeChangedParent += OnSelectNewParent;
             string title = string.Format("Выберите новую группу для '{0}'", _selectedWorkType.WorkTypeName);
-            new WindowService().ShowWindow(new WorkTypeTreeViewModel(workTypeStore1, WorkTypeViewMode.CHANGE_PARENT), 450, 800, title);
+            new WindowService().ShowWindow(new WorkTypeTreeViewModel(workTypeStore1, WorkTypeViewMode.CHANGE_PARENT), 450, 800, title, SHOW_MODAL);
 
         }
 

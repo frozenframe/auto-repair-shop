@@ -108,31 +108,6 @@ namespace AutoRepairShop.ViewModel
         }
         #endregion Constructors
 
-        //------------------------------- Предположительно ненужно---------------------------
-        //private RelayCommand brandSelectionChangedCommand;
-
-        //public ICommand BrandSelectionChangedCommand
-        //{
-        //    get
-        //    {
-        //        if (brandSelectionChangedCommand == null)
-        //        {
-        //            brandSelectionChangedCommand = new RelayCommand(BrandSelectionChanged);
-        //        }
-
-        //        return brandSelectionChangedCommand;
-        //    }
-        //}
-
-        //private void BrandSelectionChanged(object commandParameter)
-        //{
-        //   var carModelWithSelectedBrand = dbInteraction.GetModels(SelectedCarBrand);
-        //    CarModels.Add(new CarModel(1, new CarBrand(1, ""), "f911"));
-        //    CarModels.Add(new CarModel(1, new CarBrand(2, ""), "gg"));
-        //    
-        //}
-
-
         private void FillCarModelComboBox( CarBrand selectedCarBrand)
         {
             CarModels.Clear();
@@ -142,9 +117,6 @@ namespace AutoRepairShop.ViewModel
                 CarModels.Add(row);
             }
         }
-
-
-        
 
         public ICommand AddCarToClientCommand
         {
