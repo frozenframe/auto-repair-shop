@@ -7,7 +7,6 @@ namespace AutoRepairShop.Stores
     {
         public event Action<WorkType> WorkTypeCreated;
         public event Action<WorkType> WorkTypeUpdated;
-        public event Action<WorkType> WorkTypeDeleted;
         public event Action<WorkType> WorkTypeChangedParent;
         public event Action<WorkType> WorkTypeSelected;
 

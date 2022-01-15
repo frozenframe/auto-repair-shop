@@ -16,5 +16,7 @@
             CHANGE_PARENT,
             MANAGEMENT
         }
+
+        public static readonly bool SHOW_MODAL = true;
     }
 }
