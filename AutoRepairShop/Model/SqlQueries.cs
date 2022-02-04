@@ -45,5 +45,10 @@ namespace AutoRepairShop
         public static readonly string addWorkType = "insert into Work_Types (parent_id, work_type) values ({0}, '{1}')";
         public static readonly string updateWorkType = "update Work_Types set work_type = '{0}' where id = {1}";
         public static readonly string changeWorkTypeParent = "update Work_Types set parent_id = {0} where id = {1}";
+
+        public static readonly string getTechEvent = @"select event.id, event.event_start_date, event.event_end_date, cc.id, cc.client_id, cc.reg_number, cc.comment, cm.id, cm.brand_id, cm.model, cb.brand_name
+                                                        from   Tech_Event event, Client_Cars cc, Car_Models cm, Car_Brands cb
+                                                        Where event.client_car_id = cc.id and cc.car_model_id = cm.id and cm.brand_id = cb.id";
+        public static readonly string getAllTechEventWorks = "select w.id, w.work_date, w.remind_day, w.comment, wt.id, wt.work_type from [Work] w, Work_Types wt Where tech_event_id = {0} AND w.processed_item_id = wt.id";
     }
 }

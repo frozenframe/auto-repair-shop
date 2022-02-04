@@ -1,4 +1,6 @@
 ﻿using AutoRepairShop;
+using AutoRepairShop.MetaModel;
+using AutoRepairShop.Model;
 using AutoRepairShop.Stores;
 using System;
 using System.Collections.Generic;
@@ -18,60 +20,58 @@ namespace AutoRepairShop.ViewModel
         private RelayCommand openClientDataWindowCommand;
         private RelayCommand openTreeViewWindowCommand;
 
-        //public ObservableCollection<ClientViewModel> ClientsList { get; set; }
-        //public Dictionary<int, Client> claientsMap = new Dictionary<int, Client>;
-        //private readonly ClientStore _clientStore;
-        //private Client _selectedClient;
+        DbWork dbWork;
+        DbTectEvent dbTectEvent;
+        DbWorkType dbWorkType;
+        public ObservableCollection<TechEvent> TechEvents { get; set; }
+        public ObservableCollection<Work> WorksOfSelectedTechEvent { get; set; }
+        private TechEvent _selectedTechEvent;
 
-        //public Client SelectedClient
-        //{
-        //    get
-        //    {
-        //        return _selectedClient;
-        //    }
-        //    set
-        //    {
-        //        _selectedClient = value;
-        //        OnPropertyChanged(nameof(SelectedClient));
-        //    }
-        //}
+
+        public TechEvent SelectedTechEvent
+        {
+            get
+            {
+                return _selectedTechEvent;
+            }
+            set
+            {
+                _selectedTechEvent = value;
+                if(_selectedTechEvent.Works is null)
+                {
+                    _selectedTechEvent.Works = FillTechEventWorks(_selectedTechEvent.Id);
+                }
+                
+                OnPropertyChanged(nameof(SelectedTechEvent));
+            }
+        }
+            
+
+        private ObservableCollection<Work> FillTechEventWorks(int techEventId)
+        {
+            WorksOfSelectedTechEvent = new ObservableCollection<Work>(dbWork.GetTechEventWorks(techEventId));
+            
+
+            
+            return WorksOfSelectedTechEvent;
+        }
 
         public MainViewModel()
         {
+            dbWork = new DbWork();
+            dbTectEvent = new DbTectEvent();
+            dbWorkType = new DbWorkType();
+            var techEventsFromDb = dbTectEvent.GetTechEvents();            
+            TechEvents = new ObservableCollection<TechEvent>(techEventsFromDb);
+            //var newWork = new TechEvent();
+            //TechEvents.Add(newWork);
+
             //_clientStore = new ClientStore();
             //ClientsList = new ObservableCollection<ClientViewModel>();
             //_clientStore.ClientCreated += OnClientCreated;
         }
 
 
-        //public MainViewModel(ClientStore clientStore)
-        //{
-        //    //_clientStore = clientStore;
-        //    //ClientsList = new ObservableCollection<ClientViewModel>();            
-        //    //ClientsList.Add(new ClientViewModel(new Client()
-        //    //{
-        //    //    Name = "Иван",
-        //    //    Surname = "Иванов",
-        //    //    Lastname = "Иванович",
-        //    //    Phone = "+71231234455",
-        //    //    Comment = "Тестовый"
-        //    //}));
-
-        //    //_clientStore.ClientCreated += OnClientCreated;
-
-        //    //ClientsList = new ObservableCollection<Client>
-        //    //{
-        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый"),
-        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый1"),
-        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый2"),
-        //    //    new Client("Иванов", "Иван", "Иванович", "+71231234455", "Тестовый3"),
-        //    //};
-        //}
-
-        //private void OnClientCreated(Client client)
-        //{
-        //    ClientsList.Add(new ClientViewModel(client));
-        //}
 
         //public override void Dispose()
         //{
@@ -79,8 +79,8 @@ namespace AutoRepairShop.ViewModel
         //    base.Dispose();
         //}
 
-
-        public ICommand OpenClientDataWindowCommand 
+        #region command
+        public ICommand OpenClientDataWindowCommand
         {
             get
             {
@@ -94,8 +94,8 @@ namespace AutoRepairShop.ViewModel
 
 
         private void OpenClientDataWindow(object commandParameter)
-        {            
-            new WindowService().ShowWindow(new ClientsViewViewModel());
+        {
+            new WindowService().ShowWindow(new ClientsViewViewModel(), 450, 1000, "Клиенты");
         }
 
         public ICommand OpenTreeViewWindowCommand
@@ -116,7 +116,6 @@ namespace AutoRepairShop.ViewModel
             new WindowService().ShowWindow(new WorkTypeTreeViewModel(WorkTypeViewMode.MANAGEMENT), 450, 800, "Список типов работ");
 
         }
-
-
+        #endregion
     }
 }

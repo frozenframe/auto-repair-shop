@@ -77,10 +77,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MetaModel\TechEvent.cs" />
+    <Compile Include="MetaModel\Work.cs" />
     <Compile Include="Model\DbClientCars.cs" />
     <Compile Include="Model\DbClient.cs" />
     <Compile Include="Model\DbCarBrand.cs" />
     <Compile Include="Model\DbCarModel.cs" />
+    <Compile Include="Model\DbTectEvent.cs" />
+    <Compile Include="Model\DbWork.cs" />
     <Compile Include="Model\DbWorkType.cs" />
     <Compile Include="Model\DbInteraction.cs" />
     <Compile Include="RelayCommand.cs" />

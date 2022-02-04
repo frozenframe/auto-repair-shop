@@ -45,10 +45,10 @@ namespace AutoRepairShop.ViewModel
                 //вопрос о том что carbrand должен быть выше carmodel
                 if (_selectedCarBrand == value) return;
                 _selectedCarBrand = value;
-                if(Car.CarModel != null)
-                {
-                    _car.CarModel.CarBrand = value;
-                }                
+                //if(Car.CarModel != null)
+                //{
+                //    Car.CarModel.CarBrand = value;
+                //}                
                 FillCarModelComboBox(_selectedCarBrand);
                 OnPropertyChanged(nameof(SelectedCarBrand));
             }
@@ -63,7 +63,7 @@ namespace AutoRepairShop.ViewModel
             set
             {
                 _selectedCarModel = value;
-                _car.CarModel = value;
+                //Car.CarModel = value;
                 OnPropertyChanged(nameof(SelectedCarModel));
             }
         }
@@ -80,6 +80,32 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(Car));
             }
         }
+        private string _regNumber;
+        public string RegNumber
+        {
+            get
+            {
+                return _regNumber;
+            }
+            set
+            {
+                _regNumber = value;
+            }
+        }
+
+        private string _comment;
+        public string Comment
+        {
+            get
+            {
+                return _comment;
+            }
+            set
+            {
+                _comment = value;
+            }
+        }
+
         #endregion Properties
 
         #region Constructors
@@ -105,6 +131,8 @@ namespace AutoRepairShop.ViewModel
             Car = car;
             SelectedCarBrand = Car.CarModel.CarBrand;
             SelectedCarModel = car.CarModel;
+            RegNumber = car.RegNumber;
+            Comment = car.Comment;
         }
         #endregion Constructors
 
@@ -162,13 +190,17 @@ namespace AutoRepairShop.ViewModel
         {
             if(Car.Id is null)
             {
-                var newCar = new Car((int)Client.Id, SelectedCarModel, Car.RegNumber, Car.Comment);                
+                var newCar = new Car((int)Client.Id, SelectedCarModel, RegNumber, Comment);                
                 newCar = dbClientCars.AddClientCar(new Client(Client.Id, Client.Lastname, Client.Name, Client.Surname, Client.Phone, Client.Comment), newCar);
-                _carstore.AddCar(newCar);                
+                _carstore.AddCar(newCar);
             }
             else
             {
+                Car.CarModel = SelectedCarModel;
+                Car.Comment = Comment;
+                Car.RegNumber = RegNumber;
                 dbClientCars.UpdateClientCar(Car);
+                //_carstore.UpdateCar(Car);
             }
         }
     }

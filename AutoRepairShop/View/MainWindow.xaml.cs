@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace AutoRepairShop
 {
@@ -21,7 +23,32 @@ namespace AutoRepairShop
         {
             InitializeComponent();
             Logger.InitLogger();
-            DataContext = new MainViewModel();            
+            DataContext = new MainViewModel();
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    
+                    row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+                    row.IsSelected = true;
+                    break;
+                }
+        }
+
+
+        private void Expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    
+                    row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+                    //row.IsSelected = true;
+                    break;
+                }
         }
     }
 }

@@ -41,7 +41,7 @@
         </Button>
         <Label Content="Номер" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top"/>
         <Label Content="Комментарий" HorizontalAlignment="Left" Margin="10,263,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="RegNumber_TextBox" Height="23" Margin="10,235,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Car.RegNumber}"/>
-        <TextBox x:Name="Comment_TextBox" Height="40" Margin="10,294,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Car.Comment}"/>
+        <TextBox x:Name="RegNumber_TextBox" Height="23" Margin="10,235,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding RegNumber}"/>
+        <TextBox x:Name="Comment_TextBox" Height="40" Margin="10,294,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Comment}"/>
     </Grid>
 </UserControl>

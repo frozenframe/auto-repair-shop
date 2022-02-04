@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoRepairShop" xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">    
+        Title="MainWindow" Height="450" Width="800">
+    <!--<Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>-->
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -18,15 +22,15 @@
             </MenuItem>
             <MenuItem Header="Ремонт" FontSize="18">
                 <MenuItem Header="Добавить" Command="{Binding OpenAddWorkWindowCommand}"/>
-                <MenuItem Header="Плановые работы"/>                
+                <MenuItem Header="Плановые работы"/>
             </MenuItem>
             <MenuItem Header="Настройка" FontSize="18">
                 <MenuItem Header="Типы работ"/>
                 <MenuItem Header="Общие настройки">
                     <MenuItem x:Name="AddClient_MenuItem" Header="Клиенты" Command="{Binding OpenClientDataWindowCommand}"/>
                     <MenuItem Header="Модели автомобилей"/>
-                </MenuItem>                
-            </MenuItem>            
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="TreeView test" FontSize="18">
                 <MenuItem Header="Показать" Command="{Binding OpenTreeViewWindowCommand}"/>
             </MenuItem>
@@ -43,8 +47,29 @@
             <Button >
                 <Image Source="../icons/Schedule.ico"></Image>
             </Button>
-            <Separator/>            
+            <Separator/>
         </ToolBar>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding TechEvents}" SelectedItem="{Binding SelectedTechEvent}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Марка" Binding="{Binding Car.CarModel.CarBrand.BrandName}"/>
+                <DataGridTextColumn Header="Модель" Binding="{Binding Car.CarModel.Model}"/>
+                <DataGridTextColumn Header="Номер" Binding="{Binding Car.RegNumber}"/>
+                <DataGridTextColumn Header="Дата работы" Binding="{Binding EventStartDate,StringFormat=\{0:dd.MM.yy\}}"/>
+                <DataGridTextColumn Header="Дата нопоминания" Binding="{Binding EventEndDate,StringFormat=\{0:dd.MM.yy\}}"/>                
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid ItemsSource="{Binding Works}" AutoGenerateColumns="False" IsReadOnly="True"  >
+                        <DataGrid.Columns>                            
+                            <DataGridTextColumn Header="Тип работы" Binding="{Binding WorkType.WorkTypeName}"/>
+                            <DataGridTextColumn Header="Дата работы" Binding="{Binding WorkDate,StringFormat=\{0:dd.MM.yy\}}"/>
+                            <DataGridTextColumn Header="День напоминания" Binding="{Binding RemindDay,StringFormat=\{0:dd.MM.yy\}}"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"/>                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>            
+        </DataGrid>
         <!--<DataGrid x:Name="CompletedWork_DataGrid" Grid.Row="1" ItemsSource="{Binding ClientsList}" AutoGenerateColumns="True" Margin="0,65,0,45" SelectedItem="{Binding SelectedClient}"/>-->
     </Grid>
 </Window>

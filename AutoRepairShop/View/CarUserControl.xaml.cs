@@ -24,5 +24,7 @@ namespace AutoRepairShop.View
         {
             InitializeComponent();
         }
+
+        
     }
 }
