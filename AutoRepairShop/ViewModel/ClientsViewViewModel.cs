@@ -1,16 +1,19 @@
 ﻿using AutoRepairShop.Model;
 using AutoRepairShop.Stores;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace AutoRepairShop.ViewModel
 {
     public class ClientsViewViewModel : ViewModelBase
     {
-        //private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
-        //private string dbSourceFromConfig = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";        
-        DbClient dbClient;
-        DbClientCars dbClientCars;
+        private DbClient dbClient;
+        private DbClientCars dbClientCars;
+
         private RelayCommand openClientDataWindowCommand;
         private RelayCommand openClientDataWindowForEditCommand;
         private RelayCommand deleteClientCommand;
@@ -18,39 +21,26 @@ namespace AutoRepairShop.ViewModel
         private RelayCommand openCarDataWindowCommand;
 
         private readonly ClientStore _clientStore;
-        private readonly CarStore _carStore;
-        private bool _isClientSelected = false;
-        private bool _isCarSelected = false;
+        private readonly CarStore _carStore;        
         public ObservableCollection<ClientViewModel> ClientsList { get; set; }
         private ClientViewModel _selectedClient;
         public ObservableCollection<Car> ClientsCarList { get; set; }
         private Car _selectedCar;
+        public ICollectionView ClientListView { get; private set; }
+        private string _surnameFilterText;
 
 
-        public bool IsClientSelected
+        public string SurnameFilterText
         {
             get
             {
-                return _isClientSelected;
+                return _surnameFilterText;
             }
             set
             {
-                _isClientSelected = value;
-                OnPropertyChanged(nameof(IsClientSelected));
-            }
-        }
-        //Свойство IsCarSelected выглядит излишним. Кажется, что св-ва SelectedCar будет достаточно для большинства случаев.
-        public bool IsCarSelected
-        {
-            get
-            {
-                return _isCarSelected;
-            }
-            set
-            {
-                _isCarSelected = value;
-                // А зачем здесь бросаем событие? на SelectedCar разве не достаточно?
-                OnPropertyChanged(nameof(IsCarSelected));
+                _surnameFilterText = value;
+                OnPropertyChanged(nameof(SurnameFilterText));                
+                ClientListView.Refresh();
             }
         }
 
@@ -67,9 +57,8 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(SelectedClient));
                 if(value != null)
                 {
-                    FillCarsGrid(_selectedClient);                    
-                }                
-                IsClientSelected = false;
+                    FillCarsGrid(_selectedClient);
+                }
             }
         }
 
@@ -83,8 +72,7 @@ namespace AutoRepairShop.ViewModel
             set
             {
                 _selectedCar = value;
-                OnPropertyChanged(nameof(SelectedCar));
-                IsCarSelected = true;
+                OnPropertyChanged(nameof(SelectedCar));                
             }
         }
 
@@ -114,9 +102,26 @@ namespace AutoRepairShop.ViewModel
                 var newClient = new ClientViewModel(row);
                 ClientsList.Add(newClient);
             }
-            _clientStore.ClientCreated += OnClientCreated;
+            _clientStore.ClientCreated += OnClientCreated;            
             _carStore.CarAdded += OnCarAdded;
+            
+
+
+            ClientListView = CollectionViewSource.GetDefaultView(ClientsList);
+            ClientListView.Filter = SurnameFilter;
         }
+
+
+        public bool SurnameFilter(object obj)
+        {
+            if (!string.IsNullOrWhiteSpace(SurnameFilterText))
+            {
+                var client = obj as ClientViewModel;
+                return client.Surname.Contains(SurnameFilterText);
+            }
+            return true;
+        }
+                
 
         private void OnCarAdded(Car car)
         {
@@ -130,8 +135,8 @@ namespace AutoRepairShop.ViewModel
 
         public override void Dispose()
         {
-            _clientStore.ClientCreated -= OnClientCreated;
-            _carStore.CarAdded -= OnCarAdded;
+            _clientStore.ClientCreated -= OnClientCreated;            
+            _carStore.CarAdded -= OnCarAdded;            
             base.Dispose();
         }
 
@@ -150,7 +155,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenClientDataWindow(object commandParameter)
         {
-            new WindowService().ShowWindow(new ClientDataViewModel(_clientStore));
+            new WindowService().ShowWindow(new ClientDataViewModel(_clientStore), 450, 800, "Добавление клиента");
         }
 
 
@@ -167,8 +172,8 @@ namespace AutoRepairShop.ViewModel
         }
 
         private void OpenClientDataWindowForEdit(object commandParameter)
-        {           
-            new WindowService().ShowWindow(new ClientDataViewModel(SelectedClient,_clientStore));
+        {
+            new WindowService().ShowWindow(new ClientDataViewModel(SelectedClient, _clientStore), 450, 800, "Редактирование клиента");
         }
                 
 
@@ -188,13 +193,21 @@ namespace AutoRepairShop.ViewModel
 
         private void DeleteClient(object commandParameter)
         {
-            foreach (var car in ClientsCarList)
+            var confirmation = MessageBox.Show(
+                    "Выбранная машина будет удалена из списка автомобилей выбранного клиента?",
+                    "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                );
+
+            if (confirmation == DialogResult.Yes)
             {
-                dbClientCars.DeleteClientCar(car);
+                foreach (var car in ClientsCarList)
+                {
+                    dbClientCars.DeleteClientCar(car);
+                }
+                ClientsCarList.Clear();
+                dbClient.DeleteClient(_selectedClient.Client);
+                ClientsList.Remove(_selectedClient);
             }
-            ClientsCarList.Clear();
-            dbClient.DeleteClient(_selectedClient.Client);
-            ClientsList.Remove(_selectedClient);
         }
 
 
@@ -213,8 +226,8 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenCarDataWindow(object commandParameter)
         {
-            
-            new WindowService().ShowWindow(new CarDataViewModel(_carStore,SelectedClient));
+
+            new WindowService().ShowWindow(new CarDataViewModel(_carStore, SelectedClient), 450, 800, "Добавление автомобиля клиента");
         }
 
         private bool CheckClientSelection(object param)
@@ -224,8 +237,7 @@ namespace AutoRepairShop.ViewModel
 
         private bool CheckCarSelection(object param)
         {
-            return SelectedCar is null? false : true;
-            //return IsCarSelected;
+            return SelectedCar is null? false : true;            
         }
 
 
@@ -245,7 +257,8 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenCarDataWindowForEdit(object commandParameter)
         {
-            new WindowService().ShowWindow(new CarDataViewModel(SelectedCar, _carStore, SelectedClient));
+
+            new WindowService().ShowWindow(new CarDataViewModel(SelectedCar, _carStore, SelectedClient), 450, 800, "Редактирование автомобиля клиента");
         }
 
         private RelayCommand deleteCarCommand;
@@ -265,8 +278,16 @@ namespace AutoRepairShop.ViewModel
 
         private void DeleteCar(object commandParameter)
         {
-            dbClientCars.DeleteClientCar(SelectedCar);
-            ClientsCarList.Remove(SelectedCar);
+            var confirmation = MessageBox.Show(
+                    "Выбранная машина будет удалена из списка автомобилей выбранного клиента?",
+                    "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                );
+
+            if (confirmation == DialogResult.Yes)
+            {
+                dbClientCars.DeleteClientCar(SelectedCar);
+                ClientsCarList.Remove(SelectedCar);
+            }
         }
     }
 }

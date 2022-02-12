@@ -26,5 +26,30 @@ namespace AutoRepairShop.View
             InitializeComponent();
             
         }
+
+        private void Surname_TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(Surname_Popup.IsOpen == false)
+            {
+                Surname_Popup.IsOpen = true;
+                SurnamePopup_TextBlock.Text = string.IsNullOrWhiteSpace(Surname_TextBox.Text) ? string.Empty : $@"Старое значение: {Surname_TextBox.Text}";
+                Surname_TextBox.SelectAll();
+            }            
+        }
+
+        private void Surname_TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void FirstName_TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (FirstName_Popup.IsOpen == false)
+            {
+                FirstName_Popup.IsOpen = true;
+                NamePopup_TextBlock.Text = string.IsNullOrWhiteSpace(FirstName_TextBox.Text) ? string.Empty : $@"Старое значение: {FirstName_TextBox.Text}";
+                FirstName_TextBox.SelectAll();
+            }
+        }
     }
 }
