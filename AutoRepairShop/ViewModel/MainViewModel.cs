@@ -1,15 +1,6 @@
-﻿using AutoRepairShop;
-using AutoRepairShop.MetaModel;
+﻿using AutoRepairShop.MetaModel;
 using AutoRepairShop.Model;
-using AutoRepairShop.Stores;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using static AutoRepairShop.Utils.Constants;
 
@@ -17,8 +8,9 @@ namespace AutoRepairShop.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private RelayCommand openClientDataWindowCommand;
-        private RelayCommand openTreeViewWindowCommand;
+        private RelayCommand _openClientDataWindowCommand;
+        private RelayCommand _openSettingsWindowCommand;
+        private RelayCommand _openTreeViewWindowCommand;
 
         DbWork dbWork;
         DbTectEvent dbTectEvent;
@@ -84,28 +76,28 @@ namespace AutoRepairShop.ViewModel
         {
             get
             {
-                if (openClientDataWindowCommand == null)
+                if (_openClientDataWindowCommand == null)
                 {
-                    openClientDataWindowCommand = new RelayCommand(OpenClientDataWindow);
+                    _openClientDataWindowCommand = new RelayCommand(OpenClientDataWindow);
                 }
-                return openClientDataWindowCommand;
+                return _openClientDataWindowCommand;
             }
         }
 
         private void OpenClientDataWindow(object commandParameter)
         {
-            new WindowService().ShowWindow(new ClientsViewViewModel(), 450, 1000, "Клиенты");
+            new WindowService().ShowWindow(new ClientsViewViewModel(), 450, 1000, "Клиенты", true);
         }
 
         public ICommand OpenTreeViewWindowCommand
         {
             get
             {
-                if (openTreeViewWindowCommand == null)
+                if (_openTreeViewWindowCommand == null)
                 {
-                    openTreeViewWindowCommand = new RelayCommand(OpenTreeViewWindow);
+                    _openTreeViewWindowCommand = new RelayCommand(OpenTreeViewWindow);
                 }
-                return openTreeViewWindowCommand;
+                return _openTreeViewWindowCommand;
             }
         }
 
@@ -113,6 +105,22 @@ namespace AutoRepairShop.ViewModel
         {
             new WindowService().ShowWindow(new WorkTypeTreeViewModel(WorkTypeViewMode.MANAGEMENT), 450, 800, "Список типов работ", SHOW_MODAL);
 
+        }
+
+        public ICommand OpenSettingsWindowCommand
+        {
+            get
+            {
+                if (_openSettingsWindowCommand == null)
+                {
+                    _openSettingsWindowCommand = new RelayCommand(OpenSettingsWindow);
+                }
+                return _openSettingsWindowCommand;
+            }
+        }
+        private void OpenSettingsWindow(object commandParameter)
+        {
+            new WindowService().ShowWindow(new SettingsViewModel(), 524, 814, "Общие настройки", true);
         }
         #endregion
     }

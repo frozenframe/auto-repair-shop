@@ -155,7 +155,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenClientDataWindow(object commandParameter)
         {
-            new WindowService().ShowWindow(new ClientDataViewModel(_clientStore), 450, 800, "Добавление клиента");
+            new WindowService().ShowWindow(new ClientDataViewModel(_clientStore), 450, 800, "Добавление клиента", true);
         }
 
 
@@ -173,7 +173,7 @@ namespace AutoRepairShop.ViewModel
 
         private void OpenClientDataWindowForEdit(object commandParameter)
         {
-            new WindowService().ShowWindow(new ClientDataViewModel(SelectedClient, _clientStore), 450, 800, "Редактирование клиента");
+            new WindowService().ShowWindow(new ClientDataViewModel(SelectedClient, _clientStore), 450, 800, "Редактирование клиента", true);
         }
                 
 
@@ -227,7 +227,7 @@ namespace AutoRepairShop.ViewModel
         private void OpenCarDataWindow(object commandParameter)
         {
 
-            new WindowService().ShowWindow(new CarDataViewModel(_carStore, SelectedClient), 450, 800, "Добавление автомобиля клиента");
+            new WindowService().ShowWindow(new CarDataViewModel(_carStore, SelectedClient), 450, 800, "Добавление автомобиля клиента", true);
         }
 
         private bool CheckClientSelection(object param)
@@ -258,7 +258,7 @@ namespace AutoRepairShop.ViewModel
         private void OpenCarDataWindowForEdit(object commandParameter)
         {
 
-            new WindowService().ShowWindow(new CarDataViewModel(SelectedCar, _carStore, SelectedClient), 450, 800, "Редактирование автомобиля клиента");
+            new WindowService().ShowWindow(new CarDataViewModel(SelectedCar, _carStore, SelectedClient), 450, 800, "Редактирование автомобиля клиента", true);
         }
 
         private RelayCommand deleteCarCommand;

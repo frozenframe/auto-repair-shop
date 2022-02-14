@@ -91,7 +91,9 @@
     <Compile Include="Stores\CarStore.cs" />
     <Compile Include="Stores\WorkTypeStore.cs" />
     <Compile Include="Stores\ClientStore.cs" />
+    <Compile Include="Utils\SettingsManager.cs" />
     <Compile Include="Utils\Constants.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\OpenTreeViewModel.cs" />
     <Compile Include="ViewModel\CarDataViewModel.cs" />
     <Compile Include="ViewModel\ClientDataViewModel.cs" />
@@ -107,6 +109,9 @@
     <Compile Include="View\ClientsViewUserControl.xaml.cs">
       <DependentUpon>ClientsViewUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SettingsUserControl.xaml.cs">
+      <DependentUpon>SettingsUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowService.cs" />
     <Page Include="View\AddWorkWindow.xaml">
       <SubType>Designer</SubType>
@@ -121,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClientsViewUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

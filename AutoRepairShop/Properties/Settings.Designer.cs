@@ -25,25 +25,25 @@ namespace AutoRepairShop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\FrozenFrame\\source\\repos\\AutoRepairShop\\CarRepair.accdb")]
-        public string SConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\CarRepair.accdb")]
+        public string ConnectionString {
             get {
-                return ((string)(this["SConnectionString"]));
+                return ((string)(this["ConnectionString"]));
             }
             set {
-                this["SConnectionString"] = value;
+                this["ConnectionString"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb")]
-        public string UConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Привет")]
+        public string TestSetting {
             get {
-                return ((string)(this["UConnectionString"]));
+                return ((string)(this["TestSetting"]));
             }
             set {
-                this["UConnectionString"] = value;
+                this["TestSetting"] = value;
             }
         }
     }
