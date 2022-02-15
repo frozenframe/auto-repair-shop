@@ -18,5 +18,7 @@
         }
 
         public static readonly bool SHOW_MODAL = true;
+
+        public static readonly string CONNECTION_STRING = "ConnectionString";
     }
 }

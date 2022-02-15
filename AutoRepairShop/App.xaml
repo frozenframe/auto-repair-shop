@@ -20,5 +20,8 @@
         <DataTemplate DataType="{x:Type viewmodels:WorkTypeAddUpdateViewModel}">
             <views:AddWorkTypeUserControl/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
+            <views:SettingsUserControl/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

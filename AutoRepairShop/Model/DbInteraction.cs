@@ -1,7 +1,9 @@
-﻿using System;
-using System.Configuration;
+﻿using AutoRepairShop.Utils;
+using AutoRepairShop.ViewModel;
+using System;
 using System.Data.OleDb;
 using System.IO;
+using System.Windows.Forms;
 
 namespace AutoRepairShop.Model
 {
@@ -10,23 +12,29 @@ namespace AutoRepairShop.Model
         #region Fields
 
         private string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};";
-        // Надо либо уже запилить нормальный конфиг файл, либо разобраться как указать для базы текущую директорию!
-        //Кто первый - тот молодец!
 
-        private string dbSourceFromConfig; // = @"C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb";
-        //private string dbSourceFromConfig = "C:\\Users\\Wcoat\\source\\repos\\frozenframe\\auto-repair-shop\\CarRepair.accdb";
-
+        private string dbPathString = "";
         protected OleDbConnection Connection { get; }
 
-        #endregion // Fields
+        #endregion Fields
 
         public DbInteraction()
         {
-            // Логики вычитывания из базы здесь быть не должно. Пусть за это будут отвечать дочерние от него классы.
-            // Позже развяжем их.            
-            dbSourceFromConfig = File.Exists(Properties.Settings.Default["SConnectionString"].ToString()) ? Properties.Settings.Default["SConnectionString"].ToString() : Properties.Settings.Default["UConnectionString"].ToString();
             
-            Connection = new OleDbConnection(string.Format(connectionString, dbSourceFromConfig));
+            //// Логики вычитывания из базы здесь быть не должно. Пусть за это будут отвечать дочерние от него классы.
+            //// Позже развяжем их.            
+            SettingsManager settingsManager = SettingsManager.getSettingsManager();
+            if (!settingsManager.Settings.TryGetValue(Constants.CONNECTION_STRING, out dbPathString))
+            {
+                findDatabase("В файле конфигурации не указан путь до базы данных");
+            }
+            settingsManager.Settings.TryGetValue(Constants.CONNECTION_STRING, out dbPathString);
+            if (!File.Exists(dbPathString))
+            {
+                findDatabase("Файл базы данных не существует по указанному пути: " + dbPathString);
+            }
+
+            Connection = new OleDbConnection(string.Format(connectionString, dbPathString));
             OpenConnection();
 
         }
@@ -52,6 +60,12 @@ namespace AutoRepairShop.Model
         #endregion Public methods
 
         #region Private methods
+
+        private void findDatabase(string errorMessage)
+        {
+            MessageBox.Show(errorMessage, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            new WindowService().ShowWindow(new SettingsViewModel(), 450, 820, "Общие настройки", true);
+        }
 
         private void OpenConnection()
         {

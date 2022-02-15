@@ -25,15 +25,16 @@
                 <MenuItem Header="Плановые работы"/>
             </MenuItem>
             <MenuItem Header="Настройка" FontSize="18">
-                <MenuItem Header="Типы работ"/>
-                <MenuItem Header="Общие настройки">
-                    <MenuItem x:Name="AddClient_MenuItem" Header="Клиенты" Command="{Binding OpenClientDataWindowCommand}"/>
-                    <MenuItem Header="Модели автомобилей"/>
-                </MenuItem>
+                <MenuItem Header="Типы работ" Command="{Binding OpenTreeViewWindowCommand}"/>
+                <MenuItem x:Name="AddClient_MenuItem" Header="Клиенты" Command="{Binding OpenClientDataWindowCommand}"/>
+                <MenuItem Header="Модели автомобилей"/>
+                <MenuItem Header="Общие настройки" Command="{Binding OpenSettingsWindowCommand}"/>
             </MenuItem>
+<!--
             <MenuItem Header="TreeView test" FontSize="18">
                 <MenuItem Header="Показать" Command="{Binding OpenTreeViewWindowCommand}"/>
             </MenuItem>
+-->
         </Menu>
         <ToolBar Height="32" Grid.Row="1" VerticalAlignment="Top">
             <Button Command="{Binding OpenClientDataWindowCommand}">
