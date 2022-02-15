@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace AutoRepairShop.ViewModel
 {
-    public class SettingsViewModel
+    public class SettingsViewModel : INotifyPropertyChanged
     {
         #region Fields
         private RelayCommand _selectDbFileCommand;
@@ -30,16 +30,9 @@ namespace AutoRepairShop.ViewModel
             set 
             {
                 _dbPathString = value;
-                OnPropertyChanged("DbPathString");
+                OnPropertyChanged(nameof(DbPathString));
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
 
         #region Commands
         /// <summary>
@@ -90,5 +83,11 @@ namespace AutoRepairShop.ViewModel
         }
 
         #endregion Commands
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }
