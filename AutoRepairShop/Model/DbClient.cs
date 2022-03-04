@@ -69,10 +69,20 @@ namespace AutoRepairShop.Model
             }
         }
 
+
         public Client GetClientByFioPhone(Client client)
         {
-            object[] selectArgs = { client.Lastname, client.Name, client.Surname, client.Phone };
-            string selectQuery = string.Format(SqlQueries.getClientByFioPhone, selectArgs);
+            object[] selectArgs = { client.Id };
+            string selectQuery = string.Format(SqlQueries.getClientById, selectArgs);
+
+            return GetClients(selectQuery).ToArray()[0];
+        }
+
+
+        public Client GetClientById(int id)
+        {
+            object[] selectArgs = { id };
+            string selectQuery = string.Format(SqlQueries.getClientById, selectArgs);
 
             return GetClients(selectQuery).ToArray()[0];
         }

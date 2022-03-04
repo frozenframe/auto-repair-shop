@@ -89,6 +89,8 @@
     <Compile Include="Model\DbInteraction.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Stores\CarStore.cs" />
+    <Compile Include="Stores\TechEventStore.cs" />
+    <Compile Include="Stores\WorkStore.cs" />
     <Compile Include="Stores\WorkTypeStore.cs" />
     <Compile Include="Stores\ClientStore.cs" />
     <Compile Include="Utils\SettingsManager.cs" />
@@ -99,7 +101,11 @@
     <Compile Include="ViewModel\ClientDataViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
+    <Compile Include="ViewModel\TechEventViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\AddTechEventUserControl.xaml.cs">
+      <DependentUpon>AddTechEventUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CarUserControl.xaml.cs">
       <DependentUpon>CarUserControl.xaml</DependentUpon>
     </Compile>
@@ -113,7 +119,7 @@
       <DependentUpon>SettingsUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowService.cs" />
-    <Page Include="View\AddWorkWindow.xaml">
+    <Page Include="View\AddTechEventUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,9 +160,6 @@
       <DependentUpon>AddWorkTypeUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\AddWorkWindow.xaml.cs">
-      <DependentUpon>AddWorkWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\WorkTypeAddUpdateViewModel.cs" />
     <Compile Include="ViewModel\WorkTypeTreeViewModel.cs" />
     <Compile Include="View\WorkTypeViewUserControl.xaml.cs">

@@ -1,4 +1,5 @@
-﻿using AutoRepairShop.Model;
+﻿using AutoRepairShop;
+using AutoRepairShop.Model;
 using AutoRepairShop.Stores;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace AutoRepairShop.ViewModel
         private RelayCommand deleteClientCommand;
         private RelayCommand openCarDataWindowForEditCommand;
         private RelayCommand openCarDataWindowCommand;
+        private RelayCommand _chooseClient;
 
         private readonly ClientStore _clientStore;
         private readonly CarStore _carStore;        
@@ -105,6 +107,29 @@ namespace AutoRepairShop.ViewModel
             _clientStore.ClientCreated += OnClientCreated;            
             _carStore.CarAdded += OnCarAdded;
             
+
+
+            ClientListView = CollectionViewSource.GetDefaultView(ClientsList);
+            ClientListView.Filter = SurnameFilter;
+        }
+
+        public ClientsViewViewModel(ClientStore clientStore, CarStore carStore)
+        {
+            _clientStore = clientStore;
+            _carStore = carStore;
+            dbClient = new DbClient();
+            dbClientCars = new DbClientCars();
+            var clientsFromDb = dbClient.GetClient();
+            ClientsList = new ObservableCollection<ClientViewModel>();
+            ClientsCarList = new ObservableCollection<Car>();
+            foreach (var row in clientsFromDb)
+            {
+                var newClient = new ClientViewModel(row);
+                ClientsList.Add(newClient);
+            }
+            //_clientStore.ClientCreated += OnClientCreated;
+            //_carStore.CarAdded += OnCarAdded;
+
 
 
             ClientListView = CollectionViewSource.GetDefaultView(ClientsList);
@@ -288,6 +313,27 @@ namespace AutoRepairShop.ViewModel
                 dbClientCars.DeleteClientCar(SelectedCar);
                 ClientsCarList.Remove(SelectedCar);
             }
+        }
+
+       
+
+        public ICommand SelectClientWithCarCommand
+        {
+            get
+            {
+                if (_chooseClient == null)
+                {
+                    _chooseClient = new RelayCommand(SelectClientWithCar);
+                }
+
+                return _chooseClient;
+            }
+        }
+
+        private void SelectClientWithCar(object commandParameter)
+        {
+            _clientStore.SelectClient(SelectedClient.Client);
+            _carStore.SelectCar(SelectedCar);
         }
     }
 }

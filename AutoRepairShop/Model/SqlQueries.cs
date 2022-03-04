@@ -50,5 +50,9 @@ namespace AutoRepairShop
                                                         from   Tech_Event event, Client_Cars cc, Car_Models cm, Car_Brands cb
                                                         Where event.client_car_id = cc.id and cc.car_model_id = cm.id and cm.brand_id = cb.id";
         public static readonly string getAllTechEventWorks = "select w.id, w.work_date, w.remind_day, w.comment, wt.id, wt.work_type from [Work] w, Work_Types wt Where tech_event_id = {0} AND w.processed_item_id = wt.id";
+        public static readonly string insertTechEvent = "insert into Tech_Event(client_car_id,event_start_date,event_end_date) values ('{0}','{1}','{2}')";
+        public static readonly string updateTechEvent = "update Tech_Event set client_car_id = '{0}', event_start_date = '{1}', event_end_date = '{2}' where id = {3}";
+        public static readonly string deleteTechEvent = "delete from Tech_Event where id = {0}";
+
     }
 }

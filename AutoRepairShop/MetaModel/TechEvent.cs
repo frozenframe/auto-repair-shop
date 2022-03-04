@@ -11,12 +11,12 @@ namespace AutoRepairShop.MetaModel
 {
     public class TechEvent : INotifyPropertyChanged
     {
-        private int _id;
+        private int? _id;
         private Car _car;
         private DateTime? _eventStartDate;
         private DateTime? _eventEndDate;
 
-        public int Id { get => _id; set => _id = value; }
+        public int? Id { get => _id; set => _id = value; }
         public Car Car { get => _car; set => _car = value; }
 
         public DateTime? EventStartDate
@@ -70,12 +70,17 @@ namespace AutoRepairShop.MetaModel
         }
 
 
-        public TechEvent(int id, Car car = null, DateTime? eventStartDate = null, DateTime? eventEndDate = null)
+        public TechEvent(int? id, Car car = null, DateTime? eventStartDate = null, DateTime? eventEndDate = null)
         {
             Id = id;
             Car = car;
             EventEndDate = eventEndDate;
             EventStartDate = eventStartDate;
+        }
+
+        public TechEvent(Car car = null, DateTime? eventStartDate = null, DateTime? eventEndDate = null): this(null,car,eventStartDate,eventEndDate)
+        {
+
         }
 
 

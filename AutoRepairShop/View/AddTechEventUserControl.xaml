@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="AutoRepairShop.View.AddTechEventUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:AutoRepairShop.View" xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:TechEventViewModel}"
+             mc:Ignorable="d" Width="800" Height="530">
+    <Grid>        
+        <GroupBox Header="Клиент" Height="127" Margin="10,10,10,0" VerticalAlignment="Top">
+            <Grid Margin="0,0,0,0">
+                <Label Content="Автомобиль" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="ФИО" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                <Label Content="Номер" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="Телефон" HorizontalAlignment="Left" Margin="330,41,0,0" VerticalAlignment="Top"/>
+                <Button Command="{Binding OpenClientDataWindowCommand}" Content="Выбрать" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
+                <TextBlock HorizontalAlignment="Left" Margin="52,46,0,0" VerticalAlignment="Top" Text="{Binding Fullname}" Height="21" TextWrapping="Wrap"/>
+                <TextBlock HorizontalAlignment="Left" Margin="93,15,0,0" TextWrapping="Wrap" Text="{Binding CarModelAndBrand}" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="392,15,0,0" TextWrapping="Wrap" Text="{Binding CarNumber}" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="392,46,0,0" TextWrapping="Wrap" Text="{Binding ClientPhoneNumber}" VerticalAlignment="Top"/>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Работы" Height="330" Margin="10,142,10,0" VerticalAlignment="Top">
+            <Grid Margin="0,0,0,0">
+                <DataGrid Margin="10,10,55,0" Height="130" VerticalAlignment="Top"/>
+                <Button x:Name="AddWork_Button" Margin="0,10,10,0"  HorizontalAlignment="Right" Width="40"
+                Command="{Binding OpenAddWorkWindowCommand}" Height="40" VerticalAlignment="Top">
+                    <Image Source="../icons/Add.ico"></Image>
+                </Button>
+                <Button x:Name="EditWork_Button" Margin="0,55,10,0" HorizontalAlignment="Right" Width="40" 
+                Command="{Binding OpenEditWorkWindowCommand}" Height="40" VerticalAlignment="Top">
+                    <Image Source="../icons/Edit.ico"></Image>
+                </Button>
+                <Button x:Name="DeleteWork_Button"  Margin="0,100,10,0" HorizontalAlignment="Right" Width="40" 
+                Command="{Binding DeleteWorkCommand}" Height="40" VerticalAlignment="Top">
+                    <Image Source="../icons/Delete.ico"></Image>
+                </Button>
+                <Label Content="Напоминание" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="RemindText_TextBox" HorizontalAlignment="Left" Height="59" Margin="10,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="748" Text="{Binding Remind}"/>
+                <Label Content="Начало ремонта" HorizontalAlignment="Left" Margin="10,0,0,41" Height="26" VerticalAlignment="Bottom"/>
+                <Label Content="Конец ремонта" HorizontalAlignment="Left" Margin="10,0,0,10" Height="26" VerticalAlignment="Bottom"/>
+                <DatePicker x:Name="TechEventStartDate_DatePicker" HorizontalAlignment="Left" Margin="116,0,0,41" Height="24" VerticalAlignment="Bottom" SelectedDate="{Binding TechEventStartDate}"/>
+                <DatePicker x:Name="TechEventEndDate_DatePicker" HorizontalAlignment="Left" Margin="116,0,0,10" Height="24" VerticalAlignment="Bottom" SelectedDate="{Binding TechEventEndDate}"/>
+                <Button x:Name="SetTechEventEndDate_Button" Content="Завершить ремонт" HorizontalAlignment="Left" Margin="300,0,0,10" Width="130" Height="22" VerticalAlignment="Bottom" Click="SetTechEventEndDate_Button_Click"/>
+            </Grid>
+
+
+        </GroupBox>
+        <Button Content="Сохранить" Margin="0,0,90,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Command="{Binding SaveTechEventChangesCommand}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction MethodName="Close"
+                                            TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <Button Content="Отмена" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:CallMethodAction MethodName="Close"
+                                            TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <!--<TextBlock HorizontalAlignment="Left" Margin="88,480,0,0" VerticalAlignment="Top" Text="{Binding Path=Fullname,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" Height="21" TextWrapping="Wrap"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,504,0,0" TextWrapping="Wrap" Text="{Binding Path=CarModelAndBrand}" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="155,480,0,0" TextWrapping="Wrap" Text="{Binding Path=CarNumber}" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,485,0,0" TextWrapping="Wrap" Text="{Binding Path=ClientPhoneNumber,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" VerticalAlignment="Top"/>-->
+        
+
+    </Grid>
+</UserControl>

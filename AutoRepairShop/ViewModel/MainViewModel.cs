@@ -1,5 +1,8 @@
-﻿using AutoRepairShop.MetaModel;
+﻿using AutoRepairShop;
+using AutoRepairShop.MetaModel;
 using AutoRepairShop.Model;
+using AutoRepairShop.Stores;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using static AutoRepairShop.Utils.Constants;
@@ -11,6 +14,10 @@ namespace AutoRepairShop.ViewModel
         private RelayCommand _openClientDataWindowCommand;
         private RelayCommand _openSettingsWindowCommand;
         private RelayCommand _openTreeViewWindowCommand;
+        private RelayCommand _openTechEventWindowCommand;
+        private RelayCommand _openEditTechEventWindowCommand;
+
+        private readonly TechEventStore _techEventStore;
 
         DbWork dbWork;
         DbTectEvent dbTectEvent;
@@ -31,9 +38,8 @@ namespace AutoRepairShop.ViewModel
                 _selectedTechEvent = value;
                 if(_selectedTechEvent.Works is null)
                 {
-                    _selectedTechEvent.Works = FillTechEventWorks(_selectedTechEvent.Id);
-                }
-                
+                    _selectedTechEvent.Works = FillTechEventWorks((int)_selectedTechEvent.Id);
+                }                
                 OnPropertyChanged(nameof(SelectedTechEvent));
             }
         }
@@ -50,17 +56,25 @@ namespace AutoRepairShop.ViewModel
 
         public MainViewModel()
         {
+            _techEventStore = new TechEventStore();
+            _techEventStore.TechEventAdded += OnTechEventAdded;
             dbWork = new DbWork();
             dbTectEvent = new DbTectEvent();
             dbWorkType = new DbWorkType();
             var techEventsFromDb = dbTectEvent.GetTechEvents();            
             TechEvents = new ObservableCollection<TechEvent>(techEventsFromDb);
+
             //var newWork = new TechEvent();
             //TechEvents.Add(newWork);
 
             //_clientStore = new ClientStore();
             //ClientsList = new ObservableCollection<ClientViewModel>();
             //_clientStore.ClientCreated += OnClientCreated;
+        }
+
+        private void OnTechEventAdded(TechEvent techEvent)
+        {
+            TechEvents.Add(techEvent);
         }
 
 
@@ -122,6 +136,47 @@ namespace AutoRepairShop.ViewModel
         {
             new WindowService().ShowWindow(new SettingsViewModel(), 524, 814, "Общие настройки", true);
         }
+
+        
+
+        public ICommand OpenTechEventWindowCommand
+        {
+            get
+            {
+                if (_openTechEventWindowCommand == null)
+                {
+                    _openTechEventWindowCommand = new RelayCommand(OpenTechEventWindow);
+                }
+                return _openTechEventWindowCommand;
+            }
+        }
+
+        private void OpenTechEventWindow(object commandParameter)
+        {
+            new WindowService().ShowWindow(new TechEventViewModel(_techEventStore), 600, 900, "Добавление ремонта", true);
+        }
+
+        public ICommand OpenEditTechEventWindowCommand
+        {
+            get
+            {
+                if (_openEditTechEventWindowCommand == null)
+                {
+                    _openEditTechEventWindowCommand = new RelayCommand(OpenEditTechEventWindow);
+                }
+                return _openEditTechEventWindowCommand;
+            }
+        }
+
+        private void OpenEditTechEventWindow(object commandParameter)
+        {
+            if(SelectedTechEvent  != null)
+            {
+                new WindowService().ShowWindow(new TechEventViewModel(_techEventStore, SelectedTechEvent), 600, 900, "Добавление ремонта", true);
+            }            
+        }
         #endregion
+
+        
     }
 }

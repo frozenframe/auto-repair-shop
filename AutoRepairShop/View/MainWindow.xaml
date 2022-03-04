@@ -21,7 +21,8 @@
                 <MenuItem Header="Выход"/>
             </MenuItem>
             <MenuItem Header="Ремонт" FontSize="18">
-                <MenuItem Header="Добавить" Command="{Binding OpenAddWorkWindowCommand}"/>
+                <MenuItem Header="Добавить" Command="{Binding OpenTechEventWindowCommand}"/>
+                <MenuItem Header="Редактировать" Command="{Binding OpenEditTechEventWindowCommand}"/>
                 <MenuItem Header="Плановые работы"/>
             </MenuItem>
             <MenuItem Header="Настройка" FontSize="18">
