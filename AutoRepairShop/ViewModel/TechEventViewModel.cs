@@ -4,6 +4,7 @@ using AutoRepairShop.Model;
 using AutoRepairShop.Stores;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,13 @@ namespace AutoRepairShop.ViewModel
 {
     public class TechEventViewModel : ViewModelBase
     {
-
+        #region Fields
         private RelayCommand _openAddWorkWindowCommand;
         private RelayCommand _openClientDataWindowCommand;
         private RelayCommand _saveTechEventChangesCommand;
         DbTectEvent dbTechEvent;
         DbClient dbClient;
+        DbWork dbWork;
 
         private TechEventStore _techEventStore;
         private readonly ClientStore _clientStore;
@@ -26,6 +28,8 @@ namespace AutoRepairShop.ViewModel
 
         private Client _client;
         private Car _clientCar;
+
+        public ObservableCollection<Work> works { get; set; }
         
         private string _fullname;
         private string _carModelAndBrand;
@@ -33,8 +37,25 @@ namespace AutoRepairShop.ViewModel
         private string _clientPhoneNumber;
         private DateTime? _techEventEndDate;
         private DateTime? _techEventStartDate;
-        private string _remind;
-        public TechEvent _techEvent;
+        private string _remindText;
+        private TechEvent _techEvent;
+        private Work _selectedWork;
+        #endregion
+
+        #region Properties
+        public Work SelectedWork
+        {
+            get
+            {
+                return _selectedWork;
+            }
+            set
+            {
+                _selectedWork = value;
+                OnPropertyChanged(nameof(SelectedWork));
+            }
+        }
+
         public TechEvent TechEvent 
         {   
             get
@@ -49,16 +70,16 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
-        public string Remind
+        public string RemindText
         {
             get
             {
-                return _remind;
+                return _remindText;
             }
             set
             {
-                _remind = value;
-                OnPropertyChanged(nameof(Remind));
+                _remindText = value;
+                OnPropertyChanged(nameof(RemindText));
             }
         }
 
@@ -139,11 +160,6 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
-
-
-
-
-
         public Client Client
         {
             get
@@ -170,7 +186,9 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(ClientCar));
             }
         }
+        #endregion
 
+        #region Constructors
         public TechEventViewModel(TechEventStore techEventStore)
         {
             _techEventStore = techEventStore;
@@ -187,6 +205,8 @@ namespace AutoRepairShop.ViewModel
         public TechEventViewModel(TechEventStore techEventStore, TechEvent techEvent) : this(techEventStore)
         {
             dbClient = new DbClient();
+            dbWork = new DbWork();
+            works = new ObservableCollection<Work>(dbWork.GetTechEventWorks((int)techEvent.Id));
             Client = dbClient.GetClientById(techEvent.Car.CLientId);
             Fullname = $@"{Client.Surname} {Client.Name} {Client.Lastname}";
             ClientPhoneNumber = Client.Phone;
@@ -197,13 +217,14 @@ namespace AutoRepairShop.ViewModel
             TechEventStartDate = techEvent.EventStartDate;
             TechEventEndDate = techEvent.EventEndDate;
         }
-
+        
         public override void Dispose()
         {
             _clientStore.ClientSelected -= OnClientSelected;
             _carStore.CarSelected -= OnCarSelected;
             base.Dispose();
         }
+        #endregion
 
         private void OnCarSelected(Car car)
         {
@@ -219,7 +240,7 @@ namespace AutoRepairShop.ViewModel
             ClientPhoneNumber = client.Phone;
                      
         }
-
+        #region Commands
         public ICommand OpenAddWorkWindowCommand
         {
             get
@@ -281,8 +302,8 @@ namespace AutoRepairShop.ViewModel
                 TechEvent.EventStartDate = TechEventStartDate;
                 TechEvent.EventEndDate = TechEventEndDate;
                 dbTechEvent.UpdateTechEvent(TechEvent);
-            }
-            
+            }            
         }
+#endregion
     }
 }

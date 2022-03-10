@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AutoRepairShop.ViewModel
 {
-    public class ViewModelBase
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
