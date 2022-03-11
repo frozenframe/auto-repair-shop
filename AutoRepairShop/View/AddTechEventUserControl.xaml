@@ -50,8 +50,6 @@
                 <DatePicker x:Name="TechEventEndDate_DatePicker" HorizontalAlignment="Left" Margin="116,0,0,10" Height="24" VerticalAlignment="Bottom" SelectedDate="{Binding TechEventEndDate}"/>
                 <Button x:Name="SetTechEventEndDate_Button" Content="Завершить ремонт" HorizontalAlignment="Left" Margin="300,0,0,10" Width="130" Height="22" VerticalAlignment="Bottom" Click="SetTechEventEndDate_Button_Click"/>
             </Grid>
-
-
         </GroupBox>
         <Button Content="Сохранить" Margin="0,0,90,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Command="{Binding SaveTechEventChangesCommand}">
             <i:Interaction.Triggers>
@@ -69,11 +67,5 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
-        <!--<TextBlock HorizontalAlignment="Left" Margin="88,480,0,0" VerticalAlignment="Top" Text="{Binding Path=Fullname,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" Height="21" TextWrapping="Wrap"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,504,0,0" TextWrapping="Wrap" Text="{Binding Path=CarModelAndBrand}" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="155,480,0,0" TextWrapping="Wrap" Text="{Binding Path=CarNumber}" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="300,485,0,0" TextWrapping="Wrap" Text="{Binding Path=ClientPhoneNumber,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" VerticalAlignment="Top"/>-->
-        
-
     </Grid>
 </UserControl>

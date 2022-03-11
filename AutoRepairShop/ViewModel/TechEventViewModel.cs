@@ -18,9 +18,9 @@ namespace AutoRepairShop.ViewModel
         private RelayCommand _openAddWorkWindowCommand;
         private RelayCommand _openClientDataWindowCommand;
         private RelayCommand _saveTechEventChangesCommand;
-        DbTectEvent dbTechEvent;
-        DbClient dbClient;
-        DbWork dbWork;
+        private DbTectEvent dbTechEvent;
+        private DbClient dbClient;
+        private DbWork dbWork;
 
         private TechEventStore _techEventStore;
         private readonly ClientStore _clientStore;
@@ -56,13 +56,12 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
-        public TechEvent TechEvent 
-        {   
+        public TechEvent TechEvent
+        {
             get
             {
                 return _techEvent;
             }
-
             set
             {
                 _techEvent = value;
@@ -108,6 +107,7 @@ namespace AutoRepairShop.ViewModel
                 OnPropertyChanged(nameof(TechEventStartDate));
             }
         }
+
         public string Fullname
         {
             get
@@ -249,7 +249,6 @@ namespace AutoRepairShop.ViewModel
                 {
                     _openAddWorkWindowCommand = new RelayCommand(OpenAddWorkWindow);
                 }
-
                 return _openAddWorkWindowCommand;
             }
         }
@@ -284,7 +283,6 @@ namespace AutoRepairShop.ViewModel
                 {
                     _saveTechEventChangesCommand = new RelayCommand(SaveTechEventChanges);
                 }
-
                 return _saveTechEventChangesCommand;
             }
         }
@@ -293,7 +291,7 @@ namespace AutoRepairShop.ViewModel
         {
             if(TechEvent.Id is null)//insert
             {
-                var insertedTechEvent = dbTechEvent.InsertTechEvent(new TechEvent(ClientCar, TechEventStartDate, TechEventEndDate));
+                var insertedTechEvent = dbTechEvent.InsertTechEvent(new TechEvent(null,ClientCar, TechEventStartDate, TechEventEndDate));
                 _techEventStore.AddTechEvent(insertedTechEvent);
             }
             else//update
@@ -302,8 +300,8 @@ namespace AutoRepairShop.ViewModel
                 TechEvent.EventStartDate = TechEventStartDate;
                 TechEvent.EventEndDate = TechEventEndDate;
                 dbTechEvent.UpdateTechEvent(TechEvent);
-            }            
+            }
         }
-#endregion
+        #endregion
     }
 }

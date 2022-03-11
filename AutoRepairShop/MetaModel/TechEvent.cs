@@ -15,6 +15,7 @@ namespace AutoRepairShop.MetaModel
         private Car _car;
         private DateTime? _eventStartDate;
         private DateTime? _eventEndDate;
+        private ObservableCollection<Work> _works;
 
         public int? Id { get => _id; set => _id = value; }
         public Car Car { get => _car; set => _car = value; }
@@ -44,8 +45,7 @@ namespace AutoRepairShop.MetaModel
                 OnPropertyChanged(nameof(EventEndDate));
             }
         }
-
-        private ObservableCollection<Work> _works;
+                
         public ObservableCollection<Work> Works
         {
             get
@@ -62,12 +62,7 @@ namespace AutoRepairShop.MetaModel
                 }
                 
             }
-        }
-
-        public TechEvent()
-        {
-
-        }
+        }        
 
 
         public TechEvent(int? id, Car car = null, DateTime? eventStartDate = null, DateTime? eventEndDate = null)
@@ -78,15 +73,8 @@ namespace AutoRepairShop.MetaModel
             EventStartDate = eventStartDate;
         }
 
-        public TechEvent(Car car = null, DateTime? eventStartDate = null, DateTime? eventEndDate = null): this(null,car,eventStartDate,eventEndDate)
-        {
-
-        }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
