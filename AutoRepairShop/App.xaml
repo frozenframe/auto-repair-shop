@@ -26,5 +26,8 @@
         <DataTemplate DataType="{x:Type viewmodels:TechEventViewModel}">
             <views:AddTechEventUserControl/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:WorkViewModel}">
+            <views:WorkUserControl/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

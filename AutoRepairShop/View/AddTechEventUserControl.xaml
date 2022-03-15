@@ -23,15 +23,16 @@
         </GroupBox>
         <GroupBox Header="Работы" Height="330" Margin="10,142,10,0" VerticalAlignment="Top">
             <Grid Margin="0,0,0,0">
-                <DataGrid Margin="10,10,55,0" ItemsSource="{Binding works}" SelectedItem="{Binding SelectedWork}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Height="130" VerticalAlignment="Top">
+                <DataGrid Margin="10,10,55,0" ItemsSource="{Binding Works}" SelectedItem="{Binding SelectedWork}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Height="130" VerticalAlignment="Top">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Деталь" Binding="{Binding WorkType.WorkTypeName}"/>
-                        <DataGridTextColumn Header="Дата выполнения работы" Binding="{Binding WorkDate,StringFormat=\{0:dd.MM.yy\}}"/>
+                        <DataGridTextColumn Header="Дата выполнения работы" Binding="{Binding WorkDate,StringFormat=\{0:dd.MM.yy\}}" />
                         <DataGridTextColumn Header=" Комментарий" Binding="{Binding Comment}"/>
+                        <DataGridTextColumn Header="Дата напоминаия" Binding="{Binding RemindDay,StringFormat=\{0:dd.MM.yy\}}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button x:Name="AddWork_Button" Margin="0,10,10,0"  HorizontalAlignment="Right" Width="40"
-                Command="{Binding OpenAddWorkWindowCommand}" Height="40" VerticalAlignment="Top">
+                Command="{Binding AddWorkWindowCommand}" Height="40" VerticalAlignment="Top">
                     <Image Source="../icons/Add.ico"></Image>
                 </Button>
                 <Button x:Name="EditWork_Button" Margin="0,55,10,0" HorizontalAlignment="Right" Width="40" 

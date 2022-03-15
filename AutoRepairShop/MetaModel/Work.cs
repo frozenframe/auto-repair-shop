@@ -10,26 +10,27 @@ namespace AutoRepairShop.MetaModel
 {
     public class Work : INotifyPropertyChanged
     {
-        private int _id;
-        private int _techEventId;
+        private int? _id;
+        private int? _techEventId;
         private WorkType _workType;
-        private DateTime _workDate;
-        private DateTime _remindDay;
+        private DateTime? _workDate;
+        private DateTime? _remindDay;
         private string _comment;
 
-        public int Id { get => _id; set => _id = value; }
-        public int TechEventId { get; set; }
+        public int? Id { get => _id; set => _id = value; }
+        public int? TechEventId { get; set; }
         public WorkType WorkType { get; set; }
-        public DateTime WorkDate { get; set; }
-        public DateTime RemindDay { get; set; }
+        public DateTime? WorkDate { get; set; }
+        public DateTime? RemindDay { get; set; }
         public string Comment { get; set; }
 
         public Work()
         {
 
         }
-        public Work(int techEventId, WorkType workType, DateTime workDate, DateTime remindDay, string comment)
+        public Work(int? id, int? techEventId, WorkType workType, DateTime workDate, DateTime remindDay, string comment)
         {
+            Id = id;
             TechEventId = techEventId;
             WorkType = workType;
             WorkDate = workDate;

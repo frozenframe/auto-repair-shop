@@ -15,7 +15,7 @@ namespace AutoRepairShop.MetaModel
         private Car _car;
         private DateTime? _eventStartDate;
         private DateTime? _eventEndDate;
-        private ObservableCollection<Work> _works;
+        private ObservableCollection<WorkMate> _works;
 
         public int? Id { get => _id; set => _id = value; }
         public Car Car { get => _car; set => _car = value; }
@@ -46,7 +46,7 @@ namespace AutoRepairShop.MetaModel
             }
         }
                 
-        public ObservableCollection<Work> Works
+        public ObservableCollection<WorkMate> Works
         {
             get
             {

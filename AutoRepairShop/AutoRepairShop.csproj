@@ -79,6 +79,7 @@
     </ApplicationDefinition>
     <Compile Include="MetaModel\TechEvent.cs" />
     <Compile Include="MetaModel\Work.cs" />
+    <Compile Include="MetaModel\WorkMate.cs" />
     <Compile Include="Model\DbClientCars.cs" />
     <Compile Include="Model\DbClient.cs" />
     <Compile Include="Model\DbCarBrand.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\TechEventViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\WorkViewModel.cs" />
     <Compile Include="View\AddTechEventUserControl.xaml.cs">
       <DependentUpon>AddTechEventUserControl.xaml</DependentUpon>
     </Compile>
@@ -117,6 +119,9 @@
     </Compile>
     <Compile Include="View\SettingsUserControl.xaml.cs">
       <DependentUpon>SettingsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WorkUserControl.xaml.cs">
+      <DependentUpon>WorkUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowService.cs" />
     <Page Include="View\AddTechEventUserControl.xaml">
@@ -179,6 +184,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\WorkUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

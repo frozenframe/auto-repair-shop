@@ -23,7 +23,7 @@ namespace AutoRepairShop.ViewModel
         DbTectEvent dbTectEvent;
         DbWorkType dbWorkType;
         public ObservableCollection<TechEvent> TechEvents { get; set; }
-        public ObservableCollection<Work> WorksOfSelectedTechEvent { get; set; }
+        public ObservableCollection<WorkMate> WorksOfSelectedTechEvent { get; set; }
         private TechEvent _selectedTechEvent;
 
 
@@ -45,9 +45,9 @@ namespace AutoRepairShop.ViewModel
         }
             
 
-        private ObservableCollection<Work> FillTechEventWorks(int techEventId)
+        private ObservableCollection<WorkMate> FillTechEventWorks(int techEventId)
         {
-            WorksOfSelectedTechEvent = new ObservableCollection<Work>(dbWork.GetTechEventWorks(techEventId));
+            WorksOfSelectedTechEvent = new ObservableCollection<WorkMate>(dbWork.GetTechEventWorks(techEventId));
             
 
             

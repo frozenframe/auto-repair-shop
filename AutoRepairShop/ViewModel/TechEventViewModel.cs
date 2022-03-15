@@ -15,21 +15,22 @@ namespace AutoRepairShop.ViewModel
     public class TechEventViewModel : ViewModelBase
     {
         #region Fields
-        private RelayCommand _openAddWorkWindowCommand;
+        private RelayCommand _addWorkWindowCommand;
         private RelayCommand _openClientDataWindowCommand;
         private RelayCommand _saveTechEventChangesCommand;
         private DbTectEvent dbTechEvent;
         private DbClient dbClient;
         private DbWork dbWork;
-
+                
         private TechEventStore _techEventStore;
         private readonly ClientStore _clientStore;
         private readonly CarStore _carStore;
+        private readonly WorkTypeStore _workTypeStore;
 
         private Client _client;
         private Car _clientCar;
 
-        public ObservableCollection<Work> works { get; set; }
+        public ObservableCollection<Work> Works { get; set; }
         
         private string _fullname;
         private string _carModelAndBrand;
@@ -194,19 +195,27 @@ namespace AutoRepairShop.ViewModel
             _techEventStore = techEventStore;
             _clientStore = new ClientStore();
             _carStore = new CarStore();
+            _workTypeStore = new WorkTypeStore();
             _clientStore.ClientSelected += OnClientSelected;
             _carStore.CarSelected += OnCarSelected;
+            _workTypeStore.WorkTypeSelected += OnWorkTypeSelected;
             Client = new Client();
             ClientCar = new Car();
             dbTechEvent = new DbTectEvent();
+            Works = new ObservableCollection<Work>();
             
+        }
+
+        private void OnWorkTypeSelected(WorkType workType)
+        {
+            Works.Add(new WorkMate(null, TechEvent?.Id, workType, DateTime.Now, null, "", true));
         }
 
         public TechEventViewModel(TechEventStore techEventStore, TechEvent techEvent) : this(techEventStore)
         {
             dbClient = new DbClient();
             dbWork = new DbWork();
-            works = new ObservableCollection<Work>(dbWork.GetTechEventWorks((int)techEvent.Id));
+            Works = new ObservableCollection<Work>(dbWork.GetTechEventWorks((int)techEvent.Id));
             Client = dbClient.GetClientById(techEvent.Car.CLientId);
             Fullname = $@"{Client.Surname} {Client.Name} {Client.Lastname}";
             ClientPhoneNumber = Client.Phone;
@@ -222,6 +231,7 @@ namespace AutoRepairShop.ViewModel
         {
             _clientStore.ClientSelected -= OnClientSelected;
             _carStore.CarSelected -= OnCarSelected;
+            _workTypeStore.WorkTypeSelected -= OnWorkTypeSelected;
             base.Dispose();
         }
         #endregion
@@ -241,20 +251,21 @@ namespace AutoRepairShop.ViewModel
                      
         }
         #region Commands
-        public ICommand OpenAddWorkWindowCommand
+        public ICommand AddWorkWindowCommand
         {
             get
             {
-                if (_openAddWorkWindowCommand == null)
+                if (_addWorkWindowCommand == null)
                 {
-                    _openAddWorkWindowCommand = new RelayCommand(OpenAddWorkWindow);
+                    _addWorkWindowCommand = new RelayCommand(AddWork);
                 }
-                return _openAddWorkWindowCommand;
+                return _addWorkWindowCommand;
             }
         }
 
-        private void OpenAddWorkWindow(object commandParameter)
+        private void AddWork(object commandParameter)
         {
+          new WindowService().ShowWindow(new WorkTypeTreeViewModel(_workTypeStore, Utils.Constants.WorkTypeViewMode.SELECT));
         }
 
         public ICommand OpenClientDataWindowCommand
