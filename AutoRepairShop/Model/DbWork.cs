@@ -24,11 +24,78 @@ namespace AutoRepairShop.Model
             List<WorkMate> result = new List<WorkMate>();
             while (reader.Read())
             {
-                var work = new WorkMate((int)reader[0], techEventId,new WorkType(reader.GetInt32(4),reader["work_type"].ToString()),DateTime.Parse(reader["work_date"].ToString()),DateTime.Parse(reader["remind_day"].ToString()),reader["comment"].ToString(),false);
+                var work = new WorkMate((int)reader[0],
+                    techEventId,
+                    new WorkType(reader.GetInt32(4), reader.GetInt32(5), reader["work_type"].ToString()),
+                    DateTime.TryParse(reader["work_date"].ToString(), out DateTime workDate) ? workDate : (DateTime?)null,
+                    DateTime.TryParse(reader["remind_day"].ToString(), out DateTime remindDate) ? remindDate : (DateTime?)null,
+                    reader["comment"].ToString(),false);
                 result.Add(work);
             }
             reader.Close();
-            return result;
+            return result;            
+        }
+
+        public void InsertWorks(List<WorkMate> works,int techEventId)
+        {
+            foreach(var work in works)
+            {
+                InsertWork(work, techEventId);
+            }
+        }
+        
+
+        private WorkMate InsertWork(WorkMate work, int techEventId)
+        {            
+            string insertQuery = string.Format(SqlQueries.insertWork, 
+                                                techEventId,
+                                                work.WorkType.Id,
+                                                work.WorkDate.Value.ToShortDateString(),
+                                                work.RemindDay.HasValue ? work.RemindDay.Value.ToShortDateString() : "null",
+                                                work.Comment);
+            try
+            {
+                int id = InsertRecordIntoDb(insertQuery) ?? 0;
+                if (id != 0)
+                {
+                    work.Id = id;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(
+                    string.Format("An error is appearred during inserting work {0} {1} {2} {3}. Error: {4}",
+                    work.TechEventId,
+                    work.WorkType,
+                    work.WorkDate,
+                    work.RemindDay,
+                    e.Message)
+                    );
+            }
+            return null;
+        }
+
+
+        public void UpdateWorks(List<WorkMate> works)
+        {
+            foreach(var work in works)
+            {
+                UpdateWorks(work);
+            }
+        }
+
+        private void UpdateWorks(WorkMate work)
+        {
+            string sqlQuery = string.Format(SqlQueries.updateWork, work.WorkDate, work.RemindDay, work.Comment, work.Id);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(string.Format("An error is appearred during updating Work table: {0}", e.Message));
+            }
         }
     }
 }

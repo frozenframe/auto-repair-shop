@@ -147,7 +147,7 @@ namespace AutoRepairShop.ViewModel
             if (Id is null)
             {
                 Client newClient = new Client(Lastname, Name, Surname, Phone, Comment);
-                newClient = dbClient.AddClient(newClient);
+                newClient = dbClient.InsertClient(newClient);
                 _clientStore.CreateClient(newClient);
             }
             else

@@ -3,10 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AutoRepairShop.View"
+             xmlns:local="clr-namespace:AutoRepairShop.View" xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:WorkViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <DataGrid Margin="10,10,10,0" ItemsSource="{Binding Works}" SelectedItem="{Binding SelectedWork}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Height="149" VerticalAlignment="Top">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Деталь" Binding="{Binding WorkType.WorkTypeName}"/>
+                <DataGridTextColumn Header="Дата выполнения работы" Binding="{Binding WorkDate,StringFormat=\{0:dd.MM.yy\}}" />
+                <DataGridTextColumn Header=" Комментарий" Binding="{Binding Comment}"/>
+                <DataGridTextColumn Header="Дата напоминаия" Binding="{Binding RemindDay,StringFormat=\{0:dd.MM.yy\}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DatePicker HorizontalAlignment="Left" Margin="129,184,0,0" VerticalAlignment="Top" SelectedDate="{Binding WorkDate}"/>
+        <DatePicker HorizontalAlignment="Left" Margin="129,215,0,0" VerticalAlignment="Top" SelectedDate="{Binding RemindDate}"/>
+        <Label Content="Дата выполнения" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top"/>
+        <Label Content="Дата напоминания" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top"/>
+        <Button Margin="0,0,104,10" HorizontalAlignment="Right" Width="74" Height="22" VerticalAlignment="Bottom" Content="Сохранить" Command="{Binding SaveWorksChangesCommand}"/>
+        <Button Content="Отмена" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74"/>
+        <Label Content="Комментарий" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top"/>
+        <TextBox Height="50" Margin="10,272,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Comment}"/>
     </Grid>
 </UserControl>

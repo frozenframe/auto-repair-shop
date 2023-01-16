@@ -31,8 +31,11 @@ namespace AutoRepairShop.Model
 
         public TechEvent InsertTechEvent(TechEvent techEvent)
         {
-            object[] insertArgs = { techEvent.Car.Id,techEvent.EventStartDate,techEvent.EventEndDate};
-            string insertQuery = string.Format(SqlQueries.insertTechEvent, insertArgs);
+            object[] insertArgs = { techEvent.Car.Id, techEvent.EventStartDate.Value.ToShortDateString(), techEvent.EventEndDate ?? null };
+            string insertQuery = string.Format(SqlQueries.insertTechEvent,
+                                                            techEvent.Car.Id,
+                                                            techEvent.EventStartDate.Value.ToShortDateString(),
+                                                            techEvent.EventEndDate.HasValue ? techEvent.EventEndDate.Value.ToShortDateString() : "null");
 
             try
             {
@@ -71,7 +74,7 @@ namespace AutoRepairShop.Model
         }
 
         private List<TechEvent> GetTechEvent(string sqlQuery)
-        {            
+        {
             OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
             OleDbDataReader reader = command.ExecuteReader();
 
@@ -82,12 +85,11 @@ namespace AutoRepairShop.Model
                 result.Add(new TechEvent((int)reader[0], 
                     new Car(reader.GetInt32(3),reader.GetInt32(4),new CarModel(reader.GetInt32(7),
                             new CarBrand(reader.GetInt32(8),reader["brand_name"].ToString()),reader.GetString(9)),reader.GetString(5),reader.GetString(6)),
-                    DateTime.Parse(reader["event_start_date"].ToString()), DateTime.Parse(reader["event_end_date"].ToString())));
+                    DateTime.TryParse(reader["event_start_date"].ToString(), out DateTime startDate) ? startDate : (DateTime?)null,
+                    DateTime.TryParse(reader["event_start_date"].ToString(), out DateTime endDate) ? endDate : (DateTime?)null));
             }
             reader.Close();
-            return result;            
+            return result;
         }
-
-
     }
 }

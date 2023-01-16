@@ -18,6 +18,7 @@ namespace AutoRepairShop.ViewModel
         private RelayCommand _addWorkWindowCommand;
         private RelayCommand _openClientDataWindowCommand;
         private RelayCommand _saveTechEventChangesCommand;
+        private RelayCommand _editWorkWindowCommand;
         private DbTectEvent dbTechEvent;
         private DbClient dbClient;
         private DbWork dbWork;
@@ -30,7 +31,7 @@ namespace AutoRepairShop.ViewModel
         private Client _client;
         private Car _clientCar;
 
-        public ObservableCollection<Work> Works { get; set; }
+        public ObservableCollection<WorkMate> Works { get; set; }
         
         private string _fullname;
         private string _carModelAndBrand;
@@ -201,9 +202,10 @@ namespace AutoRepairShop.ViewModel
             _workTypeStore.WorkTypeSelected += OnWorkTypeSelected;
             Client = new Client();
             ClientCar = new Car();
+            TechEvent = new TechEvent();
             dbTechEvent = new DbTectEvent();
-            Works = new ObservableCollection<Work>();
-            
+            dbWork = new DbWork();
+            Works = new ObservableCollection<WorkMate>();
         }
 
         private void OnWorkTypeSelected(WorkType workType)
@@ -213,9 +215,8 @@ namespace AutoRepairShop.ViewModel
 
         public TechEventViewModel(TechEventStore techEventStore, TechEvent techEvent) : this(techEventStore)
         {
-            dbClient = new DbClient();
-            dbWork = new DbWork();
-            Works = new ObservableCollection<Work>(dbWork.GetTechEventWorks((int)techEvent.Id));
+            dbClient = new DbClient();            
+            Works = new ObservableCollection<WorkMate>(dbWork.GetTechEventWorks((int)techEvent.Id));
             Client = dbClient.GetClientById(techEvent.Car.CLientId);
             Fullname = $@"{Client.Surname} {Client.Name} {Client.Lastname}";
             ClientPhoneNumber = Client.Phone;
@@ -247,9 +248,10 @@ namespace AutoRepairShop.ViewModel
         {
             Client = client;
             Fullname = $@"{client.Surname} {client.Name} {client.Lastname}" ;
-            ClientPhoneNumber = client.Phone;
-                     
+            ClientPhoneNumber = client.Phone;                     
         }
+
+
         #region Commands
         public ICommand AddWorkWindowCommand
         {
@@ -303,6 +305,7 @@ namespace AutoRepairShop.ViewModel
             if(TechEvent.Id is null)//insert
             {
                 var insertedTechEvent = dbTechEvent.InsertTechEvent(new TechEvent(null,ClientCar, TechEventStartDate, TechEventEndDate));
+                dbWork.InsertWorks(Works.ToList(), (int)insertedTechEvent.Id);
                 _techEventStore.AddTechEvent(insertedTechEvent);
             }
             else//update
@@ -310,8 +313,29 @@ namespace AutoRepairShop.ViewModel
                 TechEvent.Car.Id = ClientCar.Id;
                 TechEvent.EventStartDate = TechEventStartDate;
                 TechEvent.EventEndDate = TechEventEndDate;
-                dbTechEvent.UpdateTechEvent(TechEvent);
+                dbTechEvent.UpdateTechEvent(TechEvent);                
+                dbWork.UpdateWorks(Works.Where(w => w.WasEdited is true).ToList());
             }
+        }
+
+        
+
+        public ICommand EditWorkWindowCommand
+        {
+            get
+            {
+                if (_editWorkWindowCommand == null)
+                {
+                    _editWorkWindowCommand = new RelayCommand(EditWorkWindow);
+                }
+
+                return _editWorkWindowCommand;
+            }
+        }
+
+        private void EditWorkWindow(object commandParameter)
+        {
+            new WindowService().ShowWindow(new WorkViewModel(Works), 450, 1000, "Редактирование работ", true);
         }
         #endregion
     }

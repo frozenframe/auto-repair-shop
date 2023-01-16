@@ -2,11 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AutoRepairShop.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SConnectionString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\FrozenFrame\source\repos\AutoRepairShop\CarRepair.accdb</Value>
+    <Setting Name="TestSetting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Привет</Value>
     </Setting>
-    <Setting Name="UConnectionString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Wcoat\source\repos\frozenframe\auto-repair-shop\CarRepair.accdb</Value>
+    <Setting Name="ConnectionString1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\CarRepair.accdb</Value>
+    </Setting>
+    <Setting Name="ConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\CarRepair.accdb</Value>
     </Setting>
   </Settings>
 </SettingsFile>

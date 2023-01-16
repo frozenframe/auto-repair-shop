@@ -8,7 +8,7 @@ namespace AutoRepairShop
         {
         }
 
-        public static readonly string addClient = "insert into clients (lastname, name_cl, surname, phone, сomment) values ('{0}', '{1}', '{2}', '{3}', '{4}')";
+        public static readonly string insertClient = "insert into clients (lastname, name_cl, surname, phone, сomment) values ('{0}', '{1}', '{2}', '{3}', '{4}')";
         public static readonly string updateClient = "update clients set lastname='{0}', name_cl='{1}', surname='{2}', phone='{3}', сomment='{4}' where id={5}";
         public static readonly string deleteClient = "delete from clients where id={0}";
         public static readonly string getAllClients = "select id, lastname, name_cl, surname, phone, сomment from clients where 1=1 ";
@@ -49,10 +49,13 @@ namespace AutoRepairShop
         public static readonly string getTechEvent = @"select event.id, event.event_start_date, event.event_end_date, cc.id, cc.client_id, cc.reg_number, cc.comment, cm.id, cm.brand_id, cm.model, cb.brand_name
                                                         from   Tech_Event event, Client_Cars cc, Car_Models cm, Car_Brands cb
                                                         Where event.client_car_id = cc.id and cc.car_model_id = cm.id and cm.brand_id = cb.id";
-        public static readonly string getAllTechEventWorks = "select w.id, w.work_date, w.remind_day, w.comment, wt.id, wt.work_type from [Work] w, Work_Types wt Where tech_event_id = {0} AND w.processed_item_id = wt.id";
-        public static readonly string insertTechEvent = "insert into Tech_Event(client_car_id,event_start_date,event_end_date) values ('{0}','{1}','{2}')";
+        public static readonly string getAllTechEventWorks = "select w.id, w.work_date, w.remind_day, w.comment, wt.id,wt.parent_id, wt.work_type from [Work] w, Work_Types wt Where tech_event_id = {0} AND w.processed_item_id = wt.id";
+        public static readonly string insertTechEvent = "insert into Tech_Event(client_car_id,event_start_date,event_end_date) values ('{0}','{1}',{2})";
         public static readonly string updateTechEvent = "update Tech_Event set client_car_id = '{0}', event_start_date = '{1}', event_end_date = '{2}' where id = {3}";
         public static readonly string deleteTechEvent = "delete from Tech_Event where id = {0}";
+
+        public static readonly string insertWork = "Insert into [Work]([tech_event_id],[processed_item_id],[work_date],[remind_day],[comment]) values ('{0}','{1}','{2}',{3},'{4}')";
+        public static readonly string updateWork = "Update [Work] set work_date = {0}, remind_day = {1}, comment ='{2}' where id ={3}";
 
     }
 }

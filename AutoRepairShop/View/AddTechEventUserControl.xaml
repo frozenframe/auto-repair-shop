@@ -36,7 +36,7 @@
                     <Image Source="../icons/Add.ico"></Image>
                 </Button>
                 <Button x:Name="EditWork_Button" Margin="0,55,10,0" HorizontalAlignment="Right" Width="40" 
-                Command="{Binding OpenEditWorkWindowCommand}" Height="40" VerticalAlignment="Top">
+                Command="{Binding EditWorkWindowCommand}" Height="40" VerticalAlignment="Top">
                     <Image Source="../icons/Edit.ico"></Image>
                 </Button>
                 <Button x:Name="DeleteWork_Button"  Margin="0,100,10,0" HorizontalAlignment="Right" Width="40" 

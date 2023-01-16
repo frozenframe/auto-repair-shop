@@ -27,10 +27,10 @@ namespace AutoRepairShop.Model
             }
         }
 
-        public Client AddClient(Client client)
+        public Client InsertClient(Client client)
         {
             object[] insertArgs = { client.Lastname, client.Name, client.Surname, client.Phone, client.Comment };
-            string insertQuery = string.Format(SqlQueries.addClient, insertArgs);
+            string insertQuery = string.Format(SqlQueries.insertClient, insertArgs);
 
             try
             {

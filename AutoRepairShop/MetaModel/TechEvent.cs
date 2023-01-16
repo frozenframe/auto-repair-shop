@@ -62,10 +62,13 @@ namespace AutoRepairShop.MetaModel
                 }
                 
             }
-        }        
+        }
 
+        public TechEvent()
+        { 
+        }
 
-        public TechEvent(int? id, Car car = null, DateTime? eventStartDate = null, DateTime? eventEndDate = null)
+        public TechEvent(int? id, Car car , DateTime? eventStartDate = null, DateTime? eventEndDate = null)
         {
             Id = id;
             Car = car;

@@ -19,15 +19,67 @@ namespace AutoRepairShop.MetaModel
 
         public int? Id { get => _id; set => _id = value; }
         public int? TechEventId { get; set; }
-        public WorkType WorkType { get; set; }
-        public DateTime? WorkDate { get; set; }
-        public DateTime? RemindDay { get; set; }
-        public string Comment { get; set; }
+
+        public WorkType WorkType
+        {
+            get 
+            {
+                return _workType;
+            }
+            set
+            {
+                _workType = value;
+                OnPropertyChanged(nameof(WorkType));
+            }
+        }
+
+
+        public DateTime? WorkDate
+        {
+            get
+            {
+                return _workDate;
+            }
+            set
+            {
+                _workDate = value;
+                OnPropertyChanged(nameof(WorkDate));
+            }
+        }
+
+
+        public DateTime? RemindDay
+        {
+            get
+            {
+                return _remindDay;
+            }
+            set
+            {
+                _remindDay = value;
+                OnPropertyChanged(nameof(RemindDay));
+            }
+        }
+
+
+        public string Comment
+        {
+            get
+            {
+                return _comment;
+            }
+            set
+            {
+                _comment = value;
+                OnPropertyChanged(nameof(Comment));
+            }
+        }
 
         public Work()
         {
 
         }
+
         public Work(int? id, int? techEventId, WorkType workType, DateTime workDate, DateTime remindDay, string comment)
         {
             Id = id;

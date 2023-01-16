@@ -23,6 +23,7 @@ namespace AutoRepairShop.View
         public AddTechEventUserControl()
         {
             InitializeComponent();
+            TechEventStartDate_DatePicker.SelectedDate = DateTime.Now;
         }
 
         private void SetTechEventEndDate_Button_Click(object sender, RoutedEventArgs e)
