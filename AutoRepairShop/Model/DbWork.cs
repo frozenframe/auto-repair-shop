@@ -22,18 +22,30 @@ namespace AutoRepairShop.Model
             OleDbDataReader reader = command.ExecuteReader();
 
             List<WorkMate> result = new List<WorkMate>();
+            if(!reader.HasRows)
+            {
+                reader.Close();
+                return result;
+            }
             while (reader.Read())
             {
-                var work = new WorkMate((int)reader[0],
+                var workType = new WorkType(
+                    reader.GetInt32(4),
+                    reader[5] is DBNull ? null : (int?)reader[5],
+                    reader["work_type"].ToString());
+
+                var work = new WorkMate(
+                    (int)reader[0],
                     techEventId,
-                    new WorkType(reader.GetInt32(4), reader.GetInt32(5), reader["work_type"].ToString()),
+                    workType,
                     DateTime.TryParse(reader["work_date"].ToString(), out DateTime workDate) ? workDate : (DateTime?)null,
                     DateTime.TryParse(reader["remind_day"].ToString(), out DateTime remindDate) ? remindDate : (DateTime?)null,
-                    reader["comment"].ToString(),false);
+                    reader["comment"].ToString(),
+                    false);
                 result.Add(work);
             }
             reader.Close();
-            return result;            
+            return result;
         }
 
         public void InsertWorks(List<WorkMate> works,int techEventId)
