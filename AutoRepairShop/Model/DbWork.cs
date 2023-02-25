@@ -56,7 +56,7 @@ namespace AutoRepairShop.Model
 
         private WorkMate InsertWork(WorkMate work, int techEventId)
         {            
-            string insertQuery = string.Format(SqlQueries.insertWork, 
+            string insertQuery = string.Format(SqlQueries.insertWork,
                                                 techEventId,
                                                 work.WorkType.Id,
                                                 work.WorkDate.Value.ToShortDateString(),
@@ -106,5 +106,21 @@ namespace AutoRepairShop.Model
                 Logger.Log.Error(string.Format("An error is appearred during updating Work table: {0}", e.Message));
             }
         }
+
+        public void DeleteWork(WorkMate work)
+        {
+            string sqlQuery = string.Format(SqlQueries.deleteWork, work.Id);
+            try
+            {
+                OleDbCommand command = new OleDbCommand(sqlQuery, Connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error($@"An error is appearred during deleting row from Work table: {e.Message}");
+            }
+        }
+
+        
     }
 }

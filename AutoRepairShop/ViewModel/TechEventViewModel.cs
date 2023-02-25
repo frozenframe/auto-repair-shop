@@ -19,10 +19,11 @@ namespace AutoRepairShop.ViewModel
         private RelayCommand _openClientDataWindowCommand;
         private RelayCommand _saveTechEventChangesCommand;
         private RelayCommand _editWorkWindowCommand;
+        private RelayCommand _removeWorkCommand;
         private DbTectEvent dbTechEvent;
         private DbClient dbClient;
         private DbWork dbWork;
-                
+
         private TechEventStore _techEventStore;
         private readonly ClientStore _clientStore;
         private readonly CarStore _carStore;
@@ -32,7 +33,7 @@ namespace AutoRepairShop.ViewModel
         private Car _clientCar;
 
         public ObservableCollection<WorkMate> Works { get; set; }
-        
+
         private string _fullname;
         private string _carModelAndBrand;
         private string _carNumber;
@@ -41,11 +42,11 @@ namespace AutoRepairShop.ViewModel
         private DateTime? _techEventStartDate;
         private string _remindText;
         private TechEvent _techEvent;
-        private Work _selectedWork;
+        private WorkMate _selectedWork;
         #endregion
 
         #region Properties
-        public Work SelectedWork
+        public WorkMate SelectedWork
         {
             get
             {
@@ -215,7 +216,7 @@ namespace AutoRepairShop.ViewModel
 
         public TechEventViewModel(TechEventStore techEventStore, TechEvent techEvent) : this(techEventStore)
         {
-            dbClient = new DbClient();            
+            dbClient = new DbClient();
             Works = new ObservableCollection<WorkMate>(dbWork.GetTechEventWorks((int)techEvent.Id));
             Client = dbClient.GetClientById(techEvent.Car.CLientId);
             Fullname = $@"{Client.Surname} {Client.Name} {Client.Lastname}";
@@ -294,10 +295,15 @@ namespace AutoRepairShop.ViewModel
             {
                 if (_saveTechEventChangesCommand == null)
                 {
-                    _saveTechEventChangesCommand = new RelayCommand(SaveTechEventChanges);
+                    _saveTechEventChangesCommand = new RelayCommand(SaveTechEventChanges, CheckEventStartDate);
                 }
                 return _saveTechEventChangesCommand;
             }
+        }
+
+        private bool CheckEventStartDate(object arg)
+        {
+            return !(_techEventStartDate is null);
         }
 
         private void SaveTechEventChanges(object commandParameter)
@@ -313,12 +319,12 @@ namespace AutoRepairShop.ViewModel
                 TechEvent.Car.Id = ClientCar.Id;
                 TechEvent.EventStartDate = TechEventStartDate;
                 TechEvent.EventEndDate = TechEventEndDate;
-                dbTechEvent.UpdateTechEvent(TechEvent);                
-                dbWork.UpdateWorks(Works.Where(w => w.WasEdited is true).ToList());
+                dbTechEvent.UpdateTechEvent(TechEvent);
+                dbWork.UpdateWorks(Works.Where(w => w.WasEdited is true && w.Id != null).ToList());
+                dbWork.InsertWorks(Works.Where(w=> w.Id is null).ToList(), _techEvent.Id.Value);
             }
         }
 
-        
 
         public ICommand EditWorkWindowCommand
         {
@@ -336,6 +342,25 @@ namespace AutoRepairShop.ViewModel
         private void EditWorkWindow(object commandParameter)
         {
             new WindowService().ShowWindow(new WorkViewModel(Works), 450, 1000, "Редактирование работ", true);
+        }
+
+        public ICommand RemoveWorkCommand
+        {
+            get
+            {
+                if (_removeWorkCommand == null)
+                {
+                    _removeWorkCommand = new RelayCommand(RemoveWorkFromList);
+                }
+
+                return _removeWorkCommand;
+            }
+        }
+
+        private void RemoveWorkFromList(object obj)
+        {
+            dbWork.DeleteWork(SelectedWork);
+            Works.Remove(SelectedWork);
         }
         #endregion
     }

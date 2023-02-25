@@ -1,12 +1,6 @@
-﻿using AutoRepairShop;
-using AutoRepairShop.MetaModel;
-using System;
-using System.Collections.Generic;
+﻿using AutoRepairShop.MetaModel;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using System.ComponentModel;
 
 namespace AutoRepairShop.ViewModel
 {
@@ -14,52 +8,6 @@ namespace AutoRepairShop.ViewModel
     {
         public ObservableCollection<WorkMate> Works { get; set; }
         private WorkMate _selectedWork;
-        private DateTime? _workDate;
-        private DateTime? _remindDate;
-        private string _comment;
-
-        public DateTime? RemindDate
-        {
-            get
-            {
-                return _remindDate;
-            }
-            set
-            {
-                _remindDate = value;
-                SelectedWork.WasEdited = true;
-                OnPropertyChanged(nameof(RemindDate));
-            }
-        }
-
-        public DateTime? WorkDate
-        {
-            get
-            {
-                return _workDate;
-            }
-            set
-            {
-                _workDate = value;
-                SelectedWork.WasEdited = true;
-                OnPropertyChanged(nameof(WorkDate));
-            }
-        }
-
-        public string Comment
-        {
-            get
-            {
-                return _comment;
-            }
-            set
-            {
-                _comment = value;
-                SelectedWork.WasEdited = true;
-                OnPropertyChanged(nameof(Comment));
-            }
-        }
-
 
         public WorkMate SelectedWork
         {
@@ -70,9 +18,6 @@ namespace AutoRepairShop.ViewModel
             set
             {
                 _selectedWork = value;
-                WorkDate = value.WorkDate;
-                RemindDate = value.RemindDay;
-                Comment = value.Comment;
                 OnPropertyChanged(nameof(SelectedWork));
             }
         }
@@ -81,26 +26,26 @@ namespace AutoRepairShop.ViewModel
         public WorkViewModel(ObservableCollection<WorkMate> works)
         {
             Works = works;
-        }
-
-        private RelayCommand _saveWorksChangesCommand;
-
-        public ICommand SaveWorksChangesCommand
-        {
-            get
+            foreach (var work in Works)
             {
-                if (_saveWorksChangesCommand == null)
-                {
-                    _saveWorksChangesCommand = new RelayCommand(SaveWorksChanges);
-                }
-
-                return _saveWorksChangesCommand;
+                work.PropertyChanged += ItemPropertyChanged;
             }
         }
 
-        private void SaveWorksChanges(object commandParameter)
-        {
 
+        public override void Dispose()
+        {
+            foreach (var work in Works)
+            {
+                work.PropertyChanged -= ItemPropertyChanged;
+            }
+            base.Dispose();
+        }
+
+
+        private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            ((WorkMate)sender).WasEdited = true;
         }
     }
 }

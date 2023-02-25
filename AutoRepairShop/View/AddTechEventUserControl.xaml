@@ -6,7 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:AutoRepairShop.View" xmlns:viewmodel="clr-namespace:AutoRepairShop.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:TechEventViewModel}"
              mc:Ignorable="d" Width="800" Height="530">
-    <Grid>        
+    <Grid>
         <GroupBox Header="Клиент" Height="127" Margin="10,10,10,0" VerticalAlignment="Top">
             <Grid Margin="0,0,0,0">
                 <Label Content="Автомобиль" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -40,14 +40,14 @@
                     <Image Source="../icons/Edit.ico"></Image>
                 </Button>
                 <Button x:Name="DeleteWork_Button"  Margin="0,100,10,0" HorizontalAlignment="Right" Width="40" 
-                Command="{Binding DeleteWorkCommand}" Height="40" VerticalAlignment="Top">
+                Command="{Binding RemoveWorkCommand}" Height="40" VerticalAlignment="Top">
                     <Image Source="../icons/Delete.ico"></Image>
                 </Button>
                 <Label Content="Напоминание" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="RemindText_TextBox" HorizontalAlignment="Left" Height="59" Margin="10,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="748" Text="{Binding RemindText}"/>
                 <Label Content="Начало ремонта" HorizontalAlignment="Left" Margin="10,0,0,41" Height="26" VerticalAlignment="Bottom"/>
                 <Label Content="Конец ремонта" HorizontalAlignment="Left" Margin="10,0,0,10" Height="26" VerticalAlignment="Bottom"/>
-                <DatePicker x:Name="TechEventStartDate_DatePicker" HorizontalAlignment="Left" Margin="116,0,0,41" Height="24" VerticalAlignment="Bottom" SelectedDate="{Binding TechEventStartDate}"/>
+                <DatePicker x:Name="TechEventStartDate_DatePicker" Margin="116,0,0,41" Height="24" VerticalAlignment="Bottom" SelectedDate="{Binding TechEventStartDate}" HorizontalAlignment="Left"/>
                 <DatePicker x:Name="TechEventEndDate_DatePicker" HorizontalAlignment="Left" Margin="116,0,0,10" Height="24" VerticalAlignment="Bottom" SelectedDate="{Binding TechEventEndDate}"/>
                 <Button x:Name="SetTechEventEndDate_Button" Content="Завершить ремонт" HorizontalAlignment="Left" Margin="300,0,0,10" Width="130" Height="22" VerticalAlignment="Bottom" Click="SetTechEventEndDate_Button_Click"/>
             </Grid>

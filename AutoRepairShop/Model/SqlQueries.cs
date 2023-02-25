@@ -55,7 +55,7 @@ namespace AutoRepairShop
         public static readonly string deleteTechEvent = "delete from Tech_Event where id = {0}";
 
         public static readonly string insertWork = "Insert into [Work]([tech_event_id],[processed_item_id],[work_date],[remind_day],[comment]) values ('{0}','{1}','{2}',{3},'{4}')";
-        public static readonly string updateWork = "Update [Work] set work_date = {0}, remind_day = {1}, comment ='{2}' where id ={3}";
-
+        public static readonly string updateWork = "Update [Work] set work_date = '{0}', remind_day = '{1}', comment ='{2}' where id ={3}";
+        public static string deleteWork = "Delete FROM [Work] Where id ={0}";
     }
 }

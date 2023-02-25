@@ -1,8 +1,6 @@
-﻿using AutoRepairShop;
-using AutoRepairShop.MetaModel;
+﻿using AutoRepairShop.MetaModel;
 using AutoRepairShop.Model;
 using AutoRepairShop.Stores;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using static AutoRepairShop.Utils.Constants;
@@ -36,10 +34,7 @@ namespace AutoRepairShop.ViewModel
             set
             {
                 _selectedTechEvent = value;
-                if(_selectedTechEvent.Works is null)
-                {
-                    _selectedTechEvent.Works = FillTechEventWorks((int)_selectedTechEvent.Id);
-                }                
+                _selectedTechEvent.Works = FillTechEventWorks((int)_selectedTechEvent.Id);
                 OnPropertyChanged(nameof(SelectedTechEvent));
             }
         }
@@ -48,9 +43,6 @@ namespace AutoRepairShop.ViewModel
         private ObservableCollection<WorkMate> FillTechEventWorks(int techEventId)
         {
             WorksOfSelectedTechEvent = new ObservableCollection<WorkMate>(dbWork.GetTechEventWorks(techEventId));
-            
-
-            
             return WorksOfSelectedTechEvent;
         }
 
@@ -61,7 +53,7 @@ namespace AutoRepairShop.ViewModel
             dbWork = new DbWork();
             dbTectEvent = new DbTectEvent();
             dbWorkType = new DbWorkType();
-            var techEventsFromDb = dbTectEvent.GetTechEvents();            
+            var techEventsFromDb = dbTectEvent.GetTechEvents();
             TechEvents = new ObservableCollection<TechEvent>(techEventsFromDb);
 
             //var newWork = new TechEvent();
@@ -173,10 +165,10 @@ namespace AutoRepairShop.ViewModel
             if(SelectedTechEvent  != null)
             {
                 new WindowService().ShowWindow(new TechEventViewModel(_techEventStore, SelectedTechEvent), 600, 900, "Добавление ремонта", true);
-            }            
+            }
         }
+
         #endregion
 
-        
     }
 }
