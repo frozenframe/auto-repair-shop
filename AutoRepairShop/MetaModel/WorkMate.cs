@@ -19,7 +19,6 @@ namespace AutoRepairShop.MetaModel
             set
             {
                 _wasEdited = value;
-                OnPropertyChanged(nameof(WasEdited));
             }
         }
 

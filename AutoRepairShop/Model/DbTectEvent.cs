@@ -86,7 +86,7 @@ namespace AutoRepairShop.Model
                     new Car(reader.GetInt32(3),reader.GetInt32(4),new CarModel(reader.GetInt32(7),
                             new CarBrand(reader.GetInt32(8),reader["brand_name"].ToString()),reader.GetString(9)),reader.GetString(5),reader.GetString(6)),
                     DateTime.TryParse(reader["event_start_date"].ToString(), out DateTime startDate) ? startDate : (DateTime?)null,
-                    DateTime.TryParse(reader["event_start_date"].ToString(), out DateTime endDate) ? endDate : (DateTime?)null));
+                    DateTime.TryParse(reader["event_end_date"].ToString(), out DateTime endDate) ? endDate : (DateTime?)null));
             }
             reader.Close();
             return result;

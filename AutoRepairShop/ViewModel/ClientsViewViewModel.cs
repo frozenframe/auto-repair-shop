@@ -294,7 +294,7 @@ namespace AutoRepairShop.ViewModel
             {
                 if (deleteCarCommand == null)
                 {
-                    deleteCarCommand = new RelayCommand(DeleteCar,CheckCarSelection);
+                    deleteCarCommand = new RelayCommand(DeleteCar, CheckCarSelection);
                 }
 
                 return deleteCarCommand;

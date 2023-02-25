@@ -42,7 +42,7 @@
                 <Image Source="../icons/ClientList.ico"></Image>
             </Button>
             <Separator/>
-            <Button Command="{Binding OpenAddWorkWindowCommand}">
+            <Button Command="{Binding OpenTechEventWindowCommand}">
                 <Image Source="../icons/Works.ico"></Image>
             </Button>
             <Separator/>

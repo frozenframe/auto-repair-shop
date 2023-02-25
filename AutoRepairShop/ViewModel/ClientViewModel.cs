@@ -22,8 +22,6 @@ namespace AutoRepairShop.ViewModel
             }
         }
 
-
-
         public int? Id => _client.Id;
         public string Lastname => _client.Lastname;
         public string Name => _client.Name;

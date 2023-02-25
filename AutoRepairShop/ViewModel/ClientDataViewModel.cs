@@ -158,7 +158,7 @@ namespace AutoRepairShop.ViewModel
                 Client.Name = Name;
                 Client.Lastname = Lastname;
                 Client.Phone = Phone;
-                Client.Comment = Comment;                
+                Client.Comment = Comment;
             }
         }
     }
